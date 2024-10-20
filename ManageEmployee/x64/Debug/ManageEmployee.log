@@ -1,2 +1,8 @@
-﻿  SignUpAdmin.cpp
+﻿  moc Navbar.h
+  moc DialogFormLoginAdmin.h
+  DialogFormLoginAdmin.cpp
+  ManageEmployee.cpp
+  Navbar.cpp
+  moc_DialogFormLoginAdmin.cpp
+  moc_Navbar.cpp
   ManageEmployee.vcxproj -> D:\IriTech\Code\ManageEmployee\x64\Debug\ManageEmployee.exe

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Navbar</class>
+ <widget class="QWidget" name="Navbar">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>602</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Navbar</string>
+  </property>
+  <widget class="QWidget" name="horizontalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>10</y>
+     <width>412</width>
+     <height>34</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QToolButton" name="logout">
+      <property name="styleSheet">
+       <string notr="true">height: 25px</string>
+      </property>
+      <property name="text">
+       <string>Đăng xuất</string>
+      </property>
+      <property name="autoRaise">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QToolButton" name="login">
+      <property name="styleSheet">
+       <string notr="true">height: 25px</string>
+      </property>
+      <property name="text">
+       <string>Đăng nhập</string>
+      </property>
+      <property name="autoRaise">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QToolButton" name="copyright">
+      <property name="styleSheet">
+       <string notr="true">height: 25px</string>
+      </property>
+      <property name="text">
+       <string>Bản quyền sử dụng</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QToolButton" name="mode">
+      <property name="styleSheet">
+       <string notr="true">height: 25px</string>
+      </property>
+      <property name="text">
+       <string>Chế độ</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QToolButton" name="exit">
+      <property name="styleSheet">
+       <string notr="true">height: 25px</string>
+      </property>
+      <property name="text">
+       <string>Thoát</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <tabstops>
+  <tabstop>logout</tabstop>
+  <tabstop>copyright</tabstop>
+  <tabstop>mode</tabstop>
+  <tabstop>exit</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

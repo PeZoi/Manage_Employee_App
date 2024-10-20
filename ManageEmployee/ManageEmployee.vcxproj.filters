@@ -46,6 +46,12 @@
     <ClCompile Include="DatabaseManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Navbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogFormLoginAdmin.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SignUpAdmin.h">
@@ -54,9 +60,21 @@
     <QtMoc Include="DatabaseManager.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Navbar.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogFormLoginAdmin.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SignUpAdmin.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Navbar.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DialogFormLoginAdmin.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

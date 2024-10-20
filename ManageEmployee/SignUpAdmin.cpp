@@ -1,4 +1,6 @@
 #include "SignUpAdmin.h"
+#include <QSettings>
+
 
 SignUpAdmin::SignUpAdmin(QWidget* parent)
 	: QMainWindow(parent)
@@ -46,6 +48,9 @@ void SignUpAdmin::handleSignUp() {
         msgBox.exec();
         return;
     }
+
+    QSettings settings("Iritech", "Manage_Employee_App");
+    settings.setValue("isLoggedIn", true);
 
     db.closeDatabase();
 
