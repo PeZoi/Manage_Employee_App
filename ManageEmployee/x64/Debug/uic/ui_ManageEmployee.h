@@ -22,23 +22,23 @@ class Ui_ManageEmployeeClass
 public:
     QWidget *centralWidget;
     QWidget *header;
-    QWidget *widget;
+    QWidget *content;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *ManageEmployeeClass)
     {
         if (ManageEmployeeClass->objectName().isEmpty())
             ManageEmployeeClass->setObjectName(QString::fromUtf8("ManageEmployeeClass"));
-        ManageEmployeeClass->resize(765, 469);
+        ManageEmployeeClass->resize(795, 469);
         centralWidget = new QWidget(ManageEmployeeClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         header = new QWidget(centralWidget);
         header->setObjectName(QString::fromUtf8("header"));
         header->setGeometry(QRect(10, -10, 551, 61));
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 80, 551, 271));
-        widget->setStyleSheet(QString::fromUtf8("width: 100%;\n"
+        content = new QWidget(centralWidget);
+        content->setObjectName(QString::fromUtf8("content"));
+        content->setGeometry(QRect(10, 40, 761, 351));
+        content->setStyleSheet(QString::fromUtf8("width: 100%;\n"
 "height: 100%;\n"
 "margin: 50px;"));
         ManageEmployeeClass->setCentralWidget(centralWidget);

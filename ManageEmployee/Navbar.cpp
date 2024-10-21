@@ -42,10 +42,14 @@ void Navbar::handleClickLogin() {
 	QSettings settings("Iritech", "Manage_Employee_App");
 	settings.setValue("isLoggedIn", true);
 
+
+
 	DialogFormLoginAdmin formLogin(this);
 	connect(&formLogin, &DialogFormLoginAdmin::loginSuccessful, this, &Navbar::onLoginSuccess);
 
 	formLogin.exec();
+
+	emit loginSuccessful();
 }
 void Navbar::handleClickCopyright() {
 	msgBox.setText("Copyright");
@@ -65,6 +69,7 @@ void Navbar::onLoginSuccess() {
 }
 
 void Navbar::onLogoutSuccess() {
+	emit logoutSuccessful();
 	ui.login->show();
 	ui.logout->hide();
 }

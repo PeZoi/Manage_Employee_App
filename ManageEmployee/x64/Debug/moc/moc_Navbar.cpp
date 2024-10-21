@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Navbar_t {
-    QByteArrayData data[9];
-    char stringdata0[127];
+    QByteArrayData data[11];
+    char stringdata0[160];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,17 +33,20 @@ struct qt_meta_stringdata_Navbar_t {
 static const qt_meta_stringdata_Navbar_t qt_meta_stringdata_Navbar = {
     {
 QT_MOC_LITERAL(0, 0, 6), // "Navbar"
-QT_MOC_LITERAL(1, 7, 17), // "handleClickLogout"
-QT_MOC_LITERAL(2, 25, 0), // ""
-QT_MOC_LITERAL(3, 26, 16), // "handleClickLogin"
-QT_MOC_LITERAL(4, 43, 20), // "handleClickCopyright"
-QT_MOC_LITERAL(5, 64, 15), // "handleClickMode"
-QT_MOC_LITERAL(6, 80, 15), // "handleClickExit"
-QT_MOC_LITERAL(7, 96, 14), // "onLoginSuccess"
-QT_MOC_LITERAL(8, 111, 15) // "onLogoutSuccess"
+QT_MOC_LITERAL(1, 7, 16), // "logoutSuccessful"
+QT_MOC_LITERAL(2, 24, 0), // ""
+QT_MOC_LITERAL(3, 25, 15), // "loginSuccessful"
+QT_MOC_LITERAL(4, 41, 17), // "handleClickLogout"
+QT_MOC_LITERAL(5, 59, 16), // "handleClickLogin"
+QT_MOC_LITERAL(6, 76, 20), // "handleClickCopyright"
+QT_MOC_LITERAL(7, 97, 15), // "handleClickMode"
+QT_MOC_LITERAL(8, 113, 15), // "handleClickExit"
+QT_MOC_LITERAL(9, 129, 14), // "onLoginSuccess"
+QT_MOC_LITERAL(10, 144, 15) // "onLogoutSuccess"
 
     },
-    "Navbar\0handleClickLogout\0\0handleClickLogin\0"
+    "Navbar\0logoutSuccessful\0\0loginSuccessful\0"
+    "handleClickLogout\0handleClickLogin\0"
     "handleClickCopyright\0handleClickMode\0"
     "handleClickExit\0onLoginSuccess\0"
     "onLogoutSuccess"
@@ -56,21 +59,29 @@ static const uint qt_meta_data_Navbar[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       2,       // signalCount
+
+ // signals: name, argc, parameters, tag, flags
+       1,    0,   59,    2, 0x06 /* Public */,
+       3,    0,   60,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x08 /* Private */,
-       3,    0,   50,    2, 0x08 /* Private */,
-       4,    0,   51,    2, 0x08 /* Private */,
-       5,    0,   52,    2, 0x08 /* Private */,
-       6,    0,   53,    2, 0x08 /* Private */,
-       7,    0,   54,    2, 0x08 /* Private */,
-       8,    0,   55,    2, 0x08 /* Private */,
+       4,    0,   61,    2, 0x08 /* Private */,
+       5,    0,   62,    2, 0x08 /* Private */,
+       6,    0,   63,    2, 0x08 /* Private */,
+       7,    0,   64,    2, 0x08 /* Private */,
+       8,    0,   65,    2, 0x08 /* Private */,
+       9,    0,   66,    2, 0x08 /* Private */,
+      10,    0,   67,    2, 0x08 /* Private */,
+
+ // signals: parameters
+    QMetaType::Void,
+    QMetaType::Void,
 
  // slots: parameters
     QMetaType::Void,
@@ -90,14 +101,32 @@ void Navbar::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void
         auto *_t = static_cast<Navbar *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->handleClickLogout(); break;
-        case 1: _t->handleClickLogin(); break;
-        case 2: _t->handleClickCopyright(); break;
-        case 3: _t->handleClickMode(); break;
-        case 4: _t->handleClickExit(); break;
-        case 5: _t->onLoginSuccess(); break;
-        case 6: _t->onLogoutSuccess(); break;
+        case 0: _t->logoutSuccessful(); break;
+        case 1: _t->loginSuccessful(); break;
+        case 2: _t->handleClickLogout(); break;
+        case 3: _t->handleClickLogin(); break;
+        case 4: _t->handleClickCopyright(); break;
+        case 5: _t->handleClickMode(); break;
+        case 6: _t->handleClickExit(); break;
+        case 7: _t->onLoginSuccess(); break;
+        case 8: _t->onLogoutSuccess(); break;
         default: ;
+        }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (Navbar::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Navbar::logoutSuccessful)) {
+                *result = 0;
+                return;
+            }
+        }
+        {
+            using _t = void (Navbar::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Navbar::loginSuccessful)) {
+                *result = 1;
+                return;
+            }
         }
     }
     Q_UNUSED(_a);
@@ -132,15 +161,27 @@ int Navbar::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 9)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 9;
     }
     return _id;
+}
+
+// SIGNAL 0
+void Navbar::logoutSuccessful()
+{
+    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+}
+
+// SIGNAL 1
+void Navbar::loginSuccessful()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

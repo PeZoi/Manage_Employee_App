@@ -1,13 +1,13 @@
 #include "SignUpAdmin.h"
 #include "DatabaseManager.h"
-#include "ManageEmployee.h"
+#include "MainWindow.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     SignUpAdmin signUpUI;
-    ManageEmployee manageEmployeeUI;
+    MainWindow mainWindowUI;
     DatabaseManager db;
 
     db.connectToDatabase();
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
         signUpUI.show();
     }
     else {
-        manageEmployeeUI.show();
+        mainWindowUI.show();
     }
 
     db.closeDatabase();

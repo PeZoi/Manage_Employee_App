@@ -4,7 +4,7 @@
 #include <QMessageBox>
 
 #include "ui_SignUpAdmin.h"
-#include "ManageEmployee.h"
+#include "MainWindow.h"
 #include "DatabaseManager.h"
 
 class SignUpAdmin : public QMainWindow
@@ -20,7 +20,7 @@ private slots:
 
 private:
 	Ui::SignUpAdminClass ui;
-	ManageEmployee me;
+	MainWindow me;
 	DatabaseManager db;
 	QMessageBox msgBox;
 };

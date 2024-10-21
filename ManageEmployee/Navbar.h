@@ -13,6 +13,10 @@ public:
 	Navbar(QWidget *parent = nullptr);
 	~Navbar();
 
+signals:
+	void logoutSuccessful();
+	void loginSuccessful();
+
 private slots:
 	void handleClickLogout();
 	void handleClickLogin();

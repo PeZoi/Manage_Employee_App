@@ -99,6 +99,7 @@
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
     <ClCompile Include="DialogFormLoginAdmin.cpp" />
+    <ClCompile Include="MenuList.cpp" />
     <ClCompile Include="Navbar.cpp" />
     <ClCompile Include="SignUpAdmin.cpp" />
     <QtRcc Include="ManageEmployee.qrc" />
@@ -107,6 +108,7 @@
     <QtMoc Include="ManageEmployee.h" />
     <ClCompile Include="ManageEmployee.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="MenuList.ui" />
     <QtUic Include="Navbar.ui" />
     <QtUic Include="SignUpAdmin.ui" />
   </ItemGroup>
@@ -121,6 +123,9 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DialogFormLoginAdmin.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="MenuList.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
