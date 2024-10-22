@@ -1,6 +1,8 @@
 #include "DialogFormDepartment.h"
 
-DialogFormDepartment::DialogFormDepartment(QWidget *parent)
+bool isEditMode = false;
+
+DialogFormDepartment::DialogFormDepartment(QWidget* parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
@@ -10,6 +12,18 @@ DialogFormDepartment::DialogFormDepartment(QWidget *parent)
 
 DialogFormDepartment::~DialogFormDepartment()
 {}
+
+// Kiểm tra xem tên có trùng không
+bool DialogFormDepartment::checkNameDepartment(const QString& name) {
+	QString checkNameQuery = "SELECT COUNT(*) FROM department WHERE name = " + name + ";";
+	QSqlQuery result = db.executeQuery(checkNameQuery);
+	if (result.next() && result.value(0).toInt() > 0) {
+		msgBox.setText("Tên phòng ban đã tồn tại");
+		msgBox.exec();
+		return true;
+	}
+	return false;
+}
 
 void DialogFormDepartment::handleSubmit() {
 	QString name = ui.name->text();
@@ -23,29 +37,54 @@ void DialogFormDepartment::handleSubmit() {
 
 	db.connectToDatabase();
 
-	// Kiểm tra xem tên có trùng không
-	QString checkNameQuery = "SELECT COUNT(*) FROM department WHERE name = " + name + ";";
-	QSqlQuery result = db.executeQuery(checkNameQuery);
-	if (result.next() && result.value(0).toInt() > 0) {
-		msgBox.setText("Tên phòng ban đã tồn tại");
-		msgBox.exec();
-		return;
+	// Nếu không phải là mode edit
+	if (!isEditMode) {
+		// Kiểm tra xem name có tồn tại không
+		if (checkNameDepartment(name)) {
+			msgBox.setText("Tên phòng ban đã tồn tại");
+			msgBox.exec();
+		}
+		QString insertEmployeeQuery = "INSERT INTO department (name, description) "
+			"VALUES (:name, :description);";
+
+		QMap<QString, QVariant> params;
+		params[":name"] = name;
+		params[":description"] = description;
+
+		if (!db.executeCreate(insertEmployeeQuery, params)) {
+			msgBox.setText("Tạo phòng ban thất bại");
+			msgBox.exec();
+		}
 	}
+	else {
+		QString editEmployeeQuery = "UPDATE department SET description = :description "
+			"WHERE name = :name";
 
-    QString insertEmployeeQuery = "INSERT INTO department (name, description) "
-        "VALUES (:name, :description);";
+		QMap<QString, QVariant> params;
+		params[":name"] = name;
+		params[":description"] = description;
 
-    QMap<QString, QVariant> params;
-    params[":name"] = name;
-    params[":description"] = description;
-
-    if (!db.executeCreate(insertEmployeeQuery, params)) {
-        msgBox.setText("Tạo phòng ban thất bại");
-        msgBox.exec();
-    }
+		if (!db.executeCreate(editEmployeeQuery, params)) {
+			msgBox.setText("Sửa phòng ban thất bại");
+			msgBox.exec();
+		}
+	}
 
 	emit excuteDBSuccessful();
 
 	db.closeDatabase();
 	this->accept();
+}
+
+void DialogFormDepartment::setName(const QString& name) {
+	ui.name->setText(name);
+}
+
+void DialogFormDepartment::setDescription(const QString& description) {
+	ui.description->setText(description);
+}
+
+void DialogFormDepartment::setMode(bool _isEditMode) {
+	ui.name->setDisabled(_isEditMode);
+	isEditMode = _isEditMode;
 }

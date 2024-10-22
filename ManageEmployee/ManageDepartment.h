@@ -13,6 +13,9 @@ public:
 	ManageDepartment(QWidget *parent = nullptr);
 	~ManageDepartment();
 
+signals:
+	void modeEdit();
+
 public slots:
 	void handleRenderTable();
 	void handleClickAdd();

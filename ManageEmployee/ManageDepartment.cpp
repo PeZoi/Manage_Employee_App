@@ -1,6 +1,7 @@
 #include "ManageDepartment.h"
 #include <QAbstractItemView>
 #include <QStandardItem>
+#include <QSettings>
 
 QString departmentSelected = "";
 
@@ -29,6 +30,10 @@ ManageDepartment::~ManageDepartment()
 {}
 
 void ManageDepartment::handleClickAdd() {
+	df_department->setMode(false);
+	df_department->setName("");
+	df_department->setDescription("");
+
 	df_department->exec();
 }
 
@@ -78,7 +83,23 @@ void ManageDepartment::handleRowClicked(const QModelIndex& index) {
 }
 
 void ManageDepartment::handleEdit() {
-	qDebug() << departmentSelected;
+
+	QString query = "SELECT name, description FROM department WHERE name = " + departmentSelected + "; ";
+	QSqlQuery result = db.executeQuery(query);
+
+	result.first();
+
+	QString name = result.value(0).toString();
+	QString description = result.value(1).toString();
+
+	QSettings settings("Iritech", "Manage_Employee_App");
+	settings.setValue("editDepartment", true);
+
+	df_department->setMode(true);
+	df_department->setName(name);
+	df_department->setDescription(description);
+
+	df_department->exec();
 }
 
 void ManageDepartment::handleDelete() {

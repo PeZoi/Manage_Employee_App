@@ -17,9 +17,14 @@ signals:
 
 public slots:
 	void handleSubmit();
+	void setName(const QString& name);
+	void setDescription(const QString& description);
+	void setMode(bool _isEditMode);
 
 private:
 	Ui::DialogFormDepartmentClass ui;
 	DatabaseManager db;
 	QMessageBox msgBox;
+
+	bool checkNameDepartment(const QString& name);
 };
