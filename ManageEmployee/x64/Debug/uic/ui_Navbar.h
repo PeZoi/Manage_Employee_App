@@ -22,6 +22,7 @@ class Ui_Navbar
 public:
     QWidget *horizontalLayoutWidget;
     QHBoxLayout *horizontalLayout;
+    QToolButton *back;
     QToolButton *logout;
     QToolButton *login;
     QToolButton *copyright;
@@ -35,12 +36,19 @@ public:
         Navbar->resize(602, 400);
         horizontalLayoutWidget = new QWidget(Navbar);
         horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(0, 10, 412, 34));
+        horizontalLayoutWidget->setGeometry(QRect(0, 10, 493, 34));
         horizontalLayout = new QHBoxLayout(horizontalLayoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        back = new QToolButton(horizontalLayoutWidget);
+        back->setObjectName(QString::fromUtf8("back"));
+        back->setStyleSheet(QString::fromUtf8("height: 25px"));
+        back->setAutoRaise(false);
+
+        horizontalLayout->addWidget(back);
+
         logout = new QToolButton(horizontalLayoutWidget);
         logout->setObjectName(QString::fromUtf8("logout"));
         logout->setStyleSheet(QString::fromUtf8("height: 25px"));
@@ -85,6 +93,7 @@ public:
     void retranslateUi(QWidget *Navbar)
     {
         Navbar->setWindowTitle(QCoreApplication::translate("Navbar", "Navbar", nullptr));
+        back->setText(QCoreApplication::translate("Navbar", "Tr\341\273\237 L\341\272\241i", nullptr));
         logout->setText(QCoreApplication::translate("Navbar", "\304\220\304\203ng xu\341\272\245t", nullptr));
         login->setText(QCoreApplication::translate("Navbar", "\304\220\304\203ng nh\341\272\255p", nullptr));
         copyright->setText(QCoreApplication::translate("Navbar", "B\341\272\243n quy\341\273\201n s\341\273\255 d\341\273\245ng", nullptr));

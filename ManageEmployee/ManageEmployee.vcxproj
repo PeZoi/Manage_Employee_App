@@ -98,16 +98,22 @@
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
+    <ClCompile Include="DialogFormDepartment.cpp" />
     <ClCompile Include="DialogFormLoginAdmin.cpp" />
+    <ClCompile Include="ManageDepartment.cpp" />
+    <ClCompile Include="ManageEmployee.cpp" />
     <ClCompile Include="MenuList.cpp" />
     <ClCompile Include="Navbar.cpp" />
     <ClCompile Include="SignUpAdmin.cpp" />
     <QtRcc Include="ManageEmployee.qrc" />
+    <QtUic Include="DialogFormDepartment.ui" />
     <QtUic Include="DialogFormLoginAdmin.ui" />
-    <QtUic Include="ManageEmployee.ui" />
-    <QtMoc Include="ManageEmployee.h" />
-    <ClCompile Include="ManageEmployee.cpp" />
+    <QtUic Include="MainWindow.ui" />
+    <QtMoc Include="MainWindow.h" />
+    <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="ManageDepartment.ui" />
+    <QtUic Include="ManageEmployee.ui" />
     <QtUic Include="MenuList.ui" />
     <QtUic Include="Navbar.ui" />
     <QtUic Include="SignUpAdmin.ui" />
@@ -126,6 +132,15 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="MenuList.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ManageDepartment.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ManageEmployee.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="DialogFormDepartment.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

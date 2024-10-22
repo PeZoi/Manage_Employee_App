@@ -6,6 +6,7 @@
 #include <QVariant>
 #include <QString>
 #include <QDebug>
+#include <QMessageBox>
 
 class DatabaseManager : public QObject
 {

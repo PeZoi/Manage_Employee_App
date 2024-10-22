@@ -18,11 +18,24 @@
     <rect>
      <x>0</x>
      <y>10</y>
-     <width>412</width>
+     <width>493</width>
      <height>34</height>
     </rect>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <widget class="QToolButton" name="back">
+      <property name="styleSheet">
+       <string notr="true">height: 25px</string>
+      </property>
+      <property name="text">
+       <string>Trở Lại</string>
+      </property>
+      <property name="autoRaise">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
     <item>
      <widget class="QToolButton" name="logout">
       <property name="styleSheet">

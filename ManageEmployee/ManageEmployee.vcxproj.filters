@@ -26,13 +26,13 @@
     <QtRcc Include="ManageEmployee.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
-    <QtUic Include="ManageEmployee.ui">
+    <QtUic Include="MainWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
-    <QtMoc Include="ManageEmployee.h">
+    <QtMoc Include="MainWindow.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <ClCompile Include="ManageEmployee.cpp">
+    <ClCompile Include="MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -55,6 +55,15 @@
     <ClCompile Include="MenuList.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ManageDepartment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageEmployee.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogFormDepartment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SignUpAdmin.h">
@@ -72,6 +81,15 @@
     <QtMoc Include="MenuList.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="ManageDepartment.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ManageEmployee.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogFormDepartment.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SignUpAdmin.ui">
@@ -84,6 +102,15 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="MenuList.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ManageDepartment.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ManageEmployee.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DialogFormDepartment.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

@@ -12,13 +12,15 @@ Navbar::Navbar(QWidget* parent)
 	connect(ui.copyright, SIGNAL(clicked()), this, SLOT(handleClickCopyright()));
 	connect(ui.mode, SIGNAL(clicked()), this, SLOT(handleClickMode()));
 	connect(ui.exit, SIGNAL(clicked()), this, SLOT(handleClickExit()));
+	connect(ui.back, SIGNAL(clicked()), this, SLOT(handleHiddenBack()));
 
 	QSettings settings("Iritech", "Manage_Employee_App");
 	bool isLoggedIn = settings.value("isLoggedIn", false).toBool();
 
+
+	handleHiddenBack();
 	if (isLoggedIn) {
-		ui.login->hide();
-		ui.logout->show();
+		onLoginSuccess();
 	}
 	else {
 		ui.login->show();
@@ -72,4 +74,12 @@ void Navbar::onLogoutSuccess() {
 	emit logoutSuccessful();
 	ui.login->show();
 	ui.logout->hide();
+}
+
+void Navbar::handleHiddenBack() {
+	ui.back->hide();
+	emit back();
+}
+void Navbar::handleShowBack() {
+	ui.back->show();
 }

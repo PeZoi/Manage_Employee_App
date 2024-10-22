@@ -16,13 +16,16 @@ public:
 signals:
 	void logoutSuccessful();
 	void loginSuccessful();
+	void back();
 
-private slots:
+public slots:
 	void handleClickLogout();
 	void handleClickLogin();
 	void handleClickCopyright();
 	void handleClickMode();
 	void handleClickExit();
+	void handleHiddenBack();
+	void handleShowBack();
 	void onLoginSuccess();
 	void onLogoutSuccess();
 

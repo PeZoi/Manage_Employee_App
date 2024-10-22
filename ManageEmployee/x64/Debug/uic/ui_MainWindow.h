@@ -17,7 +17,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_ManageEmployeeClass
+class Ui_MainWindowClass
 {
 public:
     QWidget *centralWidget;
@@ -25,12 +25,12 @@ public:
     QWidget *content;
     QStatusBar *statusBar;
 
-    void setupUi(QMainWindow *ManageEmployeeClass)
+    void setupUi(QMainWindow *MainWindowClass)
     {
-        if (ManageEmployeeClass->objectName().isEmpty())
-            ManageEmployeeClass->setObjectName(QString::fromUtf8("ManageEmployeeClass"));
-        ManageEmployeeClass->resize(795, 469);
-        centralWidget = new QWidget(ManageEmployeeClass);
+        if (MainWindowClass->objectName().isEmpty())
+            MainWindowClass->setObjectName(QString::fromUtf8("MainWindowClass"));
+        MainWindowClass->resize(795, 469);
+        centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         header = new QWidget(centralWidget);
         header->setObjectName(QString::fromUtf8("header"));
@@ -38,28 +38,25 @@ public:
         content = new QWidget(centralWidget);
         content->setObjectName(QString::fromUtf8("content"));
         content->setGeometry(QRect(10, 40, 761, 351));
-        content->setStyleSheet(QString::fromUtf8("width: 100%;\n"
-"height: 100%;\n"
-"margin: 50px;"));
-        ManageEmployeeClass->setCentralWidget(centralWidget);
-        statusBar = new QStatusBar(ManageEmployeeClass);
+        MainWindowClass->setCentralWidget(centralWidget);
+        statusBar = new QStatusBar(MainWindowClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
-        ManageEmployeeClass->setStatusBar(statusBar);
+        MainWindowClass->setStatusBar(statusBar);
 
-        retranslateUi(ManageEmployeeClass);
+        retranslateUi(MainWindowClass);
 
-        QMetaObject::connectSlotsByName(ManageEmployeeClass);
+        QMetaObject::connectSlotsByName(MainWindowClass);
     } // setupUi
 
-    void retranslateUi(QMainWindow *ManageEmployeeClass)
+    void retranslateUi(QMainWindow *MainWindowClass)
     {
-        ManageEmployeeClass->setWindowTitle(QCoreApplication::translate("ManageEmployeeClass", "ManageEmployee", nullptr));
+        MainWindowClass->setWindowTitle(QCoreApplication::translate("MainWindowClass", "MainWindow", nullptr));
     } // retranslateUi
 
 };
 
 namespace Ui {
-    class ManageEmployeeClass: public Ui_ManageEmployeeClass {};
+    class MainWindowClass: public Ui_MainWindowClass {};
 } // namespace Ui
 
 QT_END_NAMESPACE

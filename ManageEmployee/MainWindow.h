@@ -3,10 +3,12 @@
 #include <QtWidgets/QMainWindow>
 #include <QSettings>
 #include <QDebug>
-#include "ui_ManageEmployee.h"
+#include "ui_MainWindow.h"
 #include "Navbar.h"
 #include "MenuList.h"
 #include "DialogFormLoginAdmin.h"
+#include "ManageDepartment.h"
+#include "ManageEmployee.h"
 
 class MainWindow : public QMainWindow
 {
@@ -17,13 +19,21 @@ public:
     ~MainWindow();
 
 private slots:
-    void handleHidenMenu();
+    void handleHiddenMenu();
     void handleShowMenu();
 
+    void handleHiddenManageDepartment();
+    void handleShowManageDepartment();
+
+    void handleHiddenManageEmployee();
+    void handleShowManageEmployee();
+
 private:
-    Ui::ManageEmployeeClass ui;
+    Ui::MainWindowClass ui;
     DialogFormLoginAdmin formLogin;
     QSettings settings;
     MenuList* menu;
     Navbar* navbar;
+    ManageDepartment* md;
+    ManageEmployee* me;
 };
