@@ -276,7 +276,7 @@ void DialogFormEmployee::setMode(bool _isEditMode) {
 }
 
 void DialogFormEmployee::renderDepartments() {
-	ManageDepartment md;
+	/*ManageDepartment md;
 	QSqlQuery result = md.getAllDepartment();
 
 	ui.department->clear();
@@ -285,7 +285,7 @@ void DialogFormEmployee::renderDepartments() {
 
 	while (result.next()) {
 		ui.department->addItem(result.value(0).toString());
-	}
+	}*/
 }
 
 void DialogFormEmployee::setValue(QSqlQuery result) {

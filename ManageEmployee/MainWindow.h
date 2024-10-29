@@ -18,22 +18,15 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void handleHiddenMenu();
-    void handleShowMenu();
-
-    void handleHiddenManageDepartment();
-    void handleShowManageDepartment();
-
-    void handleHiddenManageEmployee();
-    void handleShowManageEmployee();
+    DialogFormLoginAdmin& getFormLogin();
+    MenuList* getMenu();
+    Navbar* getNavbar();
+    Ui::MainWindowClass* getUi() { return ui; };
 
 private:
-    Ui::MainWindowClass ui;
+    Ui::MainWindowClass* ui;
     DialogFormLoginAdmin formLogin;
     QSettings settings;
     MenuList* menu;
     Navbar* navbar;
-    ManageDepartment* md;
-    ManageEmployee* me;
 };

@@ -3,6 +3,7 @@
 #include <QDialog>
 #include "ui_DialogFormDepartment.h"
 #include "DatabaseManager.h"
+#include "DepartmentModel.h"
 
 class DialogFormDepartment : public QDialog
 {
@@ -11,9 +12,10 @@ class DialogFormDepartment : public QDialog
 public:
 	DialogFormDepartment(QWidget *parent = nullptr);
 	~DialogFormDepartment();
+	bool isEditMode_department = false;
 
 signals:
-	void excuteDBSuccessful();
+	void submit(DepartmentModel department, bool isEditMode);
 
 public slots:
 	void handleSubmit();

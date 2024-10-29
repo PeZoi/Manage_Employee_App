@@ -112,12 +112,17 @@
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
+    <ClCompile Include="DepartmentModel.cpp" />
+    <ClCompile Include="DepartmentRepository.cpp" />
     <ClCompile Include="DialogFormDepartment.cpp" />
     <ClCompile Include="DialogFormEmployee.cpp" />
     <ClCompile Include="DialogFormLoginAdmin.cpp" />
+    <ClCompile Include="EmployeeModel.cpp" />
     <ClCompile Include="IriTracker.cpp" />
     <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="MainWindowController.cpp" />
     <ClCompile Include="ManageDepartment.cpp" />
+    <ClCompile Include="ManageDepartmentController.cpp" />
     <ClCompile Include="ManageEmployee.cpp" />
     <ClCompile Include="MenuList.cpp" />
     <ClCompile Include="Navbar.cpp" />
@@ -162,7 +167,12 @@
     <QtMoc Include="DialogFormEmployee.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DepartmentModel.h" />
+    <QtMoc Include="DepartmentRepository.h" />
+    <ClInclude Include="EmployeeModel.h" />
     <ClInclude Include="IriTracker.h" />
+    <QtMoc Include="ManageDepartmentController.h" />
+    <QtMoc Include="MainWindowController.h" />
     <QtMoc Include="MainWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

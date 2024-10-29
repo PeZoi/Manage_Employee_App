@@ -21,6 +21,18 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
+    <Filter Include="Source Files\Model">
+      <UniqueIdentifier>{2bd8d835-42e3-41e3-8190-25a8793d466f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Controller">
+      <UniqueIdentifier>{f31625f4-e632-4068-9d4c-ccf2a0ef7fe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\View">
+      <UniqueIdentifier>{d0069127-fdb3-4099-9fa2-8204b9bc0167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Repository">
+      <UniqueIdentifier>{f3f12206-4314-427b-956e-4490037b80b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ManageEmployee.qrc">
@@ -31,38 +43,53 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SignUpAdmin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DatabaseManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Navbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DialogFormLoginAdmin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MenuList.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ManageDepartment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ManageEmployee.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DialogFormDepartment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DialogFormEmployee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IriTracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="DepartmentModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindowController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogFormDepartment.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogFormEmployee.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogFormLoginAdmin.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
     <ClCompile Include="MainWindow.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuList.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageDepartment.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageEmployee.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="SignUpAdmin.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Navbar.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageDepartmentController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="DepartmentRepository.cpp">
+      <Filter>Source Files\Repository</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +121,15 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="MainWindow.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="MainWindowController.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ManageDepartmentController.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DepartmentRepository.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
@@ -128,6 +164,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IriTracker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DepartmentModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EmployeeModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

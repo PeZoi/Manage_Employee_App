@@ -37,10 +37,10 @@ public:
     {
         if (DialogFormDepartmentClass->objectName().isEmpty())
             DialogFormDepartmentClass->setObjectName(QString::fromUtf8("DialogFormDepartmentClass"));
-        DialogFormDepartmentClass->resize(308, 242);
+        DialogFormDepartmentClass->resize(321, 243);
         formLayoutWidget = new QWidget(DialogFormDepartmentClass);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(10, 20, 281, 151));
+        formLayoutWidget->setGeometry(QRect(10, 20, 281, 155));
         formLayout = new QFormLayout(formLayoutWidget);
         formLayout->setSpacing(6);
         formLayout->setContentsMargins(11, 11, 11, 11);

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_DialogFormDepartment_t {
-    QByteArrayData data[10];
-    char stringdata0[114];
+    QByteArrayData data[13];
+    char stringdata0[140];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,19 +33,23 @@ struct qt_meta_stringdata_DialogFormDepartment_t {
 static const qt_meta_stringdata_DialogFormDepartment_t qt_meta_stringdata_DialogFormDepartment = {
     {
 QT_MOC_LITERAL(0, 0, 20), // "DialogFormDepartment"
-QT_MOC_LITERAL(1, 21, 18), // "excuteDBSuccessful"
-QT_MOC_LITERAL(2, 40, 0), // ""
-QT_MOC_LITERAL(3, 41, 12), // "handleSubmit"
-QT_MOC_LITERAL(4, 54, 7), // "setName"
-QT_MOC_LITERAL(5, 62, 4), // "name"
-QT_MOC_LITERAL(6, 67, 14), // "setDescription"
-QT_MOC_LITERAL(7, 82, 11), // "description"
-QT_MOC_LITERAL(8, 94, 7), // "setMode"
-QT_MOC_LITERAL(9, 102, 11) // "_isEditMode"
+QT_MOC_LITERAL(1, 21, 6), // "submit"
+QT_MOC_LITERAL(2, 28, 0), // ""
+QT_MOC_LITERAL(3, 29, 15), // "DepartmentModel"
+QT_MOC_LITERAL(4, 45, 10), // "department"
+QT_MOC_LITERAL(5, 56, 10), // "isEditMode"
+QT_MOC_LITERAL(6, 67, 12), // "handleSubmit"
+QT_MOC_LITERAL(7, 80, 7), // "setName"
+QT_MOC_LITERAL(8, 88, 4), // "name"
+QT_MOC_LITERAL(9, 93, 14), // "setDescription"
+QT_MOC_LITERAL(10, 108, 11), // "description"
+QT_MOC_LITERAL(11, 120, 7), // "setMode"
+QT_MOC_LITERAL(12, 128, 11) // "_isEditMode"
 
     },
-    "DialogFormDepartment\0excuteDBSuccessful\0"
-    "\0handleSubmit\0setName\0name\0setDescription\0"
+    "DialogFormDepartment\0submit\0\0"
+    "DepartmentModel\0department\0isEditMode\0"
+    "handleSubmit\0setName\0name\0setDescription\0"
     "description\0setMode\0_isEditMode"
 };
 #undef QT_MOC_LITERAL
@@ -64,22 +68,22 @@ static const uint qt_meta_data_DialogFormDepartment[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   39,    2, 0x06 /* Public */,
+       1,    2,   39,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   40,    2, 0x0a /* Public */,
-       4,    1,   41,    2, 0x0a /* Public */,
-       6,    1,   44,    2, 0x0a /* Public */,
-       8,    1,   47,    2, 0x0a /* Public */,
+       6,    0,   44,    2, 0x0a /* Public */,
+       7,    1,   45,    2, 0x0a /* Public */,
+       9,    1,   48,    2, 0x0a /* Public */,
+      11,    1,   51,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 3, QMetaType::Bool,    4,    5,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,    5,
-    QMetaType::Void, QMetaType::QString,    7,
-    QMetaType::Void, QMetaType::Bool,    9,
+    QMetaType::Void, QMetaType::QString,    8,
+    QMetaType::Void, QMetaType::QString,   10,
+    QMetaType::Void, QMetaType::Bool,   12,
 
        0        // eod
 };
@@ -90,7 +94,7 @@ void DialogFormDepartment::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         auto *_t = static_cast<DialogFormDepartment *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->excuteDBSuccessful(); break;
+        case 0: _t->submit((*reinterpret_cast< DepartmentModel(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 1: _t->handleSubmit(); break;
         case 2: _t->setName((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 3: _t->setDescription((*reinterpret_cast< const QString(*)>(_a[1]))); break;
@@ -100,8 +104,8 @@ void DialogFormDepartment::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (DialogFormDepartment::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&DialogFormDepartment::excuteDBSuccessful)) {
+            using _t = void (DialogFormDepartment::*)(DepartmentModel , bool );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&DialogFormDepartment::submit)) {
                 *result = 0;
                 return;
             }
@@ -150,9 +154,10 @@ int DialogFormDepartment::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void DialogFormDepartment::excuteDBSuccessful()
+void DialogFormDepartment::submit(DepartmentModel _t1, bool _t2)
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))), const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t2))) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

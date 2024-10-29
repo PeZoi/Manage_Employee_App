@@ -1,6 +1,8 @@
 #include "DatabaseManager.h"
 #include <QFile>
 
+QSqlDatabase DatabaseManager::db = QSqlDatabase();
+
 DatabaseManager::DatabaseManager(QObject* parent)
     : QObject(parent)
 {
@@ -19,7 +21,7 @@ bool DatabaseManager::connectToDatabase()
     // Kiểm tra nếu tệp cơ sở dữ liệu đã tồn tại
     bool databaseExists = dbFile.exists();
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(dbName);
 
     if (!db.open()) {
@@ -73,6 +75,22 @@ bool DatabaseManager::executeCreate(const QString& queryStr)
     }
     qDebug() << "Query executed successfully.";
     return true;
+}
+
+QSqlQuery DatabaseManager::executeQuery2(const QString& queryStr, const QMap<QString, QVariant>& params) {
+    QSqlQuery query(db);
+    query.prepare(queryStr);
+
+    for (auto it = params.constBegin(); it != params.constEnd(); ++it) {
+        query.bindValue(it.key(), it.value());
+    }
+
+    if (!query.exec()) {
+        qDebug() << "Failed to execute query:" << query.lastError().text();
+        return query;
+    }
+    qDebug() << "Query executed successfully.";
+    return query;
 }
 
 QSqlQuery DatabaseManager::executeQuery(const QString& queryStr) {
