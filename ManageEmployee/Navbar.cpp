@@ -1,6 +1,6 @@
 #include "Navbar.h"
 #include <QSettings>
-
+#include <QFile>
 
 Navbar::Navbar(QWidget* parent)
 	: QWidget(parent)
@@ -16,7 +16,6 @@ Navbar::Navbar(QWidget* parent)
 
 	QSettings settings("Iritech", "Manage_Employee_App");
 	bool isLoggedIn = settings.value("isLoggedIn", false).toBool();
-
 
 	handleHiddenBack();
 	if (isLoggedIn) {
@@ -67,7 +66,7 @@ void Navbar::handleClickExit() {
 
 void Navbar::onLoginSuccess() {
 	ui.login->hide();
-	ui.logout->show(); 
+	ui.logout->show();
 }
 
 void Navbar::onLogoutSuccess() {

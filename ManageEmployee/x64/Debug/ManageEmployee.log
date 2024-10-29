@@ -1,2 +1,13 @@
-﻿  DialogFormDepartment.cpp
+﻿   Qt/MSBuild: 3.3.0.13
+   Qt: 5.15.2
+  DialogFormEmployee.cpp
+  MainWindow.cpp
+  ManageDepartment.cpp
+  SignUpAdmin.cpp
+  main.cpp
+  Generating Code...
+  moc_MainWindow.cpp
+  moc_ManageDepartment.cpp
+  moc_SignUpAdmin.cpp
+  Generating Code...
   ManageEmployee.vcxproj -> D:\IriTech\Code\ManageEmployee\x64\Debug\ManageEmployee.exe

@@ -15,12 +15,15 @@ public:
 
 signals:
 	void modeEdit();
+	
 
 public slots:
 	void handleRenderTable();
 	void handleClickAdd();
 	void handleEdit();
 	void handleDelete();
+
+	QSqlQuery getAllDepartment();
 
 	void handleRowClicked(const QModelIndex& index);
 

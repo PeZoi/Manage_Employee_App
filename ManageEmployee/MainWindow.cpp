@@ -28,10 +28,10 @@ MainWindow::MainWindow(QWidget* parent)
     }
     else {
         handleHiddenMenu();
-        
+
         qDebug() << "Chưa đăng nhập";
     }
-    
+
     // Xử lý khi đăng nhập thành công
     connect(navbar, &Navbar::loginSuccessful, this, &MainWindow::handleShowMenu);
     // Xử lý khi đăng xuất thành công

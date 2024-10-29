@@ -1,11 +1,10 @@
 #include "ManageDepartment.h"
 #include <QAbstractItemView>
 #include <QStandardItem>
-#include <QSettings>
 
 QString departmentSelected = "";
 
-ManageDepartment::ManageDepartment(QWidget *parent)
+ManageDepartment::ManageDepartment(QWidget* parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
@@ -22,8 +21,11 @@ ManageDepartment::ManageDepartment(QWidget *parent)
 	connect(ui.delete_2, SIGNAL(clicked()), this, SLOT(handleDelete()));
 
 	connect(df_department, &DialogFormDepartment::excuteDBSuccessful, this, &ManageDepartment::handleRenderTable);
-
 	connect(ui.table, &QTableView::clicked, this, &ManageDepartment::handleRowClicked);
+	connect(ui.table, &QTableView::doubleClicked, this, [this]() {
+		&ManageDepartment::handleRowClicked;
+		handleEdit();
+		});
 }
 
 ManageDepartment::~ManageDepartment()
@@ -38,11 +40,9 @@ void ManageDepartment::handleClickAdd() {
 }
 
 void ManageDepartment::handleRenderTable() {
-	db.connectToDatabase();
 
-	QString query = "SELECT name, description FROM department";
-	QSqlQuery result = db.executeQuery(query);
 
+	QSqlQuery result = getAllDepartment();
 	// Đếm số hàng
 	int rowCount = 0;
 	while (result.next()) {
@@ -50,7 +50,7 @@ void ManageDepartment::handleRenderTable() {
 	}
 
 	result.clear();
-	result = db.executeQuery(query);
+	result = getAllDepartment();
 
 	QStandardItemModel* model = new QStandardItemModel(rowCount, 2, this);
 	model->setHorizontalHeaderLabels({ "Tên", "Mô tả" });
@@ -64,11 +64,7 @@ void ManageDepartment::handleRenderTable() {
 		row++;
 	}
 
-	
 	ui.table->resizeColumnsToContents();
-
-
-	db.closeDatabase();
 }
 
 void ManageDepartment::handleRowClicked(const QModelIndex& index) {
@@ -80,20 +76,18 @@ void ManageDepartment::handleRowClicked(const QModelIndex& index) {
 	ui.delete_2->setDisabled(false);
 
 	departmentSelected = index.sibling(index.row(), 0).data().toString();
+
 }
 
 void ManageDepartment::handleEdit() {
 
-	QString query = "SELECT name, description FROM department WHERE name = " + departmentSelected + "; ";
+	QString query = "SELECT name, description FROM department WHERE name = '" + departmentSelected + "'; ";
 	QSqlQuery result = db.executeQuery(query);
 
 	result.first();
 
 	QString name = result.value(0).toString();
 	QString description = result.value(1).toString();
-
-	QSettings settings("Iritech", "Manage_Employee_App");
-	settings.setValue("editDepartment", true);
 
 	df_department->setMode(true);
 	df_department->setName(name);
@@ -105,10 +99,11 @@ void ManageDepartment::handleEdit() {
 void ManageDepartment::handleDelete() {
 	db.connectToDatabase();
 
-	QString query = "DELETE FROM department WHERE name = " + departmentSelected + " ;";
+	QString query = "DELETE FROM department WHERE name = '" + departmentSelected + "' ;";
 	if (!db.executeCreate(query)) {
 		msgBox.setText("Xoá thất bại");
 		msgBox.exec();
+		return;
 	}
 
 	handleRenderTable();
@@ -118,4 +113,12 @@ void ManageDepartment::handleDelete() {
 
 
 	db.closeDatabase();
+}
+
+QSqlQuery ManageDepartment::getAllDepartment() {
+	db.connectToDatabase();
+	QString query = "SELECT name, description FROM department";
+	QSqlQuery result = db.executeQuery(query);
+	db.closeDatabase();
+	return result;
 }

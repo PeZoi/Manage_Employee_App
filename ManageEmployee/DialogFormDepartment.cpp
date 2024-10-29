@@ -1,6 +1,6 @@
 #include "DialogFormDepartment.h"
 
-bool isEditMode = false;
+bool isEditMode_department = false;
 
 DialogFormDepartment::DialogFormDepartment(QWidget* parent)
 	: QDialog(parent)
@@ -15,7 +15,7 @@ DialogFormDepartment::~DialogFormDepartment()
 
 // Kiểm tra xem tên có trùng không
 bool DialogFormDepartment::checkNameDepartment(const QString& name) {
-	QString checkNameQuery = "SELECT COUNT(*) FROM department WHERE name = " + name + ";";
+	QString checkNameQuery = "SELECT COUNT(*) FROM department WHERE name = '" + name + "';";
 	QSqlQuery result = db.executeQuery(checkNameQuery);
 	if (result.next() && result.value(0).toInt() > 0) {
 		msgBox.setText("Tên phòng ban đã tồn tại");
@@ -38,7 +38,7 @@ void DialogFormDepartment::handleSubmit() {
 	db.connectToDatabase();
 
 	// Nếu không phải là mode edit
-	if (!isEditMode) {
+	if (!isEditMode_department) {
 		// Kiểm tra xem name có tồn tại không
 		if (checkNameDepartment(name)) {
 			msgBox.setText("Tên phòng ban đã tồn tại");
@@ -86,5 +86,5 @@ void DialogFormDepartment::setDescription(const QString& description) {
 
 void DialogFormDepartment::setMode(bool _isEditMode) {
 	ui.name->setDisabled(_isEditMode);
-	isEditMode = _isEditMode;
+	isEditMode_department = _isEditMode;
 }
