@@ -15,12 +15,12 @@ public:
 	SignUpAdmin(QWidget *parent = nullptr);
 	~SignUpAdmin();
 
-private slots:
-	void handleSignUp();
+	Ui::SignUpAdminClass* getUi();
+
+signals:
+	void submit(EmployeeModel employee);
 
 private:
-	Ui::SignUpAdminClass ui;
-	MainWindow me;
-	DatabaseManager db;
+	Ui::SignUpAdminClass* ui;
 	QMessageBox msgBox;
 };

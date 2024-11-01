@@ -1,2 +1,22 @@
-﻿  DialogFormDepartment.cpp
+﻿   Qt/MSBuild: 3.3.0.13
+   Qt: 5.15.2
+  MainWindow.cpp
+  MainWindowController.cpp
+  ManageAttendanceEvents.cpp
+  ManageAttendanceEventsController.cpp
+  Navbar.cpp
+  NavbarController.cpp
+  SignUpAdmin.cpp
+  SignUpAdminController.cpp
+  main.cpp
+  Generating Code...
+  moc_MainWindow.cpp
+  moc_MainWindowController.cpp
+  moc_ManageAttendanceEvents.cpp
+  moc_ManageAttendanceEventsController.cpp
+  moc_Navbar.cpp
+  moc_NavbarController.cpp
+  moc_SignUpAdmin.cpp
+  moc_SignUpAdminController.cpp
+  Generating Code...
   ManageEmployee.vcxproj -> D:\IriTech\Code\ManageEmployee\x64\Debug\ManageEmployee.exe

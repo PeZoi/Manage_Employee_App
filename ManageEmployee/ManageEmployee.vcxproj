@@ -37,7 +37,7 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>5.15.2</QtInstall>
-    <QtModules>core;gui;sql;websockets;widgets</QtModules>
+    <QtModules>core;gui;widgets;sql</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
@@ -63,11 +63,25 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Link>
+      <AdditionalLibraryDirectories>D:\IriTech\Code\ManageEmployee\library\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libIriSentinel64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>D:\IriTech\Code\ManageEmployee\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <ProjectReference>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MultiProcessorCompilation>
+      </MultiProcessorCompilation>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>
+      </SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -98,20 +112,39 @@
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
+    <ClCompile Include="DepartmentModel.cpp" />
+    <ClCompile Include="DepartmentRepository.cpp" />
+    <ClCompile Include="DialogConfirm.cpp" />
     <ClCompile Include="DialogFormDepartment.cpp" />
+    <ClCompile Include="DialogFormEmployee.cpp" />
     <ClCompile Include="DialogFormLoginAdmin.cpp" />
+    <ClCompile Include="EmployeeCheckInOut.cpp" />
+    <ClCompile Include="EmployeeCheckInOutController.cpp" />
+    <ClCompile Include="EmployeeModel.cpp" />
+    <ClCompile Include="EmployeeRepository.cpp" />
+    <ClCompile Include="IriTracker.cpp" />
+    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="MainWindowController.cpp" />
+    <ClCompile Include="ManageAttendanceEvents.cpp" />
+    <ClCompile Include="ManageAttendanceEventsController.cpp" />
     <ClCompile Include="ManageDepartment.cpp" />
+    <ClCompile Include="ManageDepartmentController.cpp" />
     <ClCompile Include="ManageEmployee.cpp" />
+    <ClCompile Include="ManageEmployeeController.cpp" />
     <ClCompile Include="MenuList.cpp" />
     <ClCompile Include="Navbar.cpp" />
+    <ClCompile Include="NavbarController.cpp" />
     <ClCompile Include="SignUpAdmin.cpp" />
+    <ClCompile Include="SignUpAdminController.cpp" />
     <QtRcc Include="ManageEmployee.qrc" />
+    <QtUic Include="DialogConfirm.ui" />
     <QtUic Include="DialogFormDepartment.ui" />
+    <QtUic Include="DialogFormEmployee.ui" />
     <QtUic Include="DialogFormLoginAdmin.ui" />
+    <QtUic Include="EmployeeCheckInOut.ui" />
     <QtUic Include="MainWindow.ui" />
-    <QtMoc Include="MainWindow.h" />
-    <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <QtUic Include="ManageAttendanceEvents.ui" />
     <QtUic Include="ManageDepartment.ui" />
     <QtUic Include="ManageEmployee.ui" />
     <QtUic Include="MenuList.ui" />
@@ -141,6 +174,29 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DialogFormDepartment.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="DialogFormEmployee.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="ManageAttendanceEventsController.h" />
+    <QtMoc Include="ManageAttendanceEvents.h" />
+    <QtMoc Include="CustomFilterProxyModel.h" />
+    <ClInclude Include="DepartmentModel.h" />
+    <QtMoc Include="NavbarController.h" />
+    <QtMoc Include="SignUpAdminController.h" />
+    <QtMoc Include="ManageEmployeeController.h" />
+    <QtMoc Include="DepartmentRepository.h" />
+    <QtMoc Include="DialogConfirm.h" />
+    <QtMoc Include="EmployeeCheckInOut.h" />
+    <QtMoc Include="EmployeeCheckInOutController.h" />
+    <ClInclude Include="EmployeeModel.h" />
+    <QtMoc Include="EmployeeRepository.h" />
+    <QtMoc Include="ErrorLabel.h" />
+    <ClInclude Include="IriTracker.h" />
+    <QtMoc Include="ManageDepartmentController.h" />
+    <QtMoc Include="MainWindowController.h" />
+    <QtMoc Include="MainWindow.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

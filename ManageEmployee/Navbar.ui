@@ -6,93 +6,284 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>602</width>
-    <height>400</height>
+    <width>778</width>
+    <height>68</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Navbar</string>
   </property>
-  <widget class="QWidget" name="horizontalLayoutWidget">
+  <widget class="QFrame" name="frame">
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>10</y>
-     <width>493</width>
-     <height>34</height>
+     <y>0</y>
+     <width>781</width>
+     <height>61</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QToolButton" name="back">
-      <property name="styleSheet">
-       <string notr="true">height: 25px</string>
-      </property>
-      <property name="text">
-       <string>Trở Lại</string>
-      </property>
-      <property name="autoRaise">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QToolButton" name="logout">
-      <property name="styleSheet">
-       <string notr="true">height: 25px</string>
-      </property>
-      <property name="text">
-       <string>Đăng xuất</string>
-      </property>
-      <property name="autoRaise">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QToolButton" name="login">
-      <property name="styleSheet">
-       <string notr="true">height: 25px</string>
-      </property>
-      <property name="text">
-       <string>Đăng nhập</string>
-      </property>
-      <property name="autoRaise">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QToolButton" name="copyright">
-      <property name="styleSheet">
-       <string notr="true">height: 25px</string>
-      </property>
-      <property name="text">
-       <string>Bản quyền sử dụng</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QToolButton" name="mode">
-      <property name="styleSheet">
-       <string notr="true">height: 25px</string>
-      </property>
-      <property name="text">
-       <string>Chế độ</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QToolButton" name="exit">
-      <property name="styleSheet">
-       <string notr="true">height: 25px</string>
-      </property>
-      <property name="text">
-       <string>Thoát</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="styleSheet">
+    <string notr="true">QFrame {
+	border: 1px solid lightgray;
+	background: #efefef;
+}
+
+QPushButton {
+	text-align: center;
+	background: transparent;
+}
+
+QPushButton:hover {
+	margin-top: -2px;
+	margin-left: -2px;
+    border: 2px solid #aaa;
+	background: lightgray;
+}</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>10</y>
+      <width>555</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="navbarLayout">
+     <item>
+      <widget class="QPushButton" name="back">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	text-align: center;
+	background: transparent;
+height: 25px;
+}
+
+QPushButton:hover {
+	margin-top: -2px;
+	margin-left: -2px;
+    border: 2px solid #aaa;
+	background: lightgray;
+}</string>
+       </property>
+       <property name="text">
+        <string>Back</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../icon/back.png</normaloff>../icon/back.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="logout">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	text-align: center;
+	background: transparent;
+height: 25px;
+}
+
+QPushButton:hover {
+	margin-top: -2px;
+	margin-left: -2px;
+    border: 2px solid #aaa;
+	background: lightgray;
+}</string>
+       </property>
+       <property name="text">
+        <string>Logout</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../icon/logout.png</normaloff>../icon/logout.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="login">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	text-align: center;
+	background: transparent;
+height: 25px;
+}
+
+QPushButton:hover {
+	margin-top: -2px;
+	margin-left: -2px;
+    border: 2px solid #aaa;
+	background: lightgray;
+}</string>
+       </property>
+       <property name="text">
+        <string>Login</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../icon/login.png</normaloff>../icon/login.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="copyright">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	text-align: center;
+	background: transparent;
+height: 25px;
+}
+
+QPushButton:hover {
+	margin-top: -2px;
+	margin-left: -2px;
+    border: 2px solid #aaa;
+	background: lightgray;
+}</string>
+       </property>
+       <property name="text">
+        <string>License</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../icon/lisence.png</normaloff>../icon/lisence.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="mode">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	text-align: center;
+	background: transparent;
+height: 25px;
+}
+
+QPushButton:hover {
+	margin-top: -2px;
+	margin-left: -2px;
+    border: 2px solid #aaa;
+	background: lightgray;
+}</string>
+       </property>
+       <property name="text">
+        <string>Mode</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../icon/mode.png</normaloff>../icon/mode.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="exit">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	text-align: center;
+	background: transparent;
+height: 25px;
+}
+
+QPushButton:hover {
+	margin-top: -2px;
+	margin-left: -2px;
+    border: 2px solid #aaa;
+	background: lightgray;
+}</string>
+       </property>
+       <property name="text">
+        <string>Exit</string>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../icon/exit.png</normaloff>../icon/exit.png</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_2">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>10</y>
+      <width>75</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="questionButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	text-align: center;
+	background: transparent;
+height: 25px;
+width: 15px
+}
+
+QPushButton:hover {
+	margin-top: -2px;
+	margin-left: -2px;
+    border: 2px solid #aaa;
+	background: lightgray;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../icon/information.png</normaloff>../icon/information.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="informationButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+	text-align: center;
+	background: transparent;
+height: 25px;
+width: 15px
+}
+
+QPushButton:hover {
+	margin-top: -2px;
+	margin-left: -2px;
+    border: 2px solid #aaa;
+	background: lightgray;
+}</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>../icon/question-mark.png</normaloff>../icon/question-mark.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>20</width>
+         <height>20</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

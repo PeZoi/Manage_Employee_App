@@ -3,6 +3,7 @@
 #include <QWidget>
 #include "ui_ManageEmployee.h"
 #include "DatabaseManager.h"
+#include "DialogFormEmployee.h"
 
 class ManageEmployee : public QWidget
 {
@@ -12,7 +13,12 @@ public:
 	ManageEmployee(QWidget *parent = nullptr);
 	~ManageEmployee();
 
+	Ui::ManageEmployeeClass* getUi();
+
+
+signals:
+	void modeEdit();
+
 private:
-	Ui::ManageEmployeeClass ui;
-	DatabaseManager db;
+	Ui::ManageEmployeeClass* ui;
 };

@@ -1,90 +1,60 @@
 #include "DialogFormDepartment.h"
-
-bool isEditMode = false;
+#include "DepartmentModel.h"
+#include "DepartmentRepository.h"
+#include "ErrorLabel.h"
+#include <QStatusBar>
 
 DialogFormDepartment::DialogFormDepartment(QWidget* parent)
-	: QDialog(parent)
+	: QDialog(parent), ui(new Ui::DialogFormDepartmentClass)
 {
-	ui.setupUi(this);
+	ui->setupUi(this);
 
-	connect(ui.submit, SIGNAL(clicked()), this, SLOT(handleSubmit()));
+	QLinearGradient gradient(0, 0, 0, this->height());
+	gradient.setColorAt(0.0, Qt::white);
+	gradient.setColorAt(1.0, QColor("#87A8D2"));
+
+	QPalette palette;
+	palette.setBrush(QPalette::Window, gradient);
+	this->setPalette(palette);
+	this->setAutoFillBackground(true);
+
+
+	connect(ui->submit, SIGNAL(clicked()), this, SLOT(handleSubmit()));
+	connect(ui->cancelButton, &QPushButton::clicked, this, [this]() {this->accept(); });
 }
 
 DialogFormDepartment::~DialogFormDepartment()
 {}
 
-// Kiểm tra xem tên có trùng không
-bool DialogFormDepartment::checkNameDepartment(const QString& name) {
-	QString checkNameQuery = "SELECT COUNT(*) FROM department WHERE name = " + name + ";";
-	QSqlQuery result = db.executeQuery(checkNameQuery);
-	if (result.next() && result.value(0).toInt() > 0) {
-		msgBox.setText("Tên phòng ban đã tồn tại");
-		msgBox.exec();
-		return true;
-	}
-	return false;
-}
-
 void DialogFormDepartment::handleSubmit() {
-	QString name = ui.name->text();
-	QString description = ui.description->text();
+	QString name = ui->name->text();
+	QString description = ui->description->text();
 
 	if (name.trimmed().isEmpty()) {
-		msgBox.setText("Trường tên không được để trống");
-		msgBox.exec();
+		ErrorLabel* error = new ErrorLabel("  The name field cannot be left empty");
+		error->showTemporary(ui->verticalLayout, 3000);
 		return;
 	}
 
-	db.connectToDatabase();
+	DepartmentModel department = DepartmentModel(name, description);
 
-	// Nếu không phải là mode edit
-	if (!isEditMode) {
-		// Kiểm tra xem name có tồn tại không
-		if (checkNameDepartment(name)) {
-			msgBox.setText("Tên phòng ban đã tồn tại");
-			msgBox.exec();
-		}
-		QString insertEmployeeQuery = "INSERT INTO department (name, description) "
-			"VALUES (:name, :description);";
+	emit submit(department, isEditMode_department, this);
 
-		QMap<QString, QVariant> params;
-		params[":name"] = name;
-		params[":description"] = description;
-
-		if (!db.executeCreate(insertEmployeeQuery, params)) {
-			msgBox.setText("Tạo phòng ban thất bại");
-			msgBox.exec();
-		}
-	}
-	else {
-		QString editEmployeeQuery = "UPDATE department SET description = :description "
-			"WHERE name = :name";
-
-		QMap<QString, QVariant> params;
-		params[":name"] = name;
-		params[":description"] = description;
-
-		if (!db.executeCreate(editEmployeeQuery, params)) {
-			msgBox.setText("Sửa phòng ban thất bại");
-			msgBox.exec();
-		}
-	}
-
-	emit excuteDBSuccessful();
-
-	db.closeDatabase();
-	this->accept();
 }
 
 void DialogFormDepartment::setName(const QString& name) {
-	ui.name->setText(name);
+	ui->name->setText(name);
 }
 
 void DialogFormDepartment::setDescription(const QString& description) {
-	ui.description->setText(description);
+	ui->description->setText(description);
 }
 
 void DialogFormDepartment::setMode(bool _isEditMode) {
-	ui.name->setDisabled(_isEditMode);
-	isEditMode = _isEditMode;
+	ui->name->setDisabled(_isEditMode);
+	isEditMode_department = _isEditMode;
+}
+
+Ui::DialogFormDepartmentClass* DialogFormDepartment::getUi() {
+	return ui;
 }

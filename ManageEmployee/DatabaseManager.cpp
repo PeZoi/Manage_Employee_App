@@ -1,5 +1,9 @@
 #include "DatabaseManager.h"
+#include "DepartmentModel.h"
+#include "DepartmentRepository.h"
 #include <QFile>
+
+QSqlDatabase DatabaseManager::db = QSqlDatabase();
 
 DatabaseManager::DatabaseManager(QObject* parent)
     : QObject(parent)
@@ -19,7 +23,7 @@ bool DatabaseManager::connectToDatabase()
     // Kiểm tra nếu tệp cơ sở dữ liệu đã tồn tại
     bool databaseExists = dbFile.exists();
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(dbName);
 
     if (!db.open()) {
@@ -29,9 +33,12 @@ bool DatabaseManager::connectToDatabase()
 
     if (!databaseExists) {
         QString createTableDepartmentQuery = "CREATE TABLE department (name TEXT PRIMARY KEY, description TEXT);";
-        QString createTableEmployeeQuery = "CREATE TABLE employee (id TEXT PRIMARY KEY, first_name TEXT, last_name TEXT, password TEXT, department TEXT,date_of_birth TEXT,start_date_of_work TEXT,is_enabled BOOLEAN NOT NULL DEFAULT 1,avatar TEXT,role TEXT,email TEXT UNIQUE,phone_number TEXT,address TEXT,FOREIGN KEY(department) REFERENCES department(name)); ";
+        QString createTableEmployeeQuery = "CREATE TABLE employee (id TEXT PRIMARY KEY, first_name TEXT, last_name TEXT, password TEXT, department TEXT,date_of_birth TEXT,start_date_of_work TEXT, status TEXT, is_enabled BOOLEAN NOT NULL DEFAULT 1,avatar TEXT,role TEXT,email TEXT UNIQUE,phone_number TEXT,address TEXT, is_allow_password BOOLEAN NOT NULL DEFAULT 0, iri_right TEXT, iri_left TEXT,FOREIGN KEY (department) REFERENCES department(name)); ";
         executeCreate(createTableDepartmentQuery);
         executeCreate(createTableEmployeeQuery);
+
+        DepartmentModel departmentDefault = DepartmentModel("Others", "");
+        DepartmentRepository::add(departmentDefault);
     }
 
     qDebug() << "Connected to database successfully.";
@@ -73,6 +80,22 @@ bool DatabaseManager::executeCreate(const QString& queryStr)
     }
     qDebug() << "Query executed successfully.";
     return true;
+}
+
+QSqlQuery DatabaseManager::executeQuery2(const QString& queryStr, const QMap<QString, QVariant>& params) {
+    QSqlQuery query(db);
+    query.prepare(queryStr);
+
+    for (auto it = params.constBegin(); it != params.constEnd(); ++it) {
+        query.bindValue(it.key(), it.value());
+    }
+
+    if (!query.exec()) {
+        qDebug() << "Failed to execute query:" << query.lastError().text();
+        return query;
+    }
+    qDebug() << "Query executed successfully.";
+    return query;
 }
 
 QSqlQuery DatabaseManager::executeQuery(const QString& queryStr) {

@@ -1,0 +1,5 @@
+﻿   Qt/MSBuild: 3.3.0.13
+   Qt: 5.15.2
+  moc ManageDepartmentController.h
+   D:\IriTech\Code\ManageEmployee\ManageEmployee\ManageDepartmentController.h(21): Error: Not a signal or slot declaration
+C:\Users\MY PC\AppData\Local\QtMsBuild\qt_work.targets(138,5): error MSB4181: The "QtRunWork" task returned false but did not log an error.

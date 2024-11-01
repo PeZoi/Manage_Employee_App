@@ -11,9 +11,12 @@ public:
 	MenuList(QWidget *parent = nullptr);
 	~MenuList();
 
+	Ui::MenuListClass getUi();
+
 signals:
 	void onClickDepartment();
 	void onClickEmployee();
+	void onClickAttendanceEvents();
 
 private:
 	Ui::MenuListClass ui;

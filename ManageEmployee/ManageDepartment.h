@@ -13,20 +13,11 @@ public:
 	ManageDepartment(QWidget *parent = nullptr);
 	~ManageDepartment();
 
+	Ui::ManageDepartmentClass* getUi();
+
 signals:
 	void modeEdit();
 
-public slots:
-	void handleRenderTable();
-	void handleClickAdd();
-	void handleEdit();
-	void handleDelete();
-
-	void handleRowClicked(const QModelIndex& index);
-
 private:
-	Ui::ManageDepartmentClass ui;
-	DatabaseManager db;
-	DialogFormDepartment* df_department;
-	QMessageBox msgBox;
+	Ui::ManageDepartmentClass* ui;
 };

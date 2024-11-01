@@ -9,31 +9,25 @@
 #include "DialogFormLoginAdmin.h"
 #include "ManageDepartment.h"
 #include "ManageEmployee.h"
+#include "NavbarController.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void handleHiddenMenu();
-    void handleShowMenu();
-
-    void handleHiddenManageDepartment();
-    void handleShowManageDepartment();
-
-    void handleHiddenManageEmployee();
-    void handleShowManageEmployee();
+    DialogFormLoginAdmin& getFormLogin();
+    MenuList* getMenu();
+    NavbarController* getNavbarController();
+    Ui::MainWindowClass* getUi() { return ui; };
 
 private:
-    Ui::MainWindowClass ui;
+    Ui::MainWindowClass* ui;
     DialogFormLoginAdmin formLogin;
     QSettings settings;
     MenuList* menu;
-    Navbar* navbar;
-    ManageDepartment* md;
-    ManageEmployee* me;
+    NavbarController* navbarController;
 };

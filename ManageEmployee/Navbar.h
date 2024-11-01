@@ -13,24 +13,9 @@ public:
 	Navbar(QWidget *parent = nullptr);
 	~Navbar();
 
-signals:
-	void logoutSuccessful();
-	void loginSuccessful();
-	void back();
-
-public slots:
-	void handleClickLogout();
-	void handleClickLogin();
-	void handleClickCopyright();
-	void handleClickMode();
-	void handleClickExit();
-	void handleHiddenBack();
-	void handleShowBack();
-	void onLoginSuccess();
-	void onLogoutSuccess();
+	Ui::Navbar* getUi();
 
 private:
-	Ui::Navbar ui;
+	Ui::Navbar* ui;
 	QMessageBox msgBox;
-	DialogFormLoginAdmin formLogin;
 };
