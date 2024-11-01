@@ -20,5 +20,4 @@ signals:
 
 private:
 	Ui::ManageDepartmentClass* ui;
-	DatabaseManager db;
 };

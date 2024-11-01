@@ -9,6 +9,7 @@
 #include "DialogFormLoginAdmin.h"
 #include "ManageDepartment.h"
 #include "ManageEmployee.h"
+#include "NavbarController.h"
 
 class MainWindow : public QMainWindow
 {
@@ -20,7 +21,7 @@ public:
 
     DialogFormLoginAdmin& getFormLogin();
     MenuList* getMenu();
-    Navbar* getNavbar();
+    NavbarController* getNavbarController();
     Ui::MainWindowClass* getUi() { return ui; };
 
 private:
@@ -28,5 +29,5 @@ private:
     DialogFormLoginAdmin formLogin;
     QSettings settings;
     MenuList* menu;
-    Navbar* navbar;
+    NavbarController* navbarController;
 };

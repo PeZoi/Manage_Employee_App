@@ -13,9 +13,11 @@ public:
 	DialogFormDepartment(QWidget *parent = nullptr);
 	~DialogFormDepartment();
 	bool isEditMode_department = false;
+	
+	Ui::DialogFormDepartmentClass* getUi();
 
 signals:
-	void submit(DepartmentModel department, bool isEditMode);
+	void submit(DepartmentModel department, bool isEditMode, DialogFormDepartment* departmentView);
 
 public slots:
 	void handleSubmit();
@@ -24,9 +26,7 @@ public slots:
 	void setMode(bool _isEditMode);
 
 private:
-	Ui::DialogFormDepartmentClass ui;
-	DatabaseManager db;
+	Ui::DialogFormDepartmentClass* ui;
 	QMessageBox msgBox;
 
-	bool checkNameDepartment(const QString& name);
 };

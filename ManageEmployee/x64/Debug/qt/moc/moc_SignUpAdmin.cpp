@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_SignUpAdmin_t {
-    QByteArrayData data[3];
-    char stringdata0[26];
+    QByteArrayData data[5];
+    char stringdata0[43];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,11 +33,14 @@ struct qt_meta_stringdata_SignUpAdmin_t {
 static const qt_meta_stringdata_SignUpAdmin_t qt_meta_stringdata_SignUpAdmin = {
     {
 QT_MOC_LITERAL(0, 0, 11), // "SignUpAdmin"
-QT_MOC_LITERAL(1, 12, 12), // "handleSignUp"
-QT_MOC_LITERAL(2, 25, 0) // ""
+QT_MOC_LITERAL(1, 12, 6), // "submit"
+QT_MOC_LITERAL(2, 19, 0), // ""
+QT_MOC_LITERAL(3, 20, 13), // "EmployeeModel"
+QT_MOC_LITERAL(4, 34, 8) // "employee"
 
     },
-    "SignUpAdmin\0handleSignUp\0"
+    "SignUpAdmin\0submit\0\0EmployeeModel\0"
+    "employee"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,13 +55,13 @@ static const uint qt_meta_data_SignUpAdmin[] = {
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
 
- // slots: name, argc, parameters, tag, flags
-       1,    0,   19,    2, 0x08 /* Private */,
+ // signals: name, argc, parameters, tag, flags
+       1,    1,   19,    2, 0x06 /* Public */,
 
- // slots: parameters
-    QMetaType::Void,
+ // signals: parameters
+    QMetaType::Void, 0x80000000 | 3,    4,
 
        0        // eod
 };
@@ -69,11 +72,19 @@ void SignUpAdmin::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         auto *_t = static_cast<SignUpAdmin *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->handleSignUp(); break;
+        case 0: _t->submit((*reinterpret_cast< EmployeeModel(*)>(_a[1]))); break;
         default: ;
         }
+    } else if (_c == QMetaObject::IndexOfMethod) {
+        int *result = reinterpret_cast<int *>(_a[0]);
+        {
+            using _t = void (SignUpAdmin::*)(EmployeeModel );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SignUpAdmin::submit)) {
+                *result = 0;
+                return;
+            }
+        }
     }
-    Q_UNUSED(_a);
 }
 
 QT_INIT_METAOBJECT const QMetaObject SignUpAdmin::staticMetaObject = { {
@@ -114,6 +125,13 @@ int SignUpAdmin::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         _id -= 1;
     }
     return _id;
+}
+
+// SIGNAL 0
+void SignUpAdmin::submit(EmployeeModel _t1)
+{
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

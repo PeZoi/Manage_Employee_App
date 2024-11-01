@@ -10,6 +10,7 @@
 #define UI_DIALOGFORMEMPLOYEE_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QComboBox>
@@ -22,6 +23,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QTabWidget>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -30,7 +32,6 @@ QT_BEGIN_NAMESPACE
 class Ui_DialogFormEmployeeClass
 {
 public:
-    QPushButton *submit;
     QTabWidget *tabWidget;
     QWidget *tab;
     QWidget *formLayoutWidget;
@@ -39,21 +40,21 @@ public:
     QLabel *label_9;
     QLineEdit *id;
     QLabel *label_8;
-    QLineEdit *last_name;
-    QLabel *label_7;
     QLineEdit *first_name;
+    QLabel *label_7;
+    QLineEdit *last_name;
+    QCheckBox *is_allow_password;
     QLabel *label_5;
     QLineEdit *password;
     QLabel *label_3;
     QLineEdit *confirm_password;
     QLabel *label_2;
-    QLabel *label_4;
-    QLabel *label;
-    QCheckBox *is_enabled;
-    QCheckBox *is_allow_password;
-    QDateEdit *date_of_birth;
-    QDateEdit *start_date_of_work;
     QComboBox *department;
+    QLabel *label_4;
+    QDateEdit *date_of_birth;
+    QLabel *label;
+    QDateEdit *start_date_of_work;
+    QCheckBox *is_enabled;
     QLabel *label_13;
     QGraphicsView *avatar;
     QPushButton *select_avatar;
@@ -67,9 +68,9 @@ public:
     QLabel *label_11;
     QLineEdit *phone_number;
     QLabel *label_12;
-    QLineEdit *name_9;
+    QLineEdit *cell_phone;
     QLabel *label_6;
-    QLineEdit *address;
+    QTextEdit *address;
     QWidget *tab_3;
     QLabel *label_14;
     QWidget *gridLayoutWidget;
@@ -85,23 +86,26 @@ public:
     QGraphicsView *iri_left;
     QPushButton *scan_left;
     QLabel *label_19;
+    QPushButton *submit;
+    QPushButton *cancelButton;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *errorLayout;
 
     void setupUi(QDialog *DialogFormEmployeeClass)
     {
         if (DialogFormEmployeeClass->objectName().isEmpty())
             DialogFormEmployeeClass->setObjectName(QString::fromUtf8("DialogFormEmployeeClass"));
-        DialogFormEmployeeClass->resize(706, 628);
-        submit = new QPushButton(DialogFormEmployeeClass);
-        submit->setObjectName(QString::fromUtf8("submit"));
-        submit->setGeometry(QRect(590, 590, 80, 25));
+        DialogFormEmployeeClass->resize(593, 610);
         tabWidget = new QTabWidget(DialogFormEmployeeClass);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(30, 10, 661, 561));
+        tabWidget->setGeometry(QRect(30, 10, 551, 531));
+        tabWidget->setStyleSheet(QString::fromUtf8("QTabWidget::pane { background: transparent; border: none;}\n"
+""));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         formLayoutWidget = new QWidget(tab);
         formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(10, 0, 641, 351));
+        formLayoutWidget->setGeometry(QRect(10, 0, 521, 351));
         formLayout = new QFormLayout(formLayoutWidget);
         formLayout->setSpacing(6);
         formLayout->setContentsMargins(11, 11, 11, 11);
@@ -129,22 +133,27 @@ public:
 
         formLayout->setWidget(2, QFormLayout::LabelRole, label_8);
 
-        last_name = new QLineEdit(formLayoutWidget);
-        last_name->setObjectName(QString::fromUtf8("last_name"));
-        last_name->setStyleSheet(QString::fromUtf8("height: 25px;"));
+        first_name = new QLineEdit(formLayoutWidget);
+        first_name->setObjectName(QString::fromUtf8("first_name"));
+        first_name->setStyleSheet(QString::fromUtf8("height: 25px;"));
 
-        formLayout->setWidget(2, QFormLayout::FieldRole, last_name);
+        formLayout->setWidget(2, QFormLayout::FieldRole, first_name);
 
         label_7 = new QLabel(formLayoutWidget);
         label_7->setObjectName(QString::fromUtf8("label_7"));
 
         formLayout->setWidget(3, QFormLayout::LabelRole, label_7);
 
-        first_name = new QLineEdit(formLayoutWidget);
-        first_name->setObjectName(QString::fromUtf8("first_name"));
-        first_name->setStyleSheet(QString::fromUtf8("height: 25px;"));
+        last_name = new QLineEdit(formLayoutWidget);
+        last_name->setObjectName(QString::fromUtf8("last_name"));
+        last_name->setStyleSheet(QString::fromUtf8("height: 25px;"));
 
-        formLayout->setWidget(3, QFormLayout::FieldRole, first_name);
+        formLayout->setWidget(3, QFormLayout::FieldRole, last_name);
+
+        is_allow_password = new QCheckBox(formLayoutWidget);
+        is_allow_password->setObjectName(QString::fromUtf8("is_allow_password"));
+
+        formLayout->setWidget(4, QFormLayout::LabelRole, is_allow_password);
 
         label_5 = new QLabel(formLayoutWidget);
         label_5->setObjectName(QString::fromUtf8("label_5"));
@@ -173,59 +182,76 @@ public:
 
         formLayout->setWidget(7, QFormLayout::LabelRole, label_2);
 
+        department = new QComboBox(formLayoutWidget);
+        department->setObjectName(QString::fromUtf8("department"));
+
+        formLayout->setWidget(7, QFormLayout::FieldRole, department);
+
         label_4 = new QLabel(formLayoutWidget);
         label_4->setObjectName(QString::fromUtf8("label_4"));
 
         formLayout->setWidget(8, QFormLayout::LabelRole, label_4);
-
-        label = new QLabel(formLayoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-
-        formLayout->setWidget(9, QFormLayout::LabelRole, label);
-
-        is_enabled = new QCheckBox(formLayoutWidget);
-        is_enabled->setObjectName(QString::fromUtf8("is_enabled"));
-
-        formLayout->setWidget(10, QFormLayout::LabelRole, is_enabled);
-
-        is_allow_password = new QCheckBox(formLayoutWidget);
-        is_allow_password->setObjectName(QString::fromUtf8("is_allow_password"));
-
-        formLayout->setWidget(4, QFormLayout::LabelRole, is_allow_password);
 
         date_of_birth = new QDateEdit(formLayoutWidget);
         date_of_birth->setObjectName(QString::fromUtf8("date_of_birth"));
 
         formLayout->setWidget(8, QFormLayout::FieldRole, date_of_birth);
 
+        label = new QLabel(formLayoutWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        formLayout->setWidget(9, QFormLayout::LabelRole, label);
+
         start_date_of_work = new QDateEdit(formLayoutWidget);
         start_date_of_work->setObjectName(QString::fromUtf8("start_date_of_work"));
 
         formLayout->setWidget(9, QFormLayout::FieldRole, start_date_of_work);
 
-        department = new QComboBox(formLayoutWidget);
-        department->setObjectName(QString::fromUtf8("department"));
+        is_enabled = new QCheckBox(formLayoutWidget);
+        is_enabled->setObjectName(QString::fromUtf8("is_enabled"));
 
-        formLayout->setWidget(7, QFormLayout::FieldRole, department);
+        formLayout->setWidget(10, QFormLayout::LabelRole, is_enabled);
 
         label_13 = new QLabel(tab);
         label_13->setObjectName(QString::fromUtf8("label_13"));
-        label_13->setGeometry(QRect(10, 360, 55, 16));
+        label_13->setGeometry(QRect(10, 350, 55, 16));
         avatar = new QGraphicsView(tab);
         avatar->setObjectName(QString::fromUtf8("avatar"));
-        avatar->setGeometry(QRect(10, 380, 151, 131));
+        avatar->setGeometry(QRect(30, 370, 121, 111));
         select_avatar = new QPushButton(tab);
         select_avatar->setObjectName(QString::fromUtf8("select_avatar"));
-        select_avatar->setGeometry(QRect(170, 380, 80, 25));
+        select_avatar->setGeometry(QRect(160, 370, 80, 25));
+        select_avatar->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	text-align: center;\n"
+"	color: #fff;\n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"	border-radius: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(70, 133, 210, 0.7);\n"
+"}"));
         delete_avatar = new QPushButton(tab);
         delete_avatar->setObjectName(QString::fromUtf8("delete_avatar"));
-        delete_avatar->setGeometry(QRect(170, 410, 80, 25));
-        tabWidget->addTab(tab, QString());
+        delete_avatar->setGeometry(QRect(160, 400, 80, 25));
+        delete_avatar->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	text-align: center;\n"
+"	color: #fff;\n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"	border-radius: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(70, 133, 210, 0.7);\n"
+"}"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("../icon/general.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tabWidget->addTab(tab, icon, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
         formLayoutWidget_2 = new QWidget(tab_2);
         formLayoutWidget_2->setObjectName(QString::fromUtf8("formLayoutWidget_2"));
-        formLayoutWidget_2->setGeometry(QRect(10, 10, 641, 231));
+        formLayoutWidget_2->setGeometry(QRect(10, 0, 521, 231));
         formLayout_2 = new QFormLayout(formLayoutWidget_2);
         formLayout_2->setSpacing(6);
         formLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -264,24 +290,25 @@ public:
 
         formLayout_2->setWidget(3, QFormLayout::LabelRole, label_12);
 
-        name_9 = new QLineEdit(formLayoutWidget_2);
-        name_9->setObjectName(QString::fromUtf8("name_9"));
-        name_9->setStyleSheet(QString::fromUtf8("height: 25px;"));
+        cell_phone = new QLineEdit(formLayoutWidget_2);
+        cell_phone->setObjectName(QString::fromUtf8("cell_phone"));
+        cell_phone->setStyleSheet(QString::fromUtf8("height: 25px;"));
 
-        formLayout_2->setWidget(3, QFormLayout::FieldRole, name_9);
+        formLayout_2->setWidget(3, QFormLayout::FieldRole, cell_phone);
 
         label_6 = new QLabel(formLayoutWidget_2);
         label_6->setObjectName(QString::fromUtf8("label_6"));
 
         formLayout_2->setWidget(4, QFormLayout::LabelRole, label_6);
 
-        address = new QLineEdit(formLayoutWidget_2);
+        address = new QTextEdit(formLayoutWidget_2);
         address->setObjectName(QString::fromUtf8("address"));
-        address->setStyleSheet(QString::fromUtf8("height: 100px;"));
 
         formLayout_2->setWidget(4, QFormLayout::FieldRole, address);
 
-        tabWidget->addTab(tab_2, QString());
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8("../icon/contact.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tabWidget->addTab(tab_2, icon1, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
         label_14 = new QLabel(tab_3);
@@ -289,7 +316,7 @@ public:
         label_14->setGeometry(QRect(10, 10, 191, 16));
         gridLayoutWidget = new QWidget(tab_3);
         gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(40, 60, 571, 251));
+        gridLayoutWidget->setGeometry(QRect(20, 50, 491, 241));
         gridLayout = new QGridLayout(gridLayoutWidget);
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
@@ -355,11 +382,55 @@ public:
         label_19->setObjectName(QString::fromUtf8("label_19"));
         label_19->setGeometry(QRect(10, 500, 631, 16));
         label_19->setStyleSheet(QString::fromUtf8("font: 15px"));
-        tabWidget->addTab(tab_3, QString());
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8("../icon/eye.png"), QSize(), QIcon::Normal, QIcon::Off);
+        tabWidget->addTab(tab_3, icon2, QString());
+        submit = new QPushButton(DialogFormEmployeeClass);
+        submit->setObjectName(QString::fromUtf8("submit"));
+        submit->setGeometry(QRect(410, 550, 81, 25));
+        submit->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	text-align: center;\n"
+"	color: #fff;\n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"	border-radius: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(70, 133, 210, 0.7);\n"
+"}"));
+        QIcon icon3;
+        icon3.addFile(QString::fromUtf8("../icon/check.png"), QSize(), QIcon::Normal, QIcon::Off);
+        submit->setIcon(icon3);
+        submit->setIconSize(QSize(14, 14));
+        cancelButton = new QPushButton(DialogFormEmployeeClass);
+        cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
+        cancelButton->setGeometry(QRect(500, 550, 81, 25));
+        cancelButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	text-align: center;\n"
+"	color: #fff;\n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"	border-radius: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(70, 133, 210, 0.7);\n"
+"}"));
+        QIcon icon4;
+        icon4.addFile(QString::fromUtf8("../icon/close.png"), QSize(), QIcon::Normal, QIcon::Off);
+        cancelButton->setIcon(icon4);
+        cancelButton->setIconSize(QSize(12, 12));
+        verticalLayoutWidget = new QWidget(DialogFormEmployeeClass);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(0, 590, 601, 20));
+        errorLayout = new QVBoxLayout(verticalLayoutWidget);
+        errorLayout->setSpacing(6);
+        errorLayout->setContentsMargins(11, 11, 11, 11);
+        errorLayout->setObjectName(QString::fromUtf8("errorLayout"));
+        errorLayout->setContentsMargins(0, 0, 0, 0);
 
         retranslateUi(DialogFormEmployeeClass);
 
-        tabWidget->setCurrentIndex(2);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(DialogFormEmployeeClass);
@@ -368,26 +439,25 @@ public:
     void retranslateUi(QDialog *DialogFormEmployeeClass)
     {
         DialogFormEmployeeClass->setWindowTitle(QCoreApplication::translate("DialogFormEmployeeClass", "DialogFormEmployee", nullptr));
-        submit->setText(QCoreApplication::translate("DialogFormEmployeeClass", "\304\220\341\273\223ng \303\275", nullptr));
-        label_9->setText(QCoreApplication::translate("DialogFormEmployeeClass", "M\303\243 s\341\273\221 (*)", nullptr));
-        label_8->setText(QCoreApplication::translate("DialogFormEmployeeClass", "T\303\252n (*)", nullptr));
-        label_7->setText(QCoreApplication::translate("DialogFormEmployeeClass", "H\341\273\215 (*)", nullptr));
-        label_5->setText(QCoreApplication::translate("DialogFormEmployeeClass", "M\341\272\255t kh\341\272\251u", nullptr));
-        label_3->setText(QCoreApplication::translate("DialogFormEmployeeClass", "X\303\241c nh\341\272\255n m\341\272\255t kh\341\272\251u", nullptr));
-        label_2->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Ph\303\262ng ban", nullptr));
-        label_4->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Ng\303\240y sinh", nullptr));
-        label->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Ng\303\240y b\341\272\257t \304\221\341\272\247u (l\303\240m vi\341\273\207c)", nullptr));
-        is_enabled->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Nh\303\242n vi\303\252n b\341\273\213 v\303\264 hi\341\273\207u ho\303\241", nullptr));
-        is_allow_password->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Cho ph\303\251p s\341\273\255 d\341\273\245ng m\341\272\255t kh\341\272\251u", nullptr));
-        label_13->setText(QCoreApplication::translate("DialogFormEmployeeClass", "\341\272\242nh", nullptr));
-        select_avatar->setText(QCoreApplication::translate("DialogFormEmployeeClass", "T\303\254m", nullptr));
-        delete_avatar->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Xo\303\241", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("DialogFormEmployeeClass", "Tab 1", nullptr));
+        label_9->setText(QCoreApplication::translate("DialogFormEmployeeClass", "ID (*)", nullptr));
+        label_8->setText(QCoreApplication::translate("DialogFormEmployeeClass", "First name (*)", nullptr));
+        label_7->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Last name (*)", nullptr));
+        is_allow_password->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Allow to use password", nullptr));
+        label_5->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Password", nullptr));
+        label_3->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Comfirm password", nullptr));
+        label_2->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Department", nullptr));
+        label_4->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Date of birth", nullptr));
+        label->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Start Working Date", nullptr));
+        is_enabled->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Employee is disabled", nullptr));
+        label_13->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Photo", nullptr));
+        select_avatar->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Browse ...", nullptr));
+        delete_avatar->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Clear photo", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QCoreApplication::translate("DialogFormEmployeeClass", "General", nullptr));
         label_10->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Email", nullptr));
-        label_11->setText(QCoreApplication::translate("DialogFormEmployeeClass", "\304\220i\341\273\207n tho\341\272\241i", nullptr));
-        label_12->setText(QCoreApplication::translate("DialogFormEmployeeClass", "\304\220i\341\273\207n tho\341\272\241i di \304\221\341\273\231ng", nullptr));
-        label_6->setText(QCoreApplication::translate("DialogFormEmployeeClass", "\304\220\341\273\213a ch\341\273\211", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("DialogFormEmployeeClass", "Tab 2", nullptr));
+        label_11->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Phone", nullptr));
+        label_12->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Cell phone", nullptr));
+        label_6->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Address", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("DialogFormEmployeeClass", "Contact Information", nullptr));
         label_14->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Select and capture the iris(es)", nullptr));
         label_17->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Right iris", nullptr));
         label_18->setText(QCoreApplication::translate("DialogFormEmployeeClass", "(Not registerd yet)", nullptr));
@@ -396,7 +466,9 @@ public:
         label_15->setText(QCoreApplication::translate("DialogFormEmployeeClass", "(Not registerd yet)", nullptr));
         scan_left->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Scan", nullptr));
         label_19->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Note: In order to ensure the iris quality, please capture THREE times for enrolled irises", nullptr));
-        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("DialogFormEmployeeClass", "Page", nullptr));
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("DialogFormEmployeeClass", "Irises", nullptr));
+        submit->setText(QCoreApplication::translate("DialogFormEmployeeClass", "OK", nullptr));
+        cancelButton->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Cancel", nullptr));
     } // retranslateUi
 
 };

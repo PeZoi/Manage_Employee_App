@@ -6,36 +6,35 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>754</width>
-    <height>427</height>
+    <width>778</width>
+    <height>460</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="content" native="true">
+   <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>40</y>
-      <width>691</width>
-      <height>371</height>
+      <x>0</x>
+      <y>-10</y>
+      <width>771</width>
+      <height>51</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true"/>
-    </property>
+    <layout class="QHBoxLayout" name="header"/>
    </widget>
-   <widget class="QWidget" name="header" native="true">
+   <widget class="QWidget" name="verticalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>551</width>
-      <height>61</height>
+      <x>0</x>
+      <y>40</y>
+      <width>771</width>
+      <height>391</height>
      </rect>
     </property>
+    <layout class="QVBoxLayout" name="content"/>
    </widget>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>

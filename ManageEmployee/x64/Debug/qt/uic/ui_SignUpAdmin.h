@@ -11,14 +11,13 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
-#include <QtWidgets/QToolBar>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -28,87 +27,110 @@ class Ui_SignUpAdminClass
 {
 public:
     QWidget *centralWidget;
-    QWidget *formLayoutWidget;
-    QFormLayout *formLayout;
+    QLabel *infoLabel;
+    QLineEdit *email_2;
+    QLineEdit *password_2;
+    QLabel *retypePasswordLabel;
+    QLineEdit *password_confirm_2;
+    QLabel *passwordLabel;
+    QLabel *emailLabe;
+    QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
-    QLabel *label_4;
-    QLineEdit *email;
-    QLineEdit *password;
-    QLabel *label_2;
-    QLineEdit *password_confirm;
-    QLabel *label;
-    QLabel *label_3;
-    QPushButton *btn_signup;
-    QMenuBar *menuBar;
-    QToolBar *mainToolBar;
+    QHBoxLayout *horizontalLayout;
+    QSpacerItem *horizontalSpacer;
+    QPushButton *btn_signup_2;
+    QPushButton *cancelButton;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *SignUpAdminClass)
     {
         if (SignUpAdminClass->objectName().isEmpty())
             SignUpAdminClass->setObjectName(QString::fromUtf8("SignUpAdminClass"));
-        SignUpAdminClass->resize(600, 266);
+        SignUpAdminClass->resize(489, 312);
         centralWidget = new QWidget(SignUpAdminClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        formLayoutWidget = new QWidget(centralWidget);
-        formLayoutWidget->setObjectName(QString::fromUtf8("formLayoutWidget"));
-        formLayoutWidget->setGeometry(QRect(10, 60, 571, 103));
-        formLayout = new QFormLayout(formLayoutWidget);
-        formLayout->setSpacing(6);
-        formLayout->setContentsMargins(11, 11, 11, 11);
-        formLayout->setObjectName(QString::fromUtf8("formLayout"));
-        formLayout->setContentsMargins(0, 0, 0, 0);
-        verticalLayout = new QVBoxLayout();
+        infoLabel = new QLabel(centralWidget);
+        infoLabel->setObjectName(QString::fromUtf8("infoLabel"));
+        infoLabel->setGeometry(QRect(20, 10, 441, 91));
+        QFont font;
+        font.setPointSize(10);
+        infoLabel->setFont(font);
+        email_2 = new QLineEdit(centralWidget);
+        email_2->setObjectName(QString::fromUtf8("email_2"));
+        email_2->setGeometry(QRect(210, 190, 251, 31));
+        password_2 = new QLineEdit(centralWidget);
+        password_2->setObjectName(QString::fromUtf8("password_2"));
+        password_2->setGeometry(QRect(210, 110, 251, 31));
+        retypePasswordLabel = new QLabel(centralWidget);
+        retypePasswordLabel->setObjectName(QString::fromUtf8("retypePasswordLabel"));
+        retypePasswordLabel->setGeometry(QRect(20, 150, 181, 31));
+        retypePasswordLabel->setFont(font);
+        password_confirm_2 = new QLineEdit(centralWidget);
+        password_confirm_2->setObjectName(QString::fromUtf8("password_confirm_2"));
+        password_confirm_2->setGeometry(QRect(210, 150, 251, 31));
+        passwordLabel = new QLabel(centralWidget);
+        passwordLabel->setObjectName(QString::fromUtf8("passwordLabel"));
+        passwordLabel->setGeometry(QRect(20, 110, 181, 31));
+        passwordLabel->setFont(font);
+        emailLabe = new QLabel(centralWidget);
+        emailLabe->setObjectName(QString::fromUtf8("emailLabe"));
+        emailLabe->setGeometry(QRect(20, 190, 181, 31));
+        emailLabe->setFont(font);
+        verticalLayoutWidget = new QWidget(centralWidget);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(20, 230, 441, 51));
+        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(6);
+        verticalLayout->setContentsMargins(11, 11, 11, 11);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        verticalLayout->setContentsMargins(0, 0, 0, 0);
+        horizontalLayout = new QHBoxLayout();
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
-        formLayout->setLayout(0, QFormLayout::LabelRole, verticalLayout);
+        horizontalLayout->addItem(horizontalSpacer);
 
-        label_4 = new QLabel(formLayoutWidget);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
+        btn_signup_2 = new QPushButton(verticalLayoutWidget);
+        btn_signup_2->setObjectName(QString::fromUtf8("btn_signup_2"));
+        btn_signup_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	text-align: center;\n"
+"	color: #fff;\n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"	border: 1px solid #2dd0f9;\n"
+"	height: 25px;\n"
+"	width: 100px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(70, 133, 210, 0.7);\n"
+"}"));
+        btn_signup_2->setIconSize(QSize(14, 14));
 
-        formLayout->setWidget(1, QFormLayout::LabelRole, label_4);
+        horizontalLayout->addWidget(btn_signup_2);
 
-        email = new QLineEdit(formLayoutWidget);
-        email->setObjectName(QString::fromUtf8("email"));
+        cancelButton = new QPushButton(verticalLayoutWidget);
+        cancelButton->setObjectName(QString::fromUtf8("cancelButton"));
+        cancelButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	text-align: center;\n"
+"	color: #fff;\n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"	border: 1px solid #2dd0f9;\n"
+"	height: 25px;\n"
+"	width: 100px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(70, 133, 210, 0.7);\n"
+"}"));
+        cancelButton->setIconSize(QSize(12, 12));
 
-        formLayout->setWidget(1, QFormLayout::FieldRole, email);
+        horizontalLayout->addWidget(cancelButton);
 
-        password = new QLineEdit(formLayoutWidget);
-        password->setObjectName(QString::fromUtf8("password"));
 
-        formLayout->setWidget(2, QFormLayout::FieldRole, password);
+        verticalLayout->addLayout(horizontalLayout);
 
-        label_2 = new QLabel(formLayoutWidget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-
-        formLayout->setWidget(3, QFormLayout::LabelRole, label_2);
-
-        password_confirm = new QLineEdit(formLayoutWidget);
-        password_confirm->setObjectName(QString::fromUtf8("password_confirm"));
-
-        formLayout->setWidget(3, QFormLayout::FieldRole, password_confirm);
-
-        label = new QLabel(formLayoutWidget);
-        label->setObjectName(QString::fromUtf8("label"));
-
-        formLayout->setWidget(2, QFormLayout::LabelRole, label);
-
-        label_3 = new QLabel(centralWidget);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(180, 10, 331, 31));
-        label_3->setStyleSheet(QString::fromUtf8("font: 14pt \"MS Shell Dlg 2\";"));
-        btn_signup = new QPushButton(centralWidget);
-        btn_signup->setObjectName(QString::fromUtf8("btn_signup"));
-        btn_signup->setGeometry(QRect(500, 170, 80, 25));
         SignUpAdminClass->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(SignUpAdminClass);
-        menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 600, 25));
-        SignUpAdminClass->setMenuBar(menuBar);
-        mainToolBar = new QToolBar(SignUpAdminClass);
-        mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
-        SignUpAdminClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
         statusBar = new QStatusBar(SignUpAdminClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));
         SignUpAdminClass->setStatusBar(statusBar);
@@ -121,11 +143,15 @@ public:
     void retranslateUi(QMainWindow *SignUpAdminClass)
     {
         SignUpAdminClass->setWindowTitle(QCoreApplication::translate("SignUpAdminClass", "SignUpAdmin", nullptr));
-        label_4->setText(QCoreApplication::translate("SignUpAdminClass", "Email: ", nullptr));
-        label_2->setText(QCoreApplication::translate("SignUpAdminClass", "X\303\241c nh\341\272\255n m\341\272\255t kh\341\272\251u:", nullptr));
-        label->setText(QCoreApplication::translate("SignUpAdminClass", "M\341\272\255t kh\341\272\251u: ", nullptr));
-        label_3->setText(QCoreApplication::translate("SignUpAdminClass", "\304\220\304\203ng k\303\275 t\303\240i kho\341\272\243n admin", nullptr));
-        btn_signup->setText(QCoreApplication::translate("SignUpAdminClass", "\304\220\304\203ng k\303\275", nullptr));
+        infoLabel->setText(QCoreApplication::translate("SignUpAdminClass", "This is the first time you've run IriTracker on this computer. \n"
+"Before continuing, you must enter an administrator \n"
+"password and an email to remind password.  Password \n"
+"must be at least 4 characters long.", nullptr));
+        retypePasswordLabel->setText(QCoreApplication::translate("SignUpAdminClass", "Retype password", nullptr));
+        passwordLabel->setText(QCoreApplication::translate("SignUpAdminClass", "Administrator password", nullptr));
+        emailLabe->setText(QCoreApplication::translate("SignUpAdminClass", "Email", nullptr));
+        btn_signup_2->setText(QCoreApplication::translate("SignUpAdminClass", "OK", nullptr));
+        cancelButton->setText(QCoreApplication::translate("SignUpAdminClass", "Cancel", nullptr));
     } // retranslateUi
 
 };

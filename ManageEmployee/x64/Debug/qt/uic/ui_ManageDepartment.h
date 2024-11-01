@@ -10,14 +10,12 @@
 #define UI_MANAGEDEPARTMENT_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QPushButton>
-#include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTableView>
-#include <QtWidgets/QVBoxLayout>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -25,12 +23,8 @@ QT_BEGIN_NAMESPACE
 class Ui_ManageDepartmentClass
 {
 public:
-    QLabel *label;
-    QWidget *verticalLayoutWidget;
-    QVBoxLayout *verticalLayout;
-    QTableView *table;
-    QHBoxLayout *horizontalLayout;
-    QSpacerItem *horizontalSpacer;
+    QLabel *departmentsLabel;
+    QTableWidget *table;
     QPushButton *add;
     QPushButton *edit;
     QPushButton *delete_2;
@@ -39,55 +33,97 @@ public:
     {
         if (ManageDepartmentClass->objectName().isEmpty())
             ManageDepartmentClass->setObjectName(QString::fromUtf8("ManageDepartmentClass"));
-        ManageDepartmentClass->resize(504, 337);
+        ManageDepartmentClass->resize(761, 381);
         ManageDepartmentClass->setStyleSheet(QString::fromUtf8("height: fit-content;"));
-        label = new QLabel(ManageDepartmentClass);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(200, 20, 371, 31));
-        label->setStyleSheet(QString::fromUtf8("color: #f53e2d;\n"
-"font-size: 28px"));
-        verticalLayoutWidget = new QWidget(ManageDepartmentClass);
-        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(30, 70, 451, 251));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
-        verticalLayout->setSpacing(6);
-        verticalLayout->setContentsMargins(11, 11, 11, 11);
-        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        table = new QTableView(verticalLayoutWidget);
+        departmentsLabel = new QLabel(ManageDepartmentClass);
+        departmentsLabel->setObjectName(QString::fromUtf8("departmentsLabel"));
+        departmentsLabel->setGeometry(QRect(240, 10, 191, 41));
+        QFont font;
+        font.setPointSize(20);
+        departmentsLabel->setFont(font);
+        departmentsLabel->setStyleSheet(QString::fromUtf8("QLabel {\n"
+"	color: #e56f68;\n"
+"}"));
+        table = new QTableWidget(ManageDepartmentClass);
+        if (table->columnCount() < 2)
+            table->setColumnCount(2);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        table->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        table->setHorizontalHeaderItem(1, __qtablewidgetitem1);
         table->setObjectName(QString::fromUtf8("table"));
-        table->setStyleSheet(QString::fromUtf8(""));
-
-        verticalLayout->addWidget(table);
-
-        horizontalLayout = new QHBoxLayout();
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout->addItem(horizontalSpacer);
-
-        add = new QPushButton(verticalLayoutWidget);
+        table->setGeometry(QRect(10, 60, 741, 271));
+        QFont font1;
+        font1.setPointSize(8);
+        table->setFont(font1);
+        table->setStyleSheet(QString::fromUtf8("QTableWidget {\n"
+"	background: transparent;\n"
+"}\n"
+"\n"
+"QHeaderView::section {	\n"
+"	color: white; \n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"}\n"
+"\n"
+"QTableWidget::item:selected {\n"
+"    background-color: #0e6c96;\n"
+"	color: #fff;\n"
+"}"));
+        table->horizontalHeader()->setCascadingSectionResizes(false);
+        table->horizontalHeader()->setHighlightSections(false);
+        table->horizontalHeader()->setProperty("showSortIndicator", QVariant(false));
+        table->horizontalHeader()->setStretchLastSection(true);
+        add = new QPushButton(ManageDepartmentClass);
         add->setObjectName(QString::fromUtf8("add"));
-        add->setStyleSheet(QString::fromUtf8("height: 15px;"));
-
-        horizontalLayout->addWidget(add);
-
-        edit = new QPushButton(verticalLayoutWidget);
+        add->setGeometry(QRect(490, 340, 81, 31));
+        add->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	text-align: center;\n"
+"	color: #fff;\n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"	border-radius: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(70, 133, 210, 0.7);\n"
+"}"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/add.png"), QSize(), QIcon::Normal, QIcon::Off);
+        add->setIcon(icon);
+        add->setIconSize(QSize(14, 14));
+        edit = new QPushButton(ManageDepartmentClass);
         edit->setObjectName(QString::fromUtf8("edit"));
-        edit->setStyleSheet(QString::fromUtf8("height: 15px;"));
-
-        horizontalLayout->addWidget(edit);
-
-        delete_2 = new QPushButton(verticalLayoutWidget);
+        edit->setGeometry(QRect(580, 340, 81, 31));
+        edit->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	text-align: center;\n"
+"	color: #fff;\n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"	border-radius: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(70, 133, 210, 0.7);\n"
+"}"));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/edit.png"), QSize(), QIcon::Normal, QIcon::Off);
+        edit->setIcon(icon1);
+        edit->setIconSize(QSize(14, 14));
+        delete_2 = new QPushButton(ManageDepartmentClass);
         delete_2->setObjectName(QString::fromUtf8("delete_2"));
-        delete_2->setStyleSheet(QString::fromUtf8("height: 15px;"));
-
-        horizontalLayout->addWidget(delete_2);
-
-
-        verticalLayout->addLayout(horizontalLayout);
-
+        delete_2->setGeometry(QRect(670, 340, 81, 31));
+        delete_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"	text-align: center;\n"
+"	color: #fff;\n"
+"	background-color: rgba(70, 133, 210, 1);\n"
+"	border-radius: 4px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"	background-color: rgba(70, 133, 210, 0.7);\n"
+"}"));
+        QIcon icon2;
+        icon2.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/close.png"), QSize(), QIcon::Normal, QIcon::Off);
+        delete_2->setIcon(icon2);
+        delete_2->setIconSize(QSize(12, 12));
 
         retranslateUi(ManageDepartmentClass);
 
@@ -97,10 +133,14 @@ public:
     void retranslateUi(QWidget *ManageDepartmentClass)
     {
         ManageDepartmentClass->setWindowTitle(QCoreApplication::translate("ManageDepartmentClass", "ManageDepartment", nullptr));
-        label->setText(QCoreApplication::translate("ManageDepartmentClass", "Ph\303\262ng Ban", nullptr));
-        add->setText(QCoreApplication::translate("ManageDepartmentClass", "Th\303\252m", nullptr));
-        edit->setText(QCoreApplication::translate("ManageDepartmentClass", "S\341\273\255a", nullptr));
-        delete_2->setText(QCoreApplication::translate("ManageDepartmentClass", "Xo\303\241", nullptr));
+        departmentsLabel->setText(QCoreApplication::translate("ManageDepartmentClass", "Departments", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = table->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("ManageDepartmentClass", "Name", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = table->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("ManageDepartmentClass", "Description", nullptr));
+        add->setText(QCoreApplication::translate("ManageDepartmentClass", "Add", nullptr));
+        edit->setText(QCoreApplication::translate("ManageDepartmentClass", "Edit", nullptr));
+        delete_2->setText(QCoreApplication::translate("ManageDepartmentClass", "Delete", nullptr));
     } // retranslateUi
 
 };

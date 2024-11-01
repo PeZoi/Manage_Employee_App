@@ -1,5 +1,7 @@
 #include "ManageDepartmentController.h"
 #include "DepartmentRepository.h"
+#include "ErrorLabel.h"
+#include "DialogConfirm.h"
 #include <QStandardItemModel>
 #include <QTableView>
 
@@ -12,7 +14,6 @@ ManageDepartmentController::ManageDepartmentController(ManageDepartment* view, Q
 	connect(mdView->getUi()->edit, SIGNAL(clicked()), this, SLOT(onClickEdit()));
 	connect(mdView->getUi()->delete_2, SIGNAL(clicked()), this, SLOT(onClickDelete()));
 
-	//connect(df_department, &DialogFormDepartment::excuteDBSuccessful, this, &ManageDepartmentController::handleRenderTable);
 	connect(mdView->getUi()->table, &QTableView::clicked, this, &ManageDepartmentController::handleRowClicked);
 	connect(mdView->getUi()->table, &QTableView::doubleClicked, this, [this](const QModelIndex& index) {
 		handleRowClicked(index);
@@ -30,26 +31,32 @@ void ManageDepartmentController::onClickAdd() {
 }
 
 void ManageDepartmentController::handleRenderTable() {
+	QList<DepartmentModel> departmentList = DepartmentRepository::getAllIgnoreOthers();
 
-
-	QList<DepartmentModel> departmentList = DepartmentRepository::getAll();
-
-	QStandardItemModel* model = new QStandardItemModel(departmentList.size(), 2, this);
-	model->setHorizontalHeaderLabels({ "Tên", "Mô tả" });
-
-	mdView->getUi()->table->setModel(model);
+	mdView->getUi()->table->setRowCount(departmentList.size());
 
 	for (int i = 0; i < departmentList.size(); i++) {
-		model->setItem(i, 0, new QStandardItem(departmentList.at(i).getName()));
-		model->setItem(i, 1, new QStandardItem(departmentList.at(i).getDescription()));
+		mdView->getUi()->table->setItem(i, 0, new QTableWidgetItem(departmentList.at(i).getName()));
+		mdView->getUi()->table->setItem(i, 1, new QTableWidgetItem(departmentList.at(i).getDescription()));
 	}
 
-	mdView->getUi()->table->resizeColumnsToContents();
+	mdView->getUi()->table->verticalHeader()->setVisible(false);
+
+	for (int i = 0; i < departmentList.size(); ++i) {
+		if (i % 2 == 0) { // Dòng chẵn
+			for (int j = 0; j < mdView->getUi()->table->columnCount(); ++j) {
+				QTableWidgetItem* item = mdView->getUi()->table->item(i, j);
+				if (item) {
+					item->setBackground(QColor(232, 235, 237)); // Màu xám nhạt
+				}
+			}
+		}
+	}
 }
 
 void ManageDepartmentController::handleRowClicked(const QModelIndex& index) {
 	if (!index.isValid()) {
-		return; // Kiểm tra xem chỉ mục có hợp lệ không
+		return;
 	}
 
 	mdView->getUi()->edit->setDisabled(false);
@@ -74,23 +81,27 @@ void ManageDepartmentController::onClickEdit() {
 }
 
 void ManageDepartmentController::onClickDelete() {
-	if (DepartmentRepository::_delete(departmentSelected)) {
-		handleRenderTable();
+	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete department ?", nullptr);
+	if (confirm->exec() == QDialog::Accepted) {
+		if (DepartmentRepository::_delete(departmentSelected)) {
+			handleRenderTable();
+		}
+		else {
+			qDebug() << "Xoá thất bại";
+
+		};
 	}
-	else {
-		qDebug() << "Xoá thất bại";
-	};
 }
 
-void ManageDepartmentController::submitDepartment(const DepartmentModel& department, bool isEditMode) {
+void ManageDepartmentController::submitDepartment(const DepartmentModel& department, bool isEditMode, DialogFormDepartment* departmentView) {
 	DatabaseManager::connectToDatabase();
 
 	// Nếu không phải là mode edit
 	if (!isEditMode) {
 		// Kiểm tra xem name có tồn tại không
 		if (DepartmentRepository::getByName(department.getName()).getName() != "") {
-			/*msgBox.setText("Tên phòng ban đã tồn tại");
-			msgBox.exec();*/
+			ErrorLabel* error = new ErrorLabel("  The name already exists");
+			error->showTemporary(departmentView->getUi()->verticalLayout, 3000);
 			return;
 		}
 		if (DepartmentRepository::add(department)) {
@@ -102,6 +113,7 @@ void ManageDepartmentController::submitDepartment(const DepartmentModel& departm
 			handleRenderTable();
 		};
 	}
+	departmentView->accept();
 
 	DatabaseManager::closeDatabase();
 }

@@ -13,21 +13,12 @@ public:
 	ManageEmployee(QWidget *parent = nullptr);
 	~ManageEmployee();
 
+	Ui::ManageEmployeeClass* getUi();
+
+
 signals:
 	void modeEdit();
 
-public slots:
-	void handleRenderTable();
-	void handleClickAdd();
-	void handleEdit();
-	void handleDelete();
-	void handleToggleEnabled(QString id, bool checked);
-
-	void handleRowClicked(const QModelIndex& index);
-
 private:
-	Ui::ManageEmployeeClass ui;
-	DatabaseManager db;
-	DialogFormEmployee* df_employee;
-	QMessageBox msgBox;
+	Ui::ManageEmployeeClass* ui;
 };

@@ -11,8 +11,10 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -21,24 +23,35 @@ class Ui_MainWindowClass
 {
 public:
     QWidget *centralWidget;
-    QWidget *content;
-    QWidget *header;
+    QWidget *horizontalLayoutWidget;
+    QHBoxLayout *header;
+    QWidget *verticalLayoutWidget;
+    QVBoxLayout *content;
     QStatusBar *statusBar;
 
     void setupUi(QMainWindow *MainWindowClass)
     {
         if (MainWindowClass->objectName().isEmpty())
             MainWindowClass->setObjectName(QString::fromUtf8("MainWindowClass"));
-        MainWindowClass->resize(754, 427);
+        MainWindowClass->resize(778, 460);
         centralWidget = new QWidget(MainWindowClass);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
-        content = new QWidget(centralWidget);
-        content->setObjectName(QString::fromUtf8("content"));
-        content->setGeometry(QRect(20, 40, 691, 371));
-        content->setStyleSheet(QString::fromUtf8(""));
-        header = new QWidget(centralWidget);
+        horizontalLayoutWidget = new QWidget(centralWidget);
+        horizontalLayoutWidget->setObjectName(QString::fromUtf8("horizontalLayoutWidget"));
+        horizontalLayoutWidget->setGeometry(QRect(0, -10, 771, 51));
+        header = new QHBoxLayout(horizontalLayoutWidget);
+        header->setSpacing(6);
+        header->setContentsMargins(11, 11, 11, 11);
         header->setObjectName(QString::fromUtf8("header"));
-        header->setGeometry(QRect(20, 10, 551, 61));
+        header->setContentsMargins(0, 0, 0, 0);
+        verticalLayoutWidget = new QWidget(centralWidget);
+        verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
+        verticalLayoutWidget->setGeometry(QRect(0, 40, 771, 391));
+        content = new QVBoxLayout(verticalLayoutWidget);
+        content->setSpacing(6);
+        content->setContentsMargins(11, 11, 11, 11);
+        content->setObjectName(QString::fromUtf8("content"));
+        content->setContentsMargins(0, 0, 0, 0);
         MainWindowClass->setCentralWidget(centralWidget);
         statusBar = new QStatusBar(MainWindowClass);
         statusBar->setObjectName(QString::fromUtf8("statusBar"));

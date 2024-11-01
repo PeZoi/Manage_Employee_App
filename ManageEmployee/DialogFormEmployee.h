@@ -3,6 +3,7 @@
 #include <QDialog>
 #include "ui_DialogFormEmployee.h"
 #include "DatabaseManager.h"
+#include "EmployeeModel.h"
 
 class DialogFormEmployee : public QDialog
 {
@@ -11,22 +12,26 @@ class DialogFormEmployee : public QDialog
 public:
 	DialogFormEmployee(QWidget *parent = nullptr);
 	~DialogFormEmployee();
+	Ui::DialogFormEmployeeClass getUi();
+
+	bool isEditMode_employee = false;
+	QString idSelected = "";
+	QString avatarPath = "";
+	QString iri_rightPath = "";
+	QString iri_leftPath = "";
 
 signals:
-	void excuteDBSuccessful();
-	void editModeChanged();
+	void submit(EmployeeModel employee, bool isEditMode, DialogFormEmployee* employeeView);
+	void uploadAvatar(DialogFormEmployee* employeeForm, bool isEditMode_employee);
 
 public slots:
 	void handleSubmit();
 	void setMode(bool _isEditMode);
-	void setValue(QSqlQuery result);
-	bool validateExists(const QString& id, const QString& email);
-	void handleUploadAvatar();
+	void setValue(EmployeeModel employee);
 
-	void renderDepartments();
+	
 
 private:
 	Ui::DialogFormEmployeeClass ui;
-	DatabaseManager db;
 	QMessageBox msgBox;
 };

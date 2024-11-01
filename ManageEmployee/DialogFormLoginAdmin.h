@@ -11,11 +11,12 @@ class DialogFormLoginAdmin : public QDialog
 	Q_OBJECT
 
 signals:
-	void loginSuccessful();
+	void loginSuccessful(QString pass, DialogFormLoginAdmin* dialog);
 
 public:
 	DialogFormLoginAdmin(QWidget *parent = nullptr);
 	~DialogFormLoginAdmin();
+	Ui::DialogFormLoginAdminClass getUi();
 
 private slots:
 	void handleLoginAdmin();

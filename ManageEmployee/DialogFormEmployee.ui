@@ -6,48 +6,43 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>706</width>
-    <height>628</height>
+    <width>593</width>
+    <height>610</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>DialogFormEmployee</string>
   </property>
-  <widget class="QPushButton" name="submit">
-   <property name="geometry">
-    <rect>
-     <x>590</x>
-     <y>590</y>
-     <width>80</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Đồng ý</string>
-   </property>
-  </widget>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
      <x>30</x>
      <y>10</y>
-     <width>661</width>
-     <height>561</height>
+     <width>551</width>
+     <height>531</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QTabWidget::pane { background: transparent; border: none;}
+</string>
+   </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
+    <attribute name="icon">
+     <iconset>
+      <normaloff>../icon/general.png</normaloff>../icon/general.png</iconset>
+    </attribute>
     <attribute name="title">
-     <string>Tab 1</string>
+     <string>General</string>
     </attribute>
     <widget class="QWidget" name="formLayoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>0</y>
-       <width>641</width>
+       <width>521</width>
        <height>351</height>
       </rect>
      </property>
@@ -58,7 +53,7 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_9">
         <property name="text">
-         <string>Mã số (*)</string>
+         <string>ID (*)</string>
         </property>
        </widget>
       </item>
@@ -72,12 +67,12 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_8">
         <property name="text">
-         <string>Tên (*)</string>
+         <string>First name (*)</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLineEdit" name="last_name">
+       <widget class="QLineEdit" name="first_name">
         <property name="styleSheet">
          <string notr="true">height: 25px;</string>
         </property>
@@ -86,21 +81,28 @@
       <item row="3" column="0">
        <widget class="QLabel" name="label_7">
         <property name="text">
-         <string>Họ (*)</string>
+         <string>Last name (*)</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="first_name">
+       <widget class="QLineEdit" name="last_name">
         <property name="styleSheet">
          <string notr="true">height: 25px;</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="0">
+       <widget class="QCheckBox" name="is_allow_password">
+        <property name="text">
+         <string>Allow to use password</string>
         </property>
        </widget>
       </item>
       <item row="5" column="0">
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>Mật khẩu</string>
+         <string>Password</string>
         </property>
        </widget>
       </item>
@@ -114,7 +116,7 @@
       <item row="6" column="0">
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>Xác nhận mật khẩu</string>
+         <string>Comfirm password</string>
         </property>
        </widget>
       </item>
@@ -128,46 +130,39 @@
       <item row="7" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>Phòng ban</string>
+         <string>Department</string>
         </property>
        </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QComboBox" name="department"/>
       </item>
       <item row="8" column="0">
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>Ngày sinh</string>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Ngày bắt đầu (làm việc)</string>
-        </property>
-       </widget>
-      </item>
-      <item row="10" column="0">
-       <widget class="QCheckBox" name="is_enabled">
-        <property name="text">
-         <string>Nhân viên bị vô hiệu hoá</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QCheckBox" name="is_allow_password">
-        <property name="text">
-         <string>Cho phép sử dụng mật khẩu</string>
+         <string>Date of birth</string>
         </property>
        </widget>
       </item>
       <item row="8" column="1">
        <widget class="QDateEdit" name="date_of_birth"/>
       </item>
+      <item row="9" column="0">
+       <widget class="QLabel" name="label">
+        <property name="text">
+         <string>Start Working Date</string>
+        </property>
+       </widget>
+      </item>
       <item row="9" column="1">
        <widget class="QDateEdit" name="start_date_of_work"/>
       </item>
-      <item row="7" column="1">
-       <widget class="QComboBox" name="department"/>
+      <item row="10" column="0">
+       <widget class="QCheckBox" name="is_enabled">
+        <property name="text">
+         <string>Employee is disabled</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -175,62 +170,90 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>360</y>
+       <y>350</y>
        <width>55</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
-      <string>Ảnh</string>
+      <string>Photo</string>
      </property>
     </widget>
     <widget class="QGraphicsView" name="avatar">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>380</y>
-       <width>151</width>
-       <height>131</height>
+       <x>30</x>
+       <y>370</y>
+       <width>121</width>
+       <height>111</height>
       </rect>
      </property>
     </widget>
     <widget class="QPushButton" name="select_avatar">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>380</y>
+       <x>160</x>
+       <y>370</y>
        <width>80</width>
        <height>25</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	text-align: center;
+	color: #fff;
+	background-color: rgba(70, 133, 210, 1);
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+	background-color: rgba(70, 133, 210, 0.7);
+}</string>
+     </property>
      <property name="text">
-      <string>Tìm</string>
+      <string>Browse ...</string>
      </property>
     </widget>
     <widget class="QPushButton" name="delete_avatar">
      <property name="geometry">
       <rect>
-       <x>170</x>
-       <y>410</y>
+       <x>160</x>
+       <y>400</y>
        <width>80</width>
        <height>25</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+	text-align: center;
+	color: #fff;
+	background-color: rgba(70, 133, 210, 1);
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+	background-color: rgba(70, 133, 210, 0.7);
+}</string>
+     </property>
      <property name="text">
-      <string>Xoá</string>
+      <string>Clear photo</string>
      </property>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
+    <attribute name="icon">
+     <iconset>
+      <normaloff>../icon/contact.png</normaloff>../icon/contact.png</iconset>
+    </attribute>
     <attribute name="title">
-     <string>Tab 2</string>
+     <string>Contact Information</string>
     </attribute>
     <widget class="QWidget" name="formLayoutWidget_2">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
-       <width>641</width>
+       <y>0</y>
+       <width>521</width>
        <height>231</height>
       </rect>
      </property>
@@ -255,7 +278,7 @@
       <item row="2" column="0">
        <widget class="QLabel" name="label_11">
         <property name="text">
-         <string>Điện thoại</string>
+         <string>Phone</string>
         </property>
        </widget>
       </item>
@@ -269,12 +292,12 @@
       <item row="3" column="0">
        <widget class="QLabel" name="label_12">
         <property name="text">
-         <string>Điện thoại di động</string>
+         <string>Cell phone</string>
         </property>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLineEdit" name="name_9">
+       <widget class="QLineEdit" name="cell_phone">
         <property name="styleSheet">
          <string notr="true">height: 25px;</string>
         </property>
@@ -283,23 +306,23 @@
       <item row="4" column="0">
        <widget class="QLabel" name="label_6">
         <property name="text">
-         <string>Địa chỉ</string>
+         <string>Address</string>
         </property>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLineEdit" name="address">
-        <property name="styleSheet">
-         <string notr="true">height: 100px;</string>
-        </property>
-       </widget>
+       <widget class="QTextEdit" name="address"/>
       </item>
      </layout>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
+    <attribute name="icon">
+     <iconset>
+      <normaloff>../icon/eye.png</normaloff>../icon/eye.png</iconset>
+    </attribute>
     <attribute name="title">
-     <string>Page</string>
+     <string>Irises</string>
     </attribute>
     <widget class="QLabel" name="label_14">
      <property name="geometry">
@@ -317,10 +340,10 @@
     <widget class="QWidget" name="gridLayoutWidget">
      <property name="geometry">
       <rect>
-       <x>40</x>
-       <y>60</y>
-       <width>571</width>
-       <height>251</height>
+       <x>20</x>
+       <y>50</y>
+       <width>491</width>
+       <height>241</height>
       </rect>
      </property>
      <layout class="QGridLayout" name="gridLayout">
@@ -411,6 +434,87 @@
      </property>
     </widget>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="submit">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>550</y>
+     <width>81</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	text-align: center;
+	color: #fff;
+	background-color: rgba(70, 133, 210, 1);
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+	background-color: rgba(70, 133, 210, 0.7);
+}</string>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../icon/check.png</normaloff>../icon/check.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>14</width>
+     <height>14</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="cancelButton">
+   <property name="geometry">
+    <rect>
+     <x>500</x>
+     <y>550</y>
+     <width>81</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	text-align: center;
+	color: #fff;
+	background-color: rgba(70, 133, 210, 1);
+	border-radius: 4px;
+}
+
+QPushButton:hover {
+	background-color: rgba(70, 133, 210, 0.7);
+}</string>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../icon/close.png</normaloff>../icon/close.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>12</width>
+     <height>12</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>590</y>
+     <width>601</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="errorLayout"/>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

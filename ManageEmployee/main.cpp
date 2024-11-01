@@ -2,12 +2,15 @@
 #include "DatabaseManager.h"
 #include "MainWindow.h"
 #include "MainWindowController.h"
+#include "SignUpAdminController.h"
 #include <QtWidgets/QApplication>
 
 int main(int argc, char* argv[])
 {
     QApplication a(argc, argv);
-    SignUpAdmin signUpUI;
+    SignUpAdmin* signUpUI = new SignUpAdmin(nullptr);
+    SignUpAdminController* signUpController = new SignUpAdminController(signUpUI, nullptr);
+
     MainWindow* mainWindowUI = new MainWindow(nullptr);
     MainWindowController* mainWindowController = new MainWindowController(mainWindowUI, nullptr);
     DatabaseManager db;
@@ -15,10 +18,10 @@ int main(int argc, char* argv[])
     db.connectToDatabase();
 
     if (!db.checkExistAdmin()) {
-        signUpUI.show();
+        signUpController->getSignUpView()->show();
     }
     else {
-        mainWindowUI->show();
+        mainWindowController->getMainWindowView()->show();
     }
 
     // Đóng kết nối cơ sở dữ liệu sau khi ứng dụng thoát
@@ -28,6 +31,9 @@ int main(int argc, char* argv[])
     // Giải phóng bộ nhớ
     delete mainWindowController;
     delete mainWindowUI;
+
+    delete signUpController;
+    delete signUpUI;
 
     return result;
 }

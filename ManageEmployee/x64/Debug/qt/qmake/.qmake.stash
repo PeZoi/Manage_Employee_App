@@ -1,4 +1,4 @@
-QMAKE_LICHECK_TIMESTAMP = "Wed Oct 23"
+QMAKE_LICHECK_TIMESTAMP = "Wed Oct 30"
 QMAKE_CXX.QT_COMPILER_STDCXX = 199711L
 QMAKE_CXX.QMAKE_MSC_VER = 1929
 QMAKE_CXX.QMAKE_MSC_FULL_VER = 192930156
@@ -6,6 +6,7 @@ QMAKE_CXX.COMPILER_MACROS = \
     QT_COMPILER_STDCXX \
     QMAKE_MSC_VER \
     QMAKE_MSC_FULL_VER
+QMAKE_LICHECK_TIMESTAMP = "Fri Nov 1"
 QMAKE_CXX.INCDIRS = \
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\include" \
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Tools\\MSVC\\14.29.30133\\atlmfc\\include" \
@@ -25,6 +26,3 @@ QMAKE_CXX.LIBDIRS = \
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\Community\\VC\\Auxiliary\\VS\\UnitTest\\lib" \
     "C:\\Program Files (x86)\\Windows Kits\\10\\lib\\10.0.19041.0\\um\\x64" \
     "C:\\Program Files (x86)\\Windows Kits\\NETFXSDK\\4.8\\lib\\um\\x64"
-QMAKE_LICHECK_TIMESTAMP = "Thu Oct 24"
-QMAKE_LICHECK_TIMESTAMP = "Mon Oct 28"
-QMAKE_LICHECK_TIMESTAMP = "Tue Oct 29"

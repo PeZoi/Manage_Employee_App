@@ -1,6 +1,10 @@
 #pragma once
 #include <QObject>
 #include "ManageDepartmentController.h"
+#include "ManageEmployeeController.h"
+#include "EmployeeCheckInOutController.h"
+#include "ManageAttendanceEventsController.h"
+#include "NavbarController.h"
 #include "MainWindow.h"
 class MainWindowController : public QObject {
     Q_OBJECT
@@ -9,6 +13,10 @@ public:
     MainWindowController(MainWindow* view, QObject* parent = nullptr);
 
 public slots:
+    void handleLogout();
+    void handleLogin();
+    void handleBack();
+
     void handleHiddenMenu();
     void handleShowMenu();
 
@@ -18,10 +26,19 @@ public slots:
     void handleHiddenManageEmployee();
     void handleShowManageEmployee();
 
+    void handleHiddenCheckInOut();
+    void handleShowCheckInOut();
+
+    void handleHiddenManageEvents();
+    void handleShowManageEnvents();
+
     MainWindow* getMainWindowView();
 
 private:
     MainWindow* mainWindowView;
     ManageDepartmentController* mdController;
+    ManageEmployeeController* meController;
+    EmployeeCheckInOutController* ecioController;
+    ManageAttendanceEventsController* maeController;
 };
 

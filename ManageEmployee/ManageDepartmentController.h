@@ -14,7 +14,7 @@ public slots:
 	void onClickEdit();
 	void onClickDelete();
 
-	void submitDepartment(const DepartmentModel& department, bool isEditMode);
+	void submitDepartment(const DepartmentModel& department, bool isEditMode, DialogFormDepartment* departmentView);
 
 	void handleRowClicked(const QModelIndex& index);
 
@@ -23,7 +23,5 @@ public slots:
 
 private:
 	ManageDepartment* mdView;
-	DatabaseManager db;
-	
 };
 

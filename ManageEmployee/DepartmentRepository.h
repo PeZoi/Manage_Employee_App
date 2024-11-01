@@ -13,6 +13,7 @@ public:
 	static bool update(DepartmentModel department);
 	static bool _delete(QString name);
 	static QList<DepartmentModel> getAll();
+	static QList<DepartmentModel> getAllIgnoreOthers();
 	static DepartmentModel getByName(QString name);
-
+	
 };

@@ -6,130 +6,329 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>789</width>
-    <height>400</height>
+    <width>751</width>
+    <height>373</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MenuList</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="administrationLabel">
    <property name="geometry">
     <rect>
-     <x>190</x>
+     <x>280</x>
      <y>20</y>
-     <width>321</width>
-     <height>41</height>
+     <width>211</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>20</pointsize>
+    </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: #fb5533;
-font-size: 24px;</string>
+    <string notr="true">QLabel {
+	color: #e56f68;
+}</string>
    </property>
    <property name="text">
-    <string>Phòng Quản Trị</string>
+    <string>Administration</string>
    </property>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget">
+  <widget class="QToolButton" name="tools_2">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>90</y>
-     <width>631</width>
-     <height>121</height>
-    </rect>
-   </property>
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QPushButton" name="department">
-      <property name="styleSheet">
-       <string notr="true">height: 50px;
-margin: 0 15px</string>
-      </property>
-      <property name="text">
-       <string>Phòng Ban</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="employee">
-      <property name="styleSheet">
-       <string notr="true">height: 50px;
-margin: 0 15px</string>
-      </property>
-      <property name="text">
-       <string>Nhân Viên</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="event">
-      <property name="styleSheet">
-       <string notr="true">height: 50px;
-margin: 0 15px</string>
-      </property>
-      <property name="text">
-       <string>Sự Kiện Kiểm Diện</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="exception">
-      <property name="styleSheet">
-       <string notr="true">height: 50px;
-margin: 0 15px</string>
-      </property>
-      <property name="text">
-       <string>Ngoại Lệ</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>80</x>
+     <x>460</x>
      <y>220</y>
-     <width>511</width>
-     <height>80</height>
+     <width>161</width>
+     <height>131</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_2">
-    <item>
-     <widget class="QPushButton" name="report">
-      <property name="styleSheet">
-       <string notr="true">height: 50px;
-margin: 0 15px</string>
-      </property>
-      <property name="text">
-       <string>Báo Cáo</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="notification">
-      <property name="styleSheet">
-       <string notr="true">height: 50px;
-margin: 0 15px</string>
-      </property>
-      <property name="text">
-       <string>Bảng Thông Báo</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QPushButton" name="tools">
-      <property name="styleSheet">
-       <string notr="true">height: 50px;
-margin: 0 15px</string>
-      </property>
-      <property name="text">
-       <string>Công Cụ</string>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton {
+	background: transparent;
+	color: #3690ac;
+}
+
+QToolButton:hover {
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	background: #bed0e6;
+}</string>
+   </property>
+   <property name="text">
+    <string>Tools</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../icon/tool.png</normaloff>../icon/tool.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>70</width>
+     <height>70</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="notification_2">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>220</y>
+     <width>161</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton {
+	background: transparent;
+	color: #3690ac;
+}
+
+QToolButton:hover {
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	background: #bed0e6;
+}</string>
+   </property>
+   <property name="text">
+    <string>Bulletin Board</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../icon/bullentin.png</normaloff>../icon/bullentin.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>70</width>
+     <height>70</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="report_2">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>220</y>
+     <width>161</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton {
+	background: transparent;
+	color: #3690ac;
+}
+
+QToolButton:hover {
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	background: #bed0e6;
+}</string>
+   </property>
+   <property name="text">
+    <string>Reports</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../icon/report.png</normaloff>../icon/report.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>70</width>
+     <height>70</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="employee_2">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>80</y>
+     <width>151</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton {
+	background: transparent;
+	color: #3690ac;
+}
+
+QToolButton:hover {
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	background: #bed0e6;
+}</string>
+   </property>
+   <property name="text">
+    <string>Employees</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../icon/employee.png</normaloff>../icon/employee.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>70</width>
+     <height>70</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="event_2">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>80</y>
+     <width>181</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton {
+	background: transparent;
+	color: #3690ac;
+}
+
+QToolButton:hover {
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	background: #bed0e6;
+}</string>
+   </property>
+   <property name="text">
+    <string>Attendance Events</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../icon/calendar.png</normaloff>../icon/calendar.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>70</width>
+     <height>70</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="department_2">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>80</y>
+     <width>151</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton {
+	background: transparent;
+	color: #3690ac;
+}
+
+QToolButton:hover {
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	background: #bed0e6;
+}</string>
+   </property>
+   <property name="text">
+    <string>Departments</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../icon/department.png</normaloff>../icon/department.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>70</width>
+     <height>70</height>
+    </size>
+   </property>
+  </widget>
+  <widget class="QToolButton" name="exception_2">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>80</y>
+     <width>151</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QToolButton {
+	background: transparent;
+	color: #3690ac;
+}
+
+QToolButton:hover {
+	border: 1px solid #aaa;
+	border-radius: 10px;
+	background: #bed0e6;
+}</string>
+   </property>
+   <property name="text">
+    <string>Exceptions</string>
+   </property>
+   <property name="icon">
+    <iconset>
+     <normaloff>../icon/exception.png</normaloff>../icon/exception.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>70</width>
+     <height>70</height>
+    </size>
+   </property>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

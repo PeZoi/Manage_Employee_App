@@ -1,11 +1,26 @@
 #include "DialogFormLoginAdmin.h"
+#include "ErrorLabel.h"
+#include <QLinearGradient>
+#include <QPalette>
 
 DialogFormLoginAdmin::DialogFormLoginAdmin(QWidget *parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
-	connect(ui.login, SIGNAL(clicked()), this, SLOT(handleLoginAdmin()));
-	
+
+	QLinearGradient gradient(0, 0, 0, this->height());
+	gradient.setColorAt(0.0, Qt::white);
+	gradient.setColorAt(1.0, QColor("#87A8D2"));
+
+	QPalette palette;
+	palette.setBrush(QPalette::Window, gradient);
+	this->setPalette(palette);
+	this->setAutoFillBackground(true);
+
+	ui.password->setEchoMode(QLineEdit::Password);
+
+	connect(ui.login_2, SIGNAL(clicked()), this, SLOT(handleLoginAdmin()));
+	connect(ui.cancelButton, &QPushButton::clicked, this, [this]() {this->accept(); });
 }
 
 DialogFormLoginAdmin::~DialogFormLoginAdmin()
@@ -15,32 +30,22 @@ void DialogFormLoginAdmin::handleLoginAdmin() {
 	QString pass = ui.password->text();
 
 	if (pass.trimmed().isEmpty()) {
-		msgBox.setText("Vui lòng nhập đủ các trường");
-		msgBox.exec();
+		ErrorLabel* error = new ErrorLabel("  Please enter complete information.  ");
+		error->showTemporary(ui.verticalLayout, 3000);
+		this->adjustSize();
 		return;
 	}
 
-	QString queryString = "SELECT password FROM employee WHERE role = 'ADMIN'";
-	QSqlQuery query;
+	if (pass.trimmed().length() < 4) {
+		ErrorLabel* error = new ErrorLabel("  Password must be at least 4 characters long.  ");
+		error->showTemporary(ui.verticalLayout, 3000);
+		this->adjustSize();
+		return;
+	}
 
-    if (query.exec(queryString)) {
-        if (query.next()) {
-            QString storedPassword = query.value(0).toString();
+	emit loginSuccessful(pass, this);
+}
 
-            // So sánh mật khẩu
-            if (pass == storedPassword) {
-                emit loginSuccessful();
-                this->accept();
-            }
-            else {
-                msgBox.setText("Sai mật khẩu");
-                msgBox.exec();
-            }
-        }
-    }
-    else {
-        qDebug() << "Lỗi truy vấn: " << query.lastError().text();
-        msgBox.setText("Lỗi truy vấn");
-        msgBox.exec();
-    }
+Ui::DialogFormLoginAdminClass DialogFormLoginAdmin::getUi() {
+	return ui;
 }

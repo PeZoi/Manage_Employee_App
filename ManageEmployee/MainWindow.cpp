@@ -3,19 +3,21 @@
 #include <QHBoxLayout>
 
 MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), ui(new Ui::MainWindowClass), navbar(new Navbar(this)),
+    : QMainWindow(parent), ui(new Ui::MainWindowClass), navbarController(new NavbarController(new Navbar(nullptr), this)),
     menu(new MenuList(this))
 {
     ui->setupUi(this);
 
-    QHBoxLayout* headerLayout = new QHBoxLayout(ui->header);
-    QHBoxLayout* contentLayout = new QHBoxLayout(ui->content);
-    ui->header->setLayout(headerLayout);
-    ui->content->setLayout(contentLayout);
-    // Tạo và thêm Navbar vào header
-    navbar->setFixedHeight(50);
-    ui->header->layout()->addWidget(navbar);
-    
+    QLinearGradient gradient(0, 0, 0, this->height());
+    gradient.setColorAt(0.0, Qt::white);
+    gradient.setColorAt(1.0, QColor("#87A8D2"));
+
+    QPalette palette;
+    palette.setBrush(QPalette::Window, gradient);
+    this->setPalette(palette);
+    this->setAutoFillBackground(true);
+
+    ui->header->layout()->addWidget(navbarController->getUi());
 }
 
 
@@ -31,7 +33,7 @@ MenuList* MainWindow::getMenu() {
     return menu;
 }
 
-Navbar* MainWindow::getNavbar() {
-    return navbar;
+NavbarController* MainWindow::getNavbarController() {
+    return navbarController;
 }
 

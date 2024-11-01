@@ -33,6 +33,18 @@
     <Filter Include="Source Files\Repository">
       <UniqueIdentifier>{f3f12206-4314-427b-956e-4490037b80b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Controller">
+      <UniqueIdentifier>{12909489-579a-4c64-85f3-0b82574fd6a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\View">
+      <UniqueIdentifier>{e5a38910-f727-4e05-87a4-b45db8abdf06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Model">
+      <UniqueIdentifier>{f609ebc0-37d0-4265-ad55-ae72a8d7efb1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Repository">
+      <UniqueIdentifier>{6a118ac8-8b52-4a97-9ec6-2ece6417ef47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ManageEmployee.qrc">
@@ -41,9 +53,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DatabaseManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IriTracker.cpp">
@@ -91,46 +100,112 @@
     <ClCompile Include="DepartmentRepository.cpp">
       <Filter>Source Files\Repository</Filter>
     </ClCompile>
+    <ClCompile Include="DatabaseManager.cpp">
+      <Filter>Source Files\Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeRepository.cpp">
+      <Filter>Source Files\Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageEmployeeController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="SignUpAdminController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="NavbarController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogConfirm.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeCheckInOut.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeCheckInOutController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageAttendanceEvents.cpp">
+      <Filter>Header Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageAttendanceEvents.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageAttendanceEventsController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="SignUpAdmin.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="DatabaseManager.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Navbar.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="DialogFormLoginAdmin.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="MenuList.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="ManageDepartment.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="ManageEmployee.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="DialogFormDepartment.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="DialogFormEmployee.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="MainWindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="MainWindowController.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="ManageDepartmentController.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Repository</Filter>
     </QtMoc>
     <QtMoc Include="DepartmentRepository.h">
+      <Filter>Header Files\Repository</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogFormDepartment.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogFormEmployee.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogFormLoginAdmin.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="EmployeeRepository.h">
+      <Filter>Header Files\Repository</Filter>
+    </QtMoc>
+    <QtMoc Include="MainWindow.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="MainWindowController.h">
+      <Filter>Header Files\Controller</Filter>
+    </QtMoc>
+    <QtMoc Include="ManageDepartment.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="ManageDepartmentController.h">
+      <Filter>Header Files\Controller</Filter>
+    </QtMoc>
+    <QtMoc Include="ManageEmployee.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="ManageEmployeeController.h">
+      <Filter>Header Files\Controller</Filter>
+    </QtMoc>
+    <QtMoc Include="MenuList.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="Navbar.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="NavbarController.h">
+      <Filter>Header Files\Controller</Filter>
+    </QtMoc>
+    <QtMoc Include="SignUpAdmin.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="SignUpAdminController.h">
+      <Filter>Header Files\Controller</Filter>
+    </QtMoc>
+    <QtMoc Include="ErrorLabel.h">
       <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogConfirm.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="EmployeeCheckInOut.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="EmployeeCheckInOutController.h">
+      <Filter>Header Files\Controller</Filter>
+    </QtMoc>
+    <QtMoc Include="CustomFilterProxyModel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="ManageAttendanceEvents.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="ManageAttendanceEventsController.h">
+      <Filter>Header Files\Controller</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -161,16 +236,28 @@
     <QtUic Include="MainWindow.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="DialogConfirm.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="EmployeeCheckInOut.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="ManageAttendanceEvents.ui">
+      <Filter>Header Files\Controller</Filter>
+    </QtUic>
+    <QtUic Include="ManageAttendanceEvents.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IriTracker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DepartmentModel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
     <ClInclude Include="EmployeeModel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

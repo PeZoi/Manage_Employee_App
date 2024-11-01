@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_ManageDepartmentController_t {
-    QByteArrayData data[15];
-    char stringdata0[201];
+    QByteArrayData data[17];
+    char stringdata0[238];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,17 +42,20 @@ QT_MOC_LITERAL(6, 83, 16), // "submitDepartment"
 QT_MOC_LITERAL(7, 100, 15), // "DepartmentModel"
 QT_MOC_LITERAL(8, 116, 10), // "department"
 QT_MOC_LITERAL(9, 127, 10), // "isEditMode"
-QT_MOC_LITERAL(10, 138, 16), // "handleRowClicked"
-QT_MOC_LITERAL(11, 155, 11), // "QModelIndex"
-QT_MOC_LITERAL(12, 167, 5), // "index"
-QT_MOC_LITERAL(13, 173, 9), // "getMdView"
-QT_MOC_LITERAL(14, 183, 17) // "ManageDepartment*"
+QT_MOC_LITERAL(10, 138, 21), // "DialogFormDepartment*"
+QT_MOC_LITERAL(11, 160, 14), // "departmentView"
+QT_MOC_LITERAL(12, 175, 16), // "handleRowClicked"
+QT_MOC_LITERAL(13, 192, 11), // "QModelIndex"
+QT_MOC_LITERAL(14, 204, 5), // "index"
+QT_MOC_LITERAL(15, 210, 9), // "getMdView"
+QT_MOC_LITERAL(16, 220, 17) // "ManageDepartment*"
 
     },
     "ManageDepartmentController\0handleRenderTable\0"
     "\0onClickAdd\0onClickEdit\0onClickDelete\0"
     "submitDepartment\0DepartmentModel\0"
-    "department\0isEditMode\0handleRowClicked\0"
+    "department\0isEditMode\0DialogFormDepartment*\0"
+    "departmentView\0handleRowClicked\0"
     "QModelIndex\0index\0getMdView\0"
     "ManageDepartment*"
 };
@@ -76,18 +79,18 @@ static const uint qt_meta_data_ManageDepartmentController[] = {
        3,    0,   50,    2, 0x0a /* Public */,
        4,    0,   51,    2, 0x0a /* Public */,
        5,    0,   52,    2, 0x0a /* Public */,
-       6,    2,   53,    2, 0x0a /* Public */,
-      10,    1,   58,    2, 0x0a /* Public */,
-      13,    0,   61,    2, 0x0a /* Public */,
+       6,    3,   53,    2, 0x0a /* Public */,
+      12,    1,   60,    2, 0x0a /* Public */,
+      15,    0,   63,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 7, QMetaType::Bool,    8,    9,
-    QMetaType::Void, 0x80000000 | 11,   12,
-    0x80000000 | 14,
+    QMetaType::Void, 0x80000000 | 7, QMetaType::Bool, 0x80000000 | 10,    8,    9,   11,
+    QMetaType::Void, 0x80000000 | 13,   14,
+    0x80000000 | 16,
 
        0        // eod
 };
@@ -102,11 +105,22 @@ void ManageDepartmentController::qt_static_metacall(QObject *_o, QMetaObject::Ca
         case 1: _t->onClickAdd(); break;
         case 2: _t->onClickEdit(); break;
         case 3: _t->onClickDelete(); break;
-        case 4: _t->submitDepartment((*reinterpret_cast< const DepartmentModel(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 4: _t->submitDepartment((*reinterpret_cast< const DepartmentModel(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])),(*reinterpret_cast< DialogFormDepartment*(*)>(_a[3]))); break;
         case 5: _t->handleRowClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
         case 6: { ManageDepartment* _r = _t->getMdView();
             if (_a[0]) *reinterpret_cast< ManageDepartment**>(_a[0]) = std::move(_r); }  break;
         default: ;
+        }
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        switch (_id) {
+        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+        case 4:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 2:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< DialogFormDepartment* >(); break;
+            }
+            break;
         }
     }
 }
@@ -145,7 +159,7 @@ int ManageDepartmentController::qt_metacall(QMetaObject::Call _c, int _id, void 
         _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         if (_id < 7)
-            *reinterpret_cast<int*>(_a[0]) = -1;
+            qt_static_metacall(this, _c, _id, _a);
         _id -= 7;
     }
     return _id;
