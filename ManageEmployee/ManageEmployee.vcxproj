@@ -106,6 +106,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AttendaceEventModel.cpp" />
+    <ClCompile Include="AttendanceEventRepository.cpp" />
     <ClCompile Include="DatabaseManager.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
@@ -115,6 +117,8 @@
     <ClCompile Include="DepartmentModel.cpp" />
     <ClCompile Include="DepartmentRepository.cpp" />
     <ClCompile Include="DialogConfirm.cpp" />
+    <ClCompile Include="DialogDeleteAttendanceEvent.cpp" />
+    <ClCompile Include="DialogFormAttendanceEvents.cpp" />
     <ClCompile Include="DialogFormDepartment.cpp" />
     <ClCompile Include="DialogFormEmployee.cpp" />
     <ClCompile Include="DialogFormLoginAdmin.cpp" />
@@ -136,8 +140,11 @@
     <ClCompile Include="NavbarController.cpp" />
     <ClCompile Include="SignUpAdmin.cpp" />
     <ClCompile Include="SignUpAdminController.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <QtRcc Include="ManageEmployee.qrc" />
     <QtUic Include="DialogConfirm.ui" />
+    <QtUic Include="DialogDeleteAttendanceEvent.ui" />
+    <QtUic Include="DialogFormAttendanceEvents.ui" />
     <QtUic Include="DialogFormDepartment.ui" />
     <QtUic Include="DialogFormEmployee.ui" />
     <QtUic Include="DialogFormLoginAdmin.ui" />
@@ -179,9 +186,13 @@
     <QtMoc Include="DialogFormEmployee.h" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="DialogDeleteAttendanceEvent.h" />
+    <ClInclude Include="Utils.h" />
     <QtMoc Include="ManageAttendanceEventsController.h" />
     <QtMoc Include="ManageAttendanceEvents.h" />
     <QtMoc Include="CustomFilterProxyModel.h" />
+    <ClInclude Include="AttendaceEventModel.h" />
+    <QtMoc Include="AttendanceEventRepository.h" />
     <ClInclude Include="DepartmentModel.h" />
     <QtMoc Include="NavbarController.h" />
     <QtMoc Include="SignUpAdminController.h" />
@@ -190,6 +201,7 @@
     <QtMoc Include="DialogConfirm.h" />
     <QtMoc Include="EmployeeCheckInOut.h" />
     <QtMoc Include="EmployeeCheckInOutController.h" />
+    <QtMoc Include="DialogFormAttendanceEvents.h" />
     <ClInclude Include="EmployeeModel.h" />
     <QtMoc Include="EmployeeRepository.h" />
     <QtMoc Include="ErrorLabel.h" />

@@ -47,12 +47,14 @@ public:
     QPushButton *edit;
     QPushButton *add;
     QPushButton *check_out;
+    QWidget *verticalLayoutWidget_2;
+    QVBoxLayout *verticalLayout_2;
 
     void setupUi(QWidget *ManageAttendanceEventsClass)
     {
         if (ManageAttendanceEventsClass->objectName().isEmpty())
             ManageAttendanceEventsClass->setObjectName(QString::fromUtf8("ManageAttendanceEventsClass"));
-        ManageAttendanceEventsClass->resize(775, 405);
+        ManageAttendanceEventsClass->resize(775, 421);
         departmentsLabel = new QLabel(ManageAttendanceEventsClass);
         departmentsLabel->setObjectName(QString::fromUtf8("departmentsLabel"));
         departmentsLabel->setGeometry(QRect(260, 10, 281, 41));
@@ -241,6 +243,14 @@ public:
         icon3.addFile(QString::fromUtf8("../icon/check-red.png"), QSize(), QIcon::Normal, QIcon::Off);
         check_out->setIcon(icon3);
         check_out->setIconSize(QSize(24, 24));
+        verticalLayoutWidget_2 = new QWidget(ManageAttendanceEventsClass);
+        verticalLayoutWidget_2->setObjectName(QString::fromUtf8("verticalLayoutWidget_2"));
+        verticalLayoutWidget_2->setGeometry(QRect(0, 400, 771, 21));
+        verticalLayout_2 = new QVBoxLayout(verticalLayoutWidget_2);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
+        verticalLayout_2->setContentsMargins(0, 0, 0, 0);
 
         retranslateUi(ManageAttendanceEventsClass);
 

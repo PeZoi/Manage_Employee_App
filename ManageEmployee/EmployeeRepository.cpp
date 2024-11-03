@@ -30,7 +30,7 @@ bool EmployeeRepository::add(EmployeeModel employee) {
 	params[":address"] = employee.getAddress();
 	params[":is_enabled"] = employee.getIsEnabled();
 	params[":is_allow_password"] = employee.getIsAllowPassword();
-	params[":status"] = "Về";
+	params[":status"] = "OUT";
 	params[":avatar"] = employee.getAvatar().isEmpty() ? QVariant() : employee.getAvatar();
 	params[":iri_right"] = employee.getIriRight();
 	params[":iri_left"] = employee.getIriLeft();
@@ -233,4 +233,34 @@ QList<EmployeeModel> EmployeeRepository::getByDepartment(QString department) {
 		list.append(employee);
 	}
 	return list;
+}
+
+bool EmployeeRepository::checkStatusIn(QString id) {
+	QString query = "SELECT COUNT(*) FROM employee WHERE id = :id AND status = 'IN'";
+	QMap<QString, QVariant> params;
+	params[":id"] = id;
+
+	QSqlQuery result = DatabaseManager::executeQuery2(query, params);
+
+	if (!result.isActive()) {
+		qDebug() << "Query failed:" << result.lastError().text();
+		return false;
+	}
+
+	if (result.next()) {
+		int count = result.value(0).toInt();
+		return count > 0;
+	}
+
+	return false;
+}
+
+bool EmployeeRepository::updateStatus(QString status, QString id) {
+	QString query = "UPDATE employee SET status = :status WHERE id = :id";
+
+	QMap<QString, QVariant> params;
+	params[":status"] = status;
+	params[":id"] = id;
+
+	return DatabaseManager::executeCreate(query, params);
 }

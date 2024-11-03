@@ -17,5 +17,7 @@ public:
 	static bool changeAvatar(QString path, QString id);
 	static bool signInAdmin(QString pass);
 	static QList<EmployeeModel> getByDepartment(QString department);
+	static bool checkStatusIn(QString id);
+	static bool updateStatus(QString status, QString id);
 };
 

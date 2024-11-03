@@ -134,6 +134,13 @@ void MainWindowController::handleShowManageEnvents() {
 	handleHiddenMenu();
 	mainWindowView->getUi()->content->layout()->addWidget(maeController->getView());
 	maeController->getView()->show();
+
+	maeController->getView()->getUi()->add->setDisabled(true);
+	maeController->getView()->getUi()->edit->setDisabled(true);
+	maeController->getView()->getUi()->delete_2->setDisabled(true);
+	maeController->getView()->getUi()->check_out->setDisabled(true);
+
+	maeController->employeeSelected = "";
 }
 
 MainWindow* MainWindowController::getMainWindowView() { return this->mainWindowView; }
