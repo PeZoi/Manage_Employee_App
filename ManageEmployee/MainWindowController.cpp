@@ -1,4 +1,5 @@
 #include "MainWindowController.h"
+#include "EmployeeRepository.h"
 
 MainWindowController::MainWindowController(MainWindow* view, QObject* parent)
 	: QObject(parent), mainWindowView(view)
@@ -46,12 +47,26 @@ MainWindowController::MainWindowController(MainWindow* view, QObject* parent)
 }
 
 void MainWindowController::handleLogout() {
+	DatabaseManager::connectToDatabase();
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
 	handleHiddenMenu();
 
+	QList<EmployeeModel> employeeList = EmployeeRepository::getAll();
+	if (employeeList.isEmpty()) {
+		ecioController->getView()->getUi()->stackedWidget->setCurrentIndex(1);
+	}
+	else {
+		ecioController->getView()->getUi()->stackedWidget->setCurrentIndex(0);
+	}
+
+	ecioController->getView()->getUi()->stack_checkin_out->setCurrentIndex(0);
+	ecioController->loadEmployee();
+
+
 	handleShowCheckInOut();
+	DatabaseManager::closeDatabase();
 }
 
 void MainWindowController::handleLogin() {
@@ -134,6 +149,13 @@ void MainWindowController::handleShowManageEnvents() {
 	handleHiddenMenu();
 	mainWindowView->getUi()->content->layout()->addWidget(maeController->getView());
 	maeController->getView()->show();
+
+	maeController->getView()->getUi()->add->setDisabled(true);
+	maeController->getView()->getUi()->edit->setDisabled(true);
+	maeController->getView()->getUi()->delete_2->setDisabled(true);
+	maeController->getView()->getUi()->check_out->setDisabled(true);
+
+	maeController->employeeSelected = "";
 }
 
 MainWindow* MainWindowController::getMainWindowView() { return this->mainWindowView; }

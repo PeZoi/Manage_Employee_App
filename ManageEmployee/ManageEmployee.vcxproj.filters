@@ -125,13 +125,28 @@
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
     <ClCompile Include="ManageAttendanceEvents.cpp">
-      <Filter>Header Files\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="ManageAttendanceEvents.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
     <ClCompile Include="ManageAttendanceEventsController.cpp">
       <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogFormAttendanceEvents.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="AttendaceEventModel.cpp">
+      <Filter>Source Files\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="AttendanceEventRepository.cpp">
+      <Filter>Source Files\Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageAttendanceEvents.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogDeleteAttendanceEvent.cpp">
+      <Filter>Source Files\View</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +222,15 @@
     <QtMoc Include="ManageAttendanceEventsController.h">
       <Filter>Header Files\Controller</Filter>
     </QtMoc>
+    <QtMoc Include="DialogFormAttendanceEvents.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="AttendanceEventRepository.h">
+      <Filter>Header Files\Repository</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogDeleteAttendanceEvent.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SignUpAdmin.ui">
@@ -243,9 +267,15 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ManageAttendanceEvents.ui">
-      <Filter>Header Files\Controller</Filter>
+      <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="ManageAttendanceEvents.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DialogFormAttendanceEvents.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DialogDeleteAttendanceEvent.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -258,6 +288,12 @@
     </ClInclude>
     <ClInclude Include="EmployeeModel.h">
       <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="AttendaceEventModel.h">
+      <Filter>Header Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

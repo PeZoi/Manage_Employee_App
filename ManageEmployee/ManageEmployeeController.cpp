@@ -4,6 +4,7 @@
 #include "EmployeeRepository.h"
 #include "ErrorLabel.h"
 #include "DialogConfirm.h"
+#include "AttendanceEventRepository.h"
 #include <QAbstractItemView>
 #include <QStandardItem>
 #include <QSettings>
@@ -44,6 +45,7 @@ void ManageEmployeeController::onClickAdd() {
 }
 
 void ManageEmployeeController::handleRenderTable() {
+	DatabaseManager::connectToDatabase();
 	QList<EmployeeModel> employeeList = EmployeeRepository::getAll();
 
 	meView->getUi()->table->setRowCount(employeeList.size());
@@ -83,6 +85,8 @@ void ManageEmployeeController::handleRenderTable() {
 			}
 		}
 	}
+
+	DatabaseManager::closeDatabase();
 }
 
 void ManageEmployeeController::handleRowClicked(const QModelIndex& index) {
@@ -113,15 +117,18 @@ void ManageEmployeeController::onClickEdit() {
 }
 
 void ManageEmployeeController::onClickDelete() {
+	DatabaseManager::connectToDatabase();
 	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete employee ?", nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
-		if (EmployeeRepository::_delete(employeeSelected)) {
+		
+		if (AttendanceEventRepository::_deleteByEmployeeId(employeeSelected) && EmployeeRepository::_delete(employeeSelected)) {
 			handleRenderTable();
 		}
 		else {
 			qDebug() << "Xoá thất bại";
 		};
 	}
+	DatabaseManager::closeDatabase();
 }
 
 void ManageEmployeeController::submitEmployee(const EmployeeModel& employee, bool isEditMode, DialogFormEmployee* employeeView) {
@@ -191,11 +198,14 @@ void ManageEmployeeController::handleUploadAvatar(DialogFormEmployee* employeeFo
 }
 
 void ManageEmployeeController::renderDepartments(Ui::DialogFormEmployeeClass employeeForm) {
+	DatabaseManager::connectToDatabase();
 	QList<DepartmentModel> employeeList = DepartmentRepository::getAll();
 
 	for (int i = 0; i < employeeList.size(); i++) {
 		employeeForm.department->addItem(employeeList.at(i).getName());
 	}
+
+	DatabaseManager::closeDatabase();
 }
 
 ManageEmployee* ManageEmployeeController::getMeView() {

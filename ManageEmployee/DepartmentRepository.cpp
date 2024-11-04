@@ -37,7 +37,6 @@ bool DepartmentRepository::_delete(QString name) {
 }
 
 QList<DepartmentModel> DepartmentRepository::getAll() {
-	DatabaseManager::connectToDatabase();
 	QString query = "SELECT * FROM department";
 	QSqlQuery result = DatabaseManager::executeQuery(query);
 
