@@ -23,17 +23,12 @@ NavbarController::NavbarController(Navbar* view, QObject* parent)
 }
 
 void NavbarController::handleClickLogout() {
-	QSettings settings("Iritech", "Manage_Employee_App");
-	settings.setValue("isLoggedIn", false);
 	onLogoutSuccess();
 	msgBox.setText("Logout");
 	msgBox.exec();
 
 }
 void NavbarController::handleClickLogin() {
-	QSettings settings("Iritech", "Manage_Employee_App");
-	settings.setValue("isLoggedIn", true);
-
 	DialogFormLoginAdmin* formLogin = new DialogFormLoginAdmin(nullptr);
 	connect(formLogin, &DialogFormLoginAdmin::loginSuccessful, this, &NavbarController::handleSignInAdmin);
 
@@ -77,6 +72,7 @@ Navbar* NavbarController::getUi() {
 }
 
 void NavbarController::handleSignInAdmin(QString pass, DialogFormLoginAdmin* dialog) {
+	DatabaseManager::connectToDatabase();
 	if (EmployeeRepository::signInAdmin(pass)) {
 		dialog->accept();
 		onLoginSuccess();
@@ -86,4 +82,9 @@ void NavbarController::handleSignInAdmin(QString pass, DialogFormLoginAdmin* dia
 		error->showTemporary(dialog->getUi().verticalLayout, 3000);
 		dialog->adjustSize();
 	}
+	DatabaseManager::closeDatabase();
+}
+
+void NavbarController::setEmployeeCheckInOutController(EmployeeCheckInOutController* _employeeCheckInOutController) {
+	employeeCheckInOutController = _employeeCheckInOutController;
 }

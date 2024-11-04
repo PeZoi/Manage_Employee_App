@@ -1,6 +1,7 @@
 #pragma once
 #include <QObject>
 #include "Navbar.h"
+#include "EmployeeCheckInOutController.h"
 #include <QMessageBox>
 
 class NavbarController : public QObject {
@@ -9,6 +10,8 @@ public:
 	explicit NavbarController(QObject* parent = nullptr);
 	NavbarController(Navbar* view, QObject* parent = nullptr);
 	Navbar* getUi();
+
+	void setEmployeeCheckInOutController(EmployeeCheckInOutController* employeeCheckInOutController);
 
 signals:
 	void logoutSuccessful();
@@ -30,6 +33,7 @@ public slots:
 
 private:
 	Navbar* navbarView;
+	EmployeeCheckInOutController* employeeCheckInOutController;
 	QMessageBox msgBox;
 };
 

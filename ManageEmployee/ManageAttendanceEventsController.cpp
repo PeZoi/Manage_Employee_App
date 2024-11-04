@@ -15,6 +15,7 @@ ManageAttendanceEventsController::ManageAttendanceEventsController(ManageAttenda
 	loadEmployee();
 
 	connect(view->getUi()->add, &QPushButton::clicked, this, &ManageAttendanceEventsController::onClickAdd);
+	connect(view->getUi()->edit, &QPushButton::clicked, this, &ManageAttendanceEventsController::onClickEdit);
 	connect(view->getUi()->delete_2, &QPushButton::clicked, this, &ManageAttendanceEventsController::onClickDelete);
 	connect(view->getUi()->check_out, &QPushButton::clicked, this, &ManageAttendanceEventsController::handleCheckout);
 
@@ -34,6 +35,8 @@ ManageAttendanceEvents* ManageAttendanceEventsController::getView() {
 
 
 void ManageAttendanceEventsController::loadEmployee() {
+	DatabaseManager::connectToDatabase();
+
 	QStandardItemModel* model = new QStandardItemModel(this);
 	view->getUi()->companyTreeView->header()->setVisible(false);
 
@@ -75,6 +78,8 @@ void ManageAttendanceEventsController::loadEmployee() {
 	view->getUi()->companyTreeView->expandAll();
 
 	connect(view->getUi()->searchLineEdit, &QLineEdit::textChanged, filterModel, &CustomFilterProxyModel::setFilterFixedString);
+
+	DatabaseManager::closeDatabase();
 }
 
 void ManageAttendanceEventsController::onClickAdd() {
@@ -118,6 +123,12 @@ void ManageAttendanceEventsController::onClickDelete() {
 			ErrorLabel* error = new ErrorLabel("  Delete failed.");
 			error->showTemporary(view->getUi()->verticalLayout, 3000);
 			return;
+		}
+		if (events.size() == 2) {
+			EmployeeRepository::updateStatus("OUT", employeeSelected);
+		}
+		else {
+			EmployeeRepository::updateStatus("IN", employeeSelected);
 		}
 	}
 
@@ -246,42 +257,69 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 	AttendanceEventModel attendanceEvent;
 
 	if (dialog->getUi()->radio_in_out->isChecked()) {
+		DatabaseManager::connectToDatabase();
 
-		if (checkStatusIn) {
-			ErrorLabel* error = new ErrorLabel("  Cannot add this event. The 'IN' event exists.");
-			error->showTemporary(dialog->getUi()->verticalLayout, 3000);
-			return;
-		}
 		QList<AttendanceEventModel> events = AttendanceEventRepository::getByEmployeeId(employeeSelected);
+		QSet<int> sessionList;
+		for (auto ev : events) {
+			sessionList.insert(ev.getSession());
+		}
 
-		for (int i = 0; i < events.size(); i = i + 2) {
-			QDateTime checkinDB = QDateTime::fromString(events.at(i).getDateEvent() + " " + events.at(i).getTime(), "dd/MM/yyyy HH:mm:ss");
-			QDateTime checkoutDB = QDateTime::fromString(events.at(i + 1).getDateEvent() + " " + events.at(i + 1).getTime(), "dd/MM/yyyy HH:mm:ss");
+		// Kiểm tra điều kiện nếu đang là IN
+		if (checkStatusIn) {
+			QDateTime checkinLast = QDateTime::fromString("01/01/1990 00:00:00", "dd/MM/yyyy HH:mm:ss");
+
+			for (int i = 0; i < events.size(); i++) {
+				if (events.at(i).getTypeEvent() == "OUT") {
+					continue;
+				}
+				QDateTime checkin = QDateTime::fromString(events.at(i).getDateEvent() + " " + events.at(i).getTime(), "dd/MM/yyyy HH:mm:ss");
+				if (checkin >= checkinLast) {
+					checkinLast = checkin;
+				}
+			}
+
+			if (dateTimeCheckin >= checkinLast || dateTimeCheckout >= checkinLast) {
+				ErrorLabel* error = new ErrorLabel("  Event time is overlapped with other events.");
+				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
+				return;
+			}
+		}
+
+		for (int session : sessionList) {
+			QList<AttendanceEventModel> eventsBySession = AttendanceEventRepository::getBySession(session);
+
+			if (eventsBySession.size() == 1) {
+				continue;
+			}
+
+			QDateTime checkinDB = QDateTime::fromString(eventsBySession.at(0).getDateEvent() + " " + eventsBySession.at(0).getTime(), "dd/MM/yyyy HH:mm:ss");
+			QDateTime checkoutDB = QDateTime::fromString(eventsBySession.at(1).getDateEvent() + " " + eventsBySession.at(1).getTime(), "dd/MM/yyyy HH:mm:ss");
 
 			// check điều kiện cho edit
 			if (dateTimeCheckin == checkinDB && dateTimeCheckout == checkoutDB && isEditMode) {
 				break;
 			}
 
-			if (dateTimeCheckin == checkinDB && (checkinDB <= dateTimeCheckout && checkoutDB >= dateTimeCheckout) && attendanceEventSelected.getSession() != events.at(i).getSession()) {
+			if (dateTimeCheckin == checkinDB && (checkinDB <= dateTimeCheckout && checkoutDB >= dateTimeCheckout) && attendanceEventSelected.getSession() != eventsBySession.at(0).getSession()) {
 				ErrorLabel* error = new ErrorLabel("  Time duplicates with other event.");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 
-			if (checkinDB <= dateTimeCheckout && checkoutDB >= dateTimeCheckout && attendanceEventSelected.getSession() != events.at(i).getSession()) {
+			if (checkinDB <= dateTimeCheckout && checkoutDB >= dateTimeCheckout && attendanceEventSelected.getSession() != eventsBySession.at(0).getSession()) {
 				ErrorLabel* error = new ErrorLabel("  Event time is overlapped with other events.");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 
-			if (checkinDB <= dateTimeCheckin && checkoutDB >= dateTimeCheckin && attendanceEventSelected.getSession() != events.at(i).getSession()) {
+			if (checkinDB <= dateTimeCheckin && checkoutDB >= dateTimeCheckin && attendanceEventSelected.getSession() != eventsBySession.at(0).getSession()) {
 				ErrorLabel* error = new ErrorLabel("  Event time is overlapped with other events.");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 
-			if (dateTimeCheckin <= checkinDB && dateTimeCheckout >= checkoutDB && attendanceEventSelected.getSession() != events.at(i).getSession()) {
+			if (dateTimeCheckin <= checkinDB && dateTimeCheckout >= checkoutDB && attendanceEventSelected.getSession() != eventsBySession.at(0).getSession()) {
 				ErrorLabel* error = new ErrorLabel("  Event time is overlapped with other events.");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
@@ -465,7 +503,7 @@ void ManageAttendanceEventsController::handleRowClicked(const QModelIndex& index
 	QString dateEvent = index.sibling(index.row(), 1).data().toString();
 	QString timeEvent = index.sibling(index.row(), 2).data().toString();
 
-	attendanceEventSelected = AttendanceEventRepository::getByDateAndTime(dateEvent, timeEvent);
+	attendanceEventSelected = AttendanceEventRepository::getByDateAndTimeAndEmployeeId(dateEvent, timeEvent, employeeSelected);
 
 	view->getUi()->edit->setDisabled(false);
 	view->getUi()->delete_2->setDisabled(false);

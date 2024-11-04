@@ -73,7 +73,6 @@ bool EmployeeRepository::update(EmployeeModel employee) {
 }
 
 bool EmployeeRepository::_delete(QString id) {
-	DatabaseManager::connectToDatabase();
 	QString query = "DELETE FROM employee WHERE id = :id";
 	QMap<QString, QVariant> params;
 	params[":id"] = id;
@@ -82,7 +81,6 @@ bool EmployeeRepository::_delete(QString id) {
 }
 
 QList<EmployeeModel> EmployeeRepository::getAll() {
-	DatabaseManager::connectToDatabase();
 	QString query = "SELECT * FROM employee WHERE role = 'STAFF'";
 	QSqlQuery result = DatabaseManager::executeQuery(query);
 
@@ -210,6 +208,29 @@ bool EmployeeRepository::signInAdmin(QString pass) {
 	return false;
 }
 
+bool EmployeeRepository::signInStaff(QString id, QString pass) {
+	QString query = "SELECT COUNT(*) FROM employee WHERE id = :id AND password = :pass";
+	QMap<QString, QVariant> params;
+	params[":id"] = id;
+	params[":pass"] = pass;
+
+	// Thực thi câu truy vấn
+	QSqlQuery result = DatabaseManager::executeQuery2(query, params);
+
+	if (!result.isActive()) {
+		qDebug() << "Query failed:" << result.lastError().text();
+		return false;
+	}
+
+	// Kiểm tra nếu có ít nhất một bản ghi khớp (COUNT(*) >= 1)
+	if (result.next()) {
+		int count = result.value(0).toInt();
+		return count > 0;
+	}
+
+	return false;
+}
+
 QList<EmployeeModel> EmployeeRepository::getByDepartment(QString department) {
 	QString query = "SELECT id, first_name, last_name, is_enabled FROM employee WHERE department = :department and role = 'STAFF'";
 	QMap<QString, QVariant> params;
@@ -264,3 +285,4 @@ bool EmployeeRepository::updateStatus(QString status, QString id) {
 
 	return DatabaseManager::executeCreate(query, params);
 }
+

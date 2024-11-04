@@ -38,11 +38,19 @@ bool AttendanceEventRepository::update(AttendanceEventModel attendanceEvent) {
 }
 
 bool AttendanceEventRepository::_delete(int id) {
-    DatabaseManager::connectToDatabase();
     QString query = "DELETE FROM attendance_event WHERE id = :id;";
 
     QMap<QString, QVariant> params;
     params[":id"] = id;
+
+    return DatabaseManager::executeCreate(query, params);
+}
+
+bool AttendanceEventRepository::_deleteByEmployeeId(QString employeeId) {
+    QString query = "DELETE FROM attendance_event WHERE employee_id = :employee_id;";
+
+    QMap<QString, QVariant> params;
+    params[":employee_id"] = employeeId;
 
     return DatabaseManager::executeCreate(query, params);
 }
@@ -128,12 +136,13 @@ QList<AttendanceEventModel> AttendanceEventRepository::getBySession(int session)
     return events;
 }
 
-AttendanceEventModel AttendanceEventRepository::getByDateAndTime(QString date, QString time) {
-    QString query = "SELECT * FROM attendance_event WHERE date_event = :date_event AND time_event = :time_event";
+AttendanceEventModel AttendanceEventRepository::getByDateAndTimeAndEmployeeId(QString date, QString time, QString employeeId) {
+    QString query = "SELECT * FROM attendance_event WHERE date_event = :date_event AND time_event = :time_event AND employee_id = :employee_id";
 
     QMap<QString, QVariant> params;
     params[":date_event"] = date;
     params[":time_event"] = time;
+    params[":employee_id"] = employeeId;
 
     QSqlQuery sqlQuery = DatabaseManager::executeQuery2(query, params);
 

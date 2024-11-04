@@ -16,6 +16,7 @@ public:
 	static bool toggleEnabled(QString id, bool checked);
 	static bool changeAvatar(QString path, QString id);
 	static bool signInAdmin(QString pass);
+	static bool signInStaff(QString id, QString pass);
 	static QList<EmployeeModel> getByDepartment(QString department);
 	static bool checkStatusIn(QString id);
 	static bool updateStatus(QString status, QString id);

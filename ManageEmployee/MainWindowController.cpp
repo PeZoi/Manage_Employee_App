@@ -1,4 +1,5 @@
 #include "MainWindowController.h"
+#include "EmployeeRepository.h"
 
 MainWindowController::MainWindowController(MainWindow* view, QObject* parent)
 	: QObject(parent), mainWindowView(view)
@@ -46,12 +47,26 @@ MainWindowController::MainWindowController(MainWindow* view, QObject* parent)
 }
 
 void MainWindowController::handleLogout() {
+	DatabaseManager::connectToDatabase();
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
 	handleHiddenMenu();
 
+	QList<EmployeeModel> employeeList = EmployeeRepository::getAll();
+	if (employeeList.isEmpty()) {
+		ecioController->getView()->getUi()->stackedWidget->setCurrentIndex(1);
+	}
+	else {
+		ecioController->getView()->getUi()->stackedWidget->setCurrentIndex(0);
+	}
+
+	ecioController->getView()->getUi()->stack_checkin_out->setCurrentIndex(0);
+	ecioController->loadEmployee();
+
+
 	handleShowCheckInOut();
+	DatabaseManager::closeDatabase();
 }
 
 void MainWindowController::handleLogin() {
