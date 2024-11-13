@@ -231,6 +231,9 @@
     <QtMoc Include="DialogDeleteAttendanceEvent.h">
       <Filter>Header Files\View</Filter>
     </QtMoc>
+    <QtMoc Include="IriTracker.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SignUpAdmin.ui">
@@ -280,9 +283,6 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IriTracker.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="DepartmentModel.h">
       <Filter>Header Files\Model</Filter>
     </ClInclude>

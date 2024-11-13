@@ -20,12 +20,15 @@ ManageAttendanceEventsController::ManageAttendanceEventsController(ManageAttenda
 	connect(view->getUi()->check_out, &QPushButton::clicked, this, &ManageAttendanceEventsController::handleCheckout);
 
 	connect(view->getUi()->companyTreeView, &QTreeView::clicked, this, &ManageAttendanceEventsController::handleSelectEmployee);
+	connect(view->getUi()->filter_range, &QComboBox::currentTextChanged, this, &ManageAttendanceEventsController::handleFilterRange);
 
 	connect(view->getUi()->table, &QTableView::clicked, this, &ManageAttendanceEventsController::handleRowClicked);
 	connect(view->getUi()->table, &QTableView::doubleClicked, this, [this](const QModelIndex& index) {
 		handleRowClicked(index);
 		onClickEdit();
 		});
+
+
 
 }
 
@@ -93,7 +96,6 @@ void ManageAttendanceEventsController::onClickAdd() {
 void ManageAttendanceEventsController::onClickEdit() {
 	DatabaseManager::connectToDatabase();
 	QList<AttendanceEventModel> events = AttendanceEventRepository::getBySession(attendanceEventSelected.getSession());
-	qDebug() << attendanceEventSelected.getSession();
 	DialogFormAttendanceEvents* dialog = new DialogFormAttendanceEvents(employeeSelected, nullptr);
 	dialog->setMode(true);
 	dialog->setValue(events);
@@ -124,16 +126,16 @@ void ManageAttendanceEventsController::onClickDelete() {
 			error->showTemporary(view->getUi()->verticalLayout, 3000);
 			return;
 		}
-		if (events.size() == 2) {
-			EmployeeRepository::updateStatus("OUT", employeeSelected);
-		}
-		else {
-			EmployeeRepository::updateStatus("IN", employeeSelected);
-		}
+
+		EmployeeRepository::updateStatus("OUT", employeeSelected);
+		handleRenderTable(filter);
 	}
 
-	handleRenderTable();
 
+
+	employeeSelected = "";
+	view->getUi()->edit->setDisabled(true);
+	view->getUi()->delete_2->setDisabled(true);
 	DatabaseManager::closeDatabase();
 	dialog->accept();
 }
@@ -172,7 +174,7 @@ void ManageAttendanceEventsController::handleCheckout() {
 	EmployeeRepository::updateStatus("OUT", employeeSelected);
 	view->getUi()->check_out->setDisabled(true);
 
-	handleRenderTable();
+	handleRenderTable(filter);
 	DatabaseManager::closeDatabase();
 }
 
@@ -195,7 +197,7 @@ void ManageAttendanceEventsController::handleSelectEmployee(const QModelIndex& i
 			QRegularExpressionMatch match = re.match(item->text());
 			employeeSelected = match.captured(1);
 
-			handleRenderTable();
+			handleRenderTable(filter);
 
 			EmployeeModel employee = EmployeeRepository::getById(employeeSelected);
 
@@ -205,28 +207,52 @@ void ManageAttendanceEventsController::handleSelectEmployee(const QModelIndex& i
 			if (employee.getStatus() == "IN") {
 				view->getUi()->check_out->setDisabled(false);
 			}
+			else {
+				view->getUi()->check_out->setDisabled(true);
+			}
 		}
 	}
+
+	view->getUi()->filter_range->setCurrentText(filter);
 
 	DatabaseManager::closeDatabase();
 }
 
-void ManageAttendanceEventsController::handleRenderTable() {
+void ManageAttendanceEventsController::handleRenderTable(QString filter) {
 	DatabaseManager::connectToDatabase();
 
 	QList<AttendanceEventModel> eventList = AttendanceEventRepository::getByEmployeeId(employeeSelected);
-	view->getUi()->table->setRowCount(eventList.size());
 
-	for (int i = 0; i < eventList.size(); i++) {
-		view->getUi()->table->setItem(i, 0, new QTableWidgetItem(eventList.at(i).getTypeEvent()));
-		view->getUi()->table->setItem(i, 1, new QTableWidgetItem(eventList.at(i).getDateEvent()));
-		view->getUi()->table->setItem(i, 2, new QTableWidgetItem(eventList.at(i).getTime()));
-		view->getUi()->table->setItem(i, 3, new QTableWidgetItem(eventList.at(i).getException() == 0 ? " " : " "));
+	std::sort(eventList.begin(), eventList.end(), [](const AttendanceEventModel& a, const AttendanceEventModel& b) {
+		return a.getSession() < b.getSession();
+		});
+
+	QList<AttendanceEventModel> filteredEvents = filterEvents(eventList, filter);
+	view->getUi()->table->setRowCount(filteredEvents.size());
+
+
+	for (int i = 0; i < filteredEvents.size() - 1; i += 2) {
+		view->getUi()->table->setItem(i, 0, new QTableWidgetItem(filteredEvents.at(i).getTypeEvent()));
+		view->getUi()->table->setItem(i, 1, new QTableWidgetItem(filteredEvents.at(i).getDateEvent()));
+		view->getUi()->table->setItem(i, 2, new QTableWidgetItem(filteredEvents.at(i).getTime()));
+		view->getUi()->table->setItem(i, 3, new QTableWidgetItem(filteredEvents.at(i).getException() == 0 ? " " : " "));
+
+		view->getUi()->table->setItem(i + 1, 0, new QTableWidgetItem(filteredEvents.at(i + 1).getTypeEvent()));
+		view->getUi()->table->setItem(i + 1, 1, new QTableWidgetItem(filteredEvents.at(i + 1).getDateEvent()));
+		view->getUi()->table->setItem(i + 1, 2, new QTableWidgetItem(filteredEvents.at(i + 1).getTime()));
+		view->getUi()->table->setItem(i + 1, 3, new QTableWidgetItem(filteredEvents.at(i + 1).getException() == 0 ? " " : " "));
+	}
+
+	if (filteredEvents.size() % 2 != 0) {
+		view->getUi()->table->setItem(filteredEvents.size() - 1, 0, new QTableWidgetItem(filteredEvents.at(filteredEvents.size() - 1).getTypeEvent()));
+		view->getUi()->table->setItem(filteredEvents.size() - 1, 1, new QTableWidgetItem(filteredEvents.at(filteredEvents.size() - 1).getDateEvent()));
+		view->getUi()->table->setItem(filteredEvents.size() - 1, 2, new QTableWidgetItem(filteredEvents.at(filteredEvents.size() - 1).getTime()));
+		view->getUi()->table->setItem(filteredEvents.size() - 1, 3, new QTableWidgetItem(filteredEvents.at(filteredEvents.size() - 1).getException() == 0 ? " " : " "));
 	}
 
 	view->getUi()->table->verticalHeader()->setVisible(false);
 
-	for (int i = 0; i < eventList.size(); ++i) {
+	for (int i = 0; i < filteredEvents.size(); ++i) {
 		if (i % 2 == 0) {
 			for (int j = 0; j < view->getUi()->table->columnCount(); ++j) {
 				QTableWidgetItem* item = view->getUi()->table->item(i, j);
@@ -238,6 +264,25 @@ void ManageAttendanceEventsController::handleRenderTable() {
 	}
 
 	DatabaseManager::closeDatabase();
+}
+
+QList<AttendanceEventModel> ManageAttendanceEventsController::filterEvents(
+	const QList<AttendanceEventModel>& eventList, const QString& filter) {
+	QList<AttendanceEventModel> filteredEvents;
+
+	for (const auto& event : eventList) {
+		QDate eventDate = QDate::fromString(event.getDateEvent(), "dd/MM/yyyy");
+		if ((filter == "This week" && Utils::isInCurrentWeek(eventDate)) ||
+			(filter == "Last week" && Utils::isInLastWeek(eventDate)) ||
+			(filter == "This month" && Utils::isInCurrentMonth(eventDate)) ||
+			(filter == "Last month" && Utils::isInLastMonth(eventDate)) ||
+			(filter == "This year" && Utils::isInCurrentYear(eventDate)) ||
+			filter == "All events") {
+			filteredEvents.append(event);
+		}
+	}
+
+	return filteredEvents;
 }
 
 void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, bool isEditMode, DialogFormAttendanceEvents* dialog) {
@@ -490,7 +535,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 	}
 
 	dialog->accept();
-	handleRenderTable();
+	handleRenderTable(filter);
 
 	DatabaseManager::closeDatabase();
 }
@@ -507,5 +552,12 @@ void ManageAttendanceEventsController::handleRowClicked(const QModelIndex& index
 
 	view->getUi()->edit->setDisabled(false);
 	view->getUi()->delete_2->setDisabled(false);
+
+
 	DatabaseManager::closeDatabase();
+}
+
+void ManageAttendanceEventsController::handleFilterRange(const QString& value) {
+	filter = value;
+	handleRenderTable(value);
 }

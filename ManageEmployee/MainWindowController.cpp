@@ -1,5 +1,6 @@
 #include "MainWindowController.h"
 #include "EmployeeRepository.h"
+#include <QSettings>
 
 MainWindowController::MainWindowController(MainWindow* view, QObject* parent)
 	: QObject(parent), mainWindowView(view)
@@ -64,7 +65,6 @@ void MainWindowController::handleLogout() {
 	ecioController->getView()->getUi()->stack_checkin_out->setCurrentIndex(0);
 	ecioController->loadEmployee();
 
-
 	handleShowCheckInOut();
 	DatabaseManager::closeDatabase();
 }
@@ -113,6 +113,8 @@ void MainWindowController::handleShowManageDepartment() {
 	mdController->getMdView()->getUi()->delete_2->setDisabled(true);
 
 	mdController->departmentSelected = "";
+
+	mdController->handleRenderTable();
 }
 
 void MainWindowController::handleHiddenManageEmployee() {
@@ -129,6 +131,8 @@ void MainWindowController::handleShowManageEmployee() {
 	meController->getMeView()->getUi()->delete_2->setDisabled(true);
 
 	meController->employeeSelected = "";
+
+	meController->handleRenderTable();
 }
 
 void MainWindowController::handleHiddenCheckInOut() {
@@ -156,6 +160,9 @@ void MainWindowController::handleShowManageEnvents() {
 	maeController->getView()->getUi()->check_out->setDisabled(true);
 
 	maeController->employeeSelected = "";
+
+	maeController->handleRenderTable();
+	maeController->loadEmployee();
 }
 
 MainWindow* MainWindowController::getMainWindowView() { return this->mainWindowView; }

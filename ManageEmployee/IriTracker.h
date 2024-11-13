@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <QString>
+#include <functional>
+#include <QObject>
+
 
 #include "IICAPI.h"
 #include "IrisDef.h"
@@ -31,10 +34,20 @@ inline void sleep_msec(int miliseconds)
 
 #endif // SLEEP_MSEC_H
 
-class IriTracker
-{
+class IriTracker : public QObject {
+    Q_OBJECT
+
+signals:
+    void newImageCaptured(const unsigned char* imageData, int imageLen, int imageHeight, int imageWidth);
+    void captureFinished();
+public slots:
+    int capture_without_callback(IICHandle hdev);
+    QString run();
 public:
     IriTracker();
-    static QString run();
+    
+    IICHandle hdev;
+    
+    
 };
 

@@ -84,6 +84,7 @@ void ManageDepartmentController::onClickDelete() {
 	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete department ?", nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
 		if (DepartmentRepository::_delete(departmentSelected)) {
+			departmentSelected = "";
 			handleRenderTable();
 		}
 		else {

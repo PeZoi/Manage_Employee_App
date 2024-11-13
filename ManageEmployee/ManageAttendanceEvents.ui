@@ -42,7 +42,7 @@
      <x>0</x>
      <y>60</y>
      <width>260</width>
-     <height>286</height>
+     <height>271</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -103,7 +103,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="spinBox"/>
+       <widget class="QSpinBox" name="page_size"/>
       </item>
      </layout>
     </item>
@@ -117,7 +117,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="filter_range">
         <item>
          <property name="text">
           <string>This week</string>
@@ -160,7 +160,7 @@
      <x>260</x>
      <y>90</y>
      <width>511</width>
-     <height>231</height>
+     <height>241</height>
     </rect>
    </property>
    <property name="font">

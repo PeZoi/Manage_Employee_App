@@ -5,12 +5,16 @@
 #include <QDateTime>
 #include <QDebug>
 #include <utility>
+#include <QImage>
+#include <QBuffer>
+#include <QImageWriter>
 
 QString path = "D://IriTech//Code//ManageEmployee//image//";
 QString imgReturn = "";
 
 IriTracker::IriTracker()
 {
+	hdev = NULL;
 }
 
 int write_binary_file(const QString& fname, const void* buff, unsigned len)
@@ -40,15 +44,15 @@ IICHandle open_first_device(const char devicePaths[][256], int deviceCount)
 {
 	for (int i = 0; i < deviceCount; ++i)
 	{
-		IICHandle hdev = 0;
-		int fail = IIC_OpenDevice(devicePaths[i], NULL, &hdev);
+		IICHandle _hdev = 0;
+		int fail = IIC_OpenDevice(devicePaths[i], NULL, &_hdev);
 		if (fail)
 		{
 			log_lib_error(fail);
 			printf("...while open device: %s\n", devicePaths[i]);
 			continue;
 		}
-		return hdev;
+		return _hdev;
 	}
 	return 0;
 }
@@ -267,7 +271,7 @@ int capture_with_callback(IICHandle hdev)
 	return fail;
 }
 
-int capture_without_callback(IICHandle hdev)
+int IriTracker::capture_without_callback(IICHandle hdev)
 {
 	int fail = IIC_StartCapturing(hdev,
 		EYE_SUBTYPE_UNDEF,
@@ -307,6 +311,9 @@ int capture_without_callback(IICHandle hdev)
 					// image buffer length: imageLen[i],
 					// image width: imageWidth[i],
 					// image height: imageHeight[i]
+
+
+					emit newImageCaptured(imageData[i], imageLen[i], imageWidth[i], imageHeight[i]);
 				}
 			}
 		}
@@ -376,7 +383,9 @@ QString IriTracker::run()
 		}
 
 		/* open first available device */
-		IICHandle hdev = open_first_device(devicePaths, deviceCount);
+		if (!hdev) {
+			hdev = open_first_device(devicePaths, deviceCount);
+		}
 		if (!hdev)
 		{
 			printf("No accessible device!\n");
@@ -384,20 +393,20 @@ QString IriTracker::run()
 		}
 
 		/* capturing iris, callback approach */
-		printf("--- capture with implementation using callback ---\n");
+		/*printf("--- capture with implementation using callback ---\n");
 		fail = capture_with_callback(hdev);
 		if (fail)
 		{
 			log_lib_error(fail);
-		}
+		}*/
 
 		/* capturing iris, caller does all query */
-		/*printf("--- capture with implementation not using callback ---\n");
+		printf("--- capture with implementation not using callback ---\n");
 		fail = capture_without_callback(hdev);
 		if (fail)
 		{
 		    log_lib_error(fail);
-		}*/
+		}
 
 		/* close device handle */
 		IIC_CloseDevice(hdev);
@@ -408,5 +417,6 @@ QString IriTracker::run()
 	/* De-initialize library before exiting */
 	IIC_Deinit();
 
+	emit captureFinished();
 	return imgReturn;
 }

@@ -205,7 +205,7 @@
     <ClInclude Include="EmployeeModel.h" />
     <QtMoc Include="EmployeeRepository.h" />
     <QtMoc Include="ErrorLabel.h" />
-    <ClInclude Include="IriTracker.h" />
+    <QtMoc Include="IriTracker.h" />
     <QtMoc Include="ManageDepartmentController.h" />
     <QtMoc Include="MainWindowController.h" />
     <QtMoc Include="MainWindow.h" />

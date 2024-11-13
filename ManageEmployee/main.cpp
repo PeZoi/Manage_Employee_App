@@ -4,6 +4,7 @@
 #include "MainWindowController.h"
 #include "SignUpAdminController.h"
 #include <QtWidgets/QApplication>
+#include <QSqlDatabase>
 
 int main(int argc, char* argv[])
 {
@@ -25,7 +26,6 @@ int main(int argc, char* argv[])
     }
 
     // Đóng kết nối cơ sở dữ liệu sau khi ứng dụng thoát
-    int result = a.exec();
     db.closeDatabase();
 
     // Giải phóng bộ nhớ
@@ -35,5 +35,6 @@ int main(int argc, char* argv[])
     delete signUpController;
     delete signUpUI;
 
+    int result = a.exec();
     return result;
 }

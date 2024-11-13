@@ -38,10 +38,10 @@ public:
     QHBoxLayout *horizontalLayout;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label;
-    QSpinBox *spinBox;
+    QSpinBox *page_size;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_2;
-    QComboBox *comboBox;
+    QComboBox *filter_range;
     QTableWidget *table;
     QPushButton *delete_2;
     QPushButton *edit;
@@ -66,7 +66,7 @@ public:
 "}"));
         verticalLayoutWidget = new QWidget(ManageAttendanceEventsClass);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 60, 260, 286));
+        verticalLayoutWidget->setGeometry(QRect(0, 60, 260, 271));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(0);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -112,10 +112,10 @@ public:
 
         horizontalLayout_2->addWidget(label);
 
-        spinBox = new QSpinBox(horizontalLayoutWidget);
-        spinBox->setObjectName(QString::fromUtf8("spinBox"));
+        page_size = new QSpinBox(horizontalLayoutWidget);
+        page_size->setObjectName(QString::fromUtf8("page_size"));
 
-        horizontalLayout_2->addWidget(spinBox);
+        horizontalLayout_2->addWidget(page_size);
 
 
         horizontalLayout->addLayout(horizontalLayout_2);
@@ -128,16 +128,16 @@ public:
 
         horizontalLayout_3->addWidget(label_2);
 
-        comboBox = new QComboBox(horizontalLayoutWidget);
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->addItem(QString());
-        comboBox->setObjectName(QString::fromUtf8("comboBox"));
+        filter_range = new QComboBox(horizontalLayoutWidget);
+        filter_range->addItem(QString());
+        filter_range->addItem(QString());
+        filter_range->addItem(QString());
+        filter_range->addItem(QString());
+        filter_range->addItem(QString());
+        filter_range->addItem(QString());
+        filter_range->setObjectName(QString::fromUtf8("filter_range"));
 
-        horizontalLayout_3->addWidget(comboBox);
+        horizontalLayout_3->addWidget(filter_range);
 
 
         horizontalLayout->addLayout(horizontalLayout_3);
@@ -154,7 +154,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         table->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         table->setObjectName(QString::fromUtf8("table"));
-        table->setGeometry(QRect(260, 90, 511, 231));
+        table->setGeometry(QRect(260, 90, 511, 241));
         QFont font1;
         font1.setPointSize(8);
         table->setFont(font1);
@@ -263,12 +263,12 @@ public:
         departmentsLabel->setText(QCoreApplication::translate("ManageAttendanceEventsClass", "Attendance Events", nullptr));
         label->setText(QCoreApplication::translate("ManageAttendanceEventsClass", "Events per page", nullptr));
         label_2->setText(QCoreApplication::translate("ManageAttendanceEventsClass", "View events from", nullptr));
-        comboBox->setItemText(0, QCoreApplication::translate("ManageAttendanceEventsClass", "This week", nullptr));
-        comboBox->setItemText(1, QCoreApplication::translate("ManageAttendanceEventsClass", "Last week", nullptr));
-        comboBox->setItemText(2, QCoreApplication::translate("ManageAttendanceEventsClass", "This month", nullptr));
-        comboBox->setItemText(3, QCoreApplication::translate("ManageAttendanceEventsClass", "Last month", nullptr));
-        comboBox->setItemText(4, QCoreApplication::translate("ManageAttendanceEventsClass", "This year", nullptr));
-        comboBox->setItemText(5, QCoreApplication::translate("ManageAttendanceEventsClass", "All events", nullptr));
+        filter_range->setItemText(0, QCoreApplication::translate("ManageAttendanceEventsClass", "This week", nullptr));
+        filter_range->setItemText(1, QCoreApplication::translate("ManageAttendanceEventsClass", "Last week", nullptr));
+        filter_range->setItemText(2, QCoreApplication::translate("ManageAttendanceEventsClass", "This month", nullptr));
+        filter_range->setItemText(3, QCoreApplication::translate("ManageAttendanceEventsClass", "Last month", nullptr));
+        filter_range->setItemText(4, QCoreApplication::translate("ManageAttendanceEventsClass", "This year", nullptr));
+        filter_range->setItemText(5, QCoreApplication::translate("ManageAttendanceEventsClass", "All events", nullptr));
 
         QTableWidgetItem *___qtablewidgetitem = table->horizontalHeaderItem(0);
         ___qtablewidgetitem->setText(QCoreApplication::translate("ManageAttendanceEventsClass", "Type", nullptr));

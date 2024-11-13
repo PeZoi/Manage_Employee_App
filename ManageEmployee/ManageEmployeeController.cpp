@@ -122,6 +122,7 @@ void ManageEmployeeController::onClickDelete() {
 	if (confirm->exec() == QDialog::Accepted) {
 		
 		if (AttendanceEventRepository::_deleteByEmployeeId(employeeSelected) && EmployeeRepository::_delete(employeeSelected)) {
+			employeeSelected = "";
 			handleRenderTable();
 		}
 		else {

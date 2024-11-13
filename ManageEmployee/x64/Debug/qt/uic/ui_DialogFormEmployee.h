@@ -18,7 +18,6 @@
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QFormLayout>
 #include <QtWidgets/QGraphicsView>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -73,19 +72,15 @@ public:
     QTextEdit *address;
     QWidget *tab_3;
     QLabel *label_14;
-    QWidget *gridLayoutWidget;
-    QGridLayout *gridLayout;
-    QVBoxLayout *verticalLayout_4;
-    QLabel *label_17;
-    QLabel *label_18;
-    QGraphicsView *iri_right;
-    QPushButton *scan_right;
-    QVBoxLayout *verticalLayout_3;
-    QLabel *label_16;
-    QLabel *label_15;
-    QGraphicsView *iri_left;
-    QPushButton *scan_left;
     QLabel *label_19;
+    QLabel *label_23;
+    QLabel *label_22;
+    QPushButton *scan_left;
+    QPushButton *scan_right;
+    QLabel *label_25;
+    QLabel *label_24;
+    QLabel *iri_left;
+    QLabel *iri_right;
     QPushButton *submit;
     QPushButton *cancelButton;
     QWidget *verticalLayoutWidget;
@@ -314,74 +309,40 @@ public:
         label_14 = new QLabel(tab_3);
         label_14->setObjectName(QString::fromUtf8("label_14"));
         label_14->setGeometry(QRect(10, 10, 191, 16));
-        gridLayoutWidget = new QWidget(tab_3);
-        gridLayoutWidget->setObjectName(QString::fromUtf8("gridLayoutWidget"));
-        gridLayoutWidget->setGeometry(QRect(20, 50, 491, 241));
-        gridLayout = new QGridLayout(gridLayoutWidget);
-        gridLayout->setSpacing(6);
-        gridLayout->setContentsMargins(11, 11, 11, 11);
-        gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
-        gridLayout->setContentsMargins(0, 0, 0, 0);
-        verticalLayout_4 = new QVBoxLayout();
-        verticalLayout_4->setSpacing(6);
-        verticalLayout_4->setObjectName(QString::fromUtf8("verticalLayout_4"));
-        label_17 = new QLabel(gridLayoutWidget);
-        label_17->setObjectName(QString::fromUtf8("label_17"));
-        label_17->setStyleSheet(QString::fromUtf8("font-weight: bold;"));
-
-        verticalLayout_4->addWidget(label_17, 0, Qt::AlignHCenter|Qt::AlignTop);
-
-        label_18 = new QLabel(gridLayoutWidget);
-        label_18->setObjectName(QString::fromUtf8("label_18"));
-        label_18->setStyleSheet(QString::fromUtf8("color: red;"));
-
-        verticalLayout_4->addWidget(label_18, 0, Qt::AlignHCenter|Qt::AlignTop);
-
-        iri_right = new QGraphicsView(gridLayoutWidget);
-        iri_right->setObjectName(QString::fromUtf8("iri_right"));
-
-        verticalLayout_4->addWidget(iri_right);
-
-        scan_right = new QPushButton(gridLayoutWidget);
-        scan_right->setObjectName(QString::fromUtf8("scan_right"));
-
-        verticalLayout_4->addWidget(scan_right);
-
-
-        gridLayout->addLayout(verticalLayout_4, 0, 1, 1, 1);
-
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setSpacing(6);
-        verticalLayout_3->setObjectName(QString::fromUtf8("verticalLayout_3"));
-        label_16 = new QLabel(gridLayoutWidget);
-        label_16->setObjectName(QString::fromUtf8("label_16"));
-        label_16->setStyleSheet(QString::fromUtf8("font-weight: bold;"));
-
-        verticalLayout_3->addWidget(label_16, 0, Qt::AlignHCenter|Qt::AlignTop);
-
-        label_15 = new QLabel(gridLayoutWidget);
-        label_15->setObjectName(QString::fromUtf8("label_15"));
-        label_15->setStyleSheet(QString::fromUtf8("color: red;"));
-
-        verticalLayout_3->addWidget(label_15, 0, Qt::AlignHCenter|Qt::AlignTop);
-
-        iri_left = new QGraphicsView(gridLayoutWidget);
-        iri_left->setObjectName(QString::fromUtf8("iri_left"));
-
-        verticalLayout_3->addWidget(iri_left);
-
-        scan_left = new QPushButton(gridLayoutWidget);
-        scan_left->setObjectName(QString::fromUtf8("scan_left"));
-
-        verticalLayout_3->addWidget(scan_left);
-
-
-        gridLayout->addLayout(verticalLayout_3, 0, 0, 1, 1);
-
         label_19 = new QLabel(tab_3);
         label_19->setObjectName(QString::fromUtf8("label_19"));
         label_19->setGeometry(QRect(10, 500, 631, 16));
         label_19->setStyleSheet(QString::fromUtf8("font: 15px"));
+        label_23 = new QLabel(tab_3);
+        label_23->setObjectName(QString::fromUtf8("label_23"));
+        label_23->setGeometry(QRect(97, 73, 105, 16));
+        label_23->setStyleSheet(QString::fromUtf8("color: red;"));
+        label_22 = new QLabel(tab_3);
+        label_22->setObjectName(QString::fromUtf8("label_22"));
+        label_22->setGeometry(QRect(120, 50, 49, 16));
+        label_22->setStyleSheet(QString::fromUtf8("font-weight: bold;"));
+        scan_left = new QPushButton(tab_3);
+        scan_left->setObjectName(QString::fromUtf8("scan_left"));
+        scan_left->setGeometry(QRect(30, 280, 239, 25));
+        scan_right = new QPushButton(tab_3);
+        scan_right->setObjectName(QString::fromUtf8("scan_right"));
+        scan_right->setGeometry(QRect(280, 280, 239, 25));
+        label_25 = new QLabel(tab_3);
+        label_25->setObjectName(QString::fromUtf8("label_25"));
+        label_25->setGeometry(QRect(350, 70, 105, 16));
+        label_25->setStyleSheet(QString::fromUtf8("color: red;"));
+        label_24 = new QLabel(tab_3);
+        label_24->setObjectName(QString::fromUtf8("label_24"));
+        label_24->setGeometry(QRect(370, 50, 61, 16));
+        label_24->setStyleSheet(QString::fromUtf8("font-weight: bold;"));
+        iri_left = new QLabel(tab_3);
+        iri_left->setObjectName(QString::fromUtf8("iri_left"));
+        iri_left->setGeometry(QRect(30, 100, 231, 171));
+        iri_left->setPixmap(QPixmap(QString::fromUtf8("../icon/no-device.jpg")));
+        iri_right = new QLabel(tab_3);
+        iri_right->setObjectName(QString::fromUtf8("iri_right"));
+        iri_right->setGeometry(QRect(280, 100, 231, 171));
+        iri_right->setPixmap(QPixmap(QString::fromUtf8("../icon/no-device.jpg")));
         QIcon icon2;
         icon2.addFile(QString::fromUtf8("../icon/eye.png"), QSize(), QIcon::Normal, QIcon::Off);
         tabWidget->addTab(tab_3, icon2, QString());
@@ -430,7 +391,7 @@ public:
 
         retranslateUi(DialogFormEmployeeClass);
 
-        tabWidget->setCurrentIndex(0);
+        tabWidget->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(DialogFormEmployeeClass);
@@ -459,13 +420,15 @@ public:
         label_6->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Address", nullptr));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QCoreApplication::translate("DialogFormEmployeeClass", "Contact Information", nullptr));
         label_14->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Select and capture the iris(es)", nullptr));
-        label_17->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Right iris", nullptr));
-        label_18->setText(QCoreApplication::translate("DialogFormEmployeeClass", "(Not registerd yet)", nullptr));
-        scan_right->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Scan", nullptr));
-        label_16->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Left iris", nullptr));
-        label_15->setText(QCoreApplication::translate("DialogFormEmployeeClass", "(Not registerd yet)", nullptr));
-        scan_left->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Scan", nullptr));
         label_19->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Note: In order to ensure the iris quality, please capture THREE times for enrolled irises", nullptr));
+        label_23->setText(QCoreApplication::translate("DialogFormEmployeeClass", "(Not registerd yet)", nullptr));
+        label_22->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Left iris", nullptr));
+        scan_left->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Scan", nullptr));
+        scan_right->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Scan", nullptr));
+        label_25->setText(QCoreApplication::translate("DialogFormEmployeeClass", "(Not registerd yet)", nullptr));
+        label_24->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Right iris", nullptr));
+        iri_left->setText(QString());
+        iri_right->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QCoreApplication::translate("DialogFormEmployeeClass", "Irises", nullptr));
         submit->setText(QCoreApplication::translate("DialogFormEmployeeClass", "OK", nullptr));
         cancelButton->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Cancel", nullptr));

@@ -2,6 +2,8 @@
 #include "ManageDepartment.h"
 #include "IriTracker.h"
 #include "ErrorLabel.h"
+#include <QBuffer>
+#include <QThread>
 
 
 DialogFormEmployee::DialogFormEmployee(QWidget* parent)
@@ -25,49 +27,19 @@ DialogFormEmployee::DialogFormEmployee(QWidget* parent)
 	ui.confirm_password->setEchoMode(QLineEdit::Password);
 
 	connect(ui.submit, SIGNAL(clicked()), this, SLOT(handleSubmit()));
+	connect(ui.cancelButton, &QPushButton::clicked, this, &DialogFormEmployee::onClickCancel);
 	connect(ui.select_avatar, &QPushButton::clicked, this, [this]() {
 		emit uploadAvatar(this, isEditMode_employee);
 		});
 
 	connect(ui.scan_left, &QPushButton::clicked, this, [this]() {
-		qDebug() << "Đang scan ...";
-		QString iriLeft = IriTracker::run();
-
-		if (iriLeft.trimmed().isEmpty()) {
-			msgBox.setText("Scan fail ...");
-			msgBox.exec();
-		}
-
-		iri_leftPath = iriLeft;
-
-		QPixmap iriImg;
-		iriImg.load(iriLeft);
-
-		QGraphicsScene* scene = new QGraphicsScene(this);
-		scene->addPixmap(iriImg);
-
-		ui.iri_left->setScene(scene);
-		ui.iri_left->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+		processStreaming();
+		side = "LEFT";
 		});
 
 	connect(ui.scan_right, &QPushButton::clicked, this, [this]() {
-		qDebug() << "Đang scan ...";
-		QString iriRight = IriTracker::run();
-		if (iriRight.trimmed().isEmpty()) {
-			msgBox.setText("Scan fail ...");
-			msgBox.exec();
-		}
-
-		iri_rightPath = iriRight;
-
-		QPixmap iriImg;
-		iriImg.load(iriRight);
-
-		QGraphicsScene* scene = new QGraphicsScene(this);
-		scene->addPixmap(iriImg);
-
-		ui.iri_right->setScene(scene);
-		ui.iri_right->fitInView(scene->itemsBoundingRect(), Qt::KeepAspectRatio);
+		processStreaming();
+		side = "RIGHT";
 		});
 
 	connect(ui.is_allow_password, &QCheckBox::toggled, this, [this](bool checked) {
@@ -83,7 +55,14 @@ DialogFormEmployee::DialogFormEmployee(QWidget* parent)
 }
 
 DialogFormEmployee::~DialogFormEmployee()
-{}
+{
+	this->deleteLater();
+	captureThread = nullptr;
+	iriTracker = nullptr;
+}
+void DialogFormEmployee::onClickCancel() {
+	this->deleteLater();
+}
 
 void DialogFormEmployee::handleSubmit() {
 	QString id = ui.id->text();
@@ -208,4 +187,69 @@ void DialogFormEmployee::setValue(EmployeeModel employee) {
 
 Ui::DialogFormEmployeeClass DialogFormEmployee::getUi() {
 	return ui;
+}
+
+void DialogFormEmployee::processStreaming() {
+	// Tạo thread mới cho quá trình capture
+	captureThread = new QThread();
+	iriTracker = new IriTracker();
+
+	// Kết nối tín hiệu từ IriTracker đến updateFrame trong UI thread
+	connect(iriTracker, &IriTracker::newImageCaptured, this, &DialogFormEmployee::updateFrame);
+
+	// Kết nối tín hiệu captureFinished để dừng thread khi quá trình capture hoàn tất
+	connect(iriTracker, &IriTracker::captureFinished, captureThread, &QThread::quit);
+
+	// Di chuyển IriTracker vào thread để xử lý capture
+	iriTracker->moveToThread(captureThread);
+
+	// Kết nối captureThread đã được bắt đầu để gọi run trong IriTracker
+	connect(captureThread, &QThread::started, iriTracker, &IriTracker::run);
+
+	// Kết nối để tự động xóa IriTracker khi hoàn tất
+	connect(iriTracker, &IriTracker::captureFinished, iriTracker, &QObject::deleteLater);
+	connect(captureThread, &QThread::finished, captureThread, &QObject::deleteLater);
+
+	// Bắt đầu thread
+	captureThread->start();
+}
+void DialogFormEmployee::updateFrame(const unsigned char* imageData, int imageLen, int imageWidth, int imageHeight) {
+	if (imageData && imageWidth > 0 && imageHeight > 0) {
+		// Tạo QImage từ dữ liệu raw
+		QImage image(imageData, imageWidth, imageHeight, QImage::Format_Grayscale8);
+		QPixmap pixmap = QPixmap::fromImage(image);
+		//ui.testLabel->setPixmap(pixmap.scaled(ui.testLabel->size(), Qt::KeepAspectRatio));
+
+		if (side == "LEFT") {
+			ui.iri_left->setPixmap(pixmap.scaled(ui.iri_left->size(), Qt::KeepAspectRatio));
+		}
+		else {
+			ui.iri_right->setPixmap(pixmap.scaled(ui.iri_right->size(), Qt::KeepAspectRatio));
+		}
+	}
+	else {
+		qDebug() << "Dữ liệu hình ảnh không hợp lệ.";
+	}
+}
+void DialogFormEmployee::handleCapture(QString side) {
+	qDebug() << "Đang scan ...";
+	/*QString iri = IriTracker::run([this]() {
+		updateFrame();
+		});
+
+	if (iri.trimmed().isEmpty()) {
+		msgBox.setText("Scan fail ...");
+		msgBox.exec();
+	}
+	QPixmap iriImg;
+	iriImg.load(iri);
+	QGraphicsScene* scene = new QGraphicsScene(this);
+	scene->addPixmap(iriImg);
+
+	if (side == "LEFT") {
+		iri_leftPath = iri;
+	}
+	else {
+		iri_rightPath = iri;
+	}*/
 }
