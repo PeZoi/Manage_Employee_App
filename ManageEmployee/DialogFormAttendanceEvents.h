@@ -3,13 +3,14 @@
 #include <QDialog>
 #include "ui_DialogFormAttendanceEvents.h"
 #include "AttendaceEventModel.h"
+#include "IDatabaseManager.h"
 
 class DialogFormAttendanceEvents : public QDialog
 {
 	Q_OBJECT
 
 public:
-	DialogFormAttendanceEvents(QString employeeSelected ,QWidget *parent = nullptr);
+	DialogFormAttendanceEvents(QString employeeSelected ,IDatabaseManager* db, QWidget *parent = nullptr);
 	~DialogFormAttendanceEvents();
 
 	Ui::DialogFormAttendanceEventsClass* getUi();
@@ -28,4 +29,5 @@ public slots:
 
 private:
 	Ui::DialogFormAttendanceEventsClass *ui;
+	IDatabaseManager* db;
 };

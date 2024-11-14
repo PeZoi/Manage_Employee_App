@@ -3,9 +3,10 @@
 #include "MainWindowController.h"
 #include "ErrorLabel.h"
 
-SignUpAdminController::SignUpAdminController(SignUpAdmin* view, QObject* parent)
-	: QObject(parent), signUpView(view)
+SignUpAdminController::SignUpAdminController(SignUpAdmin* view, IDatabaseManager* _db, QObject* parent)
+	: QObject(parent), signUpView(view), db(_db)
 {
+
 	connect(signUpView->getUi()->btn_signup_2, &QPushButton::clicked, this, &SignUpAdminController::handleSubmit);
 	connect(signUpView->getUi()->cancelButton, &QPushButton::clicked, this, [this]() {exit(0); });
 }

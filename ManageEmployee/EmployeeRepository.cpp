@@ -286,3 +286,13 @@ bool EmployeeRepository::updateStatus(QString status, QString id) {
 	return DatabaseManager::executeCreate(query, params);
 }
 
+bool EmployeeRepository::checkExistAdmin() {
+	QString queryString = "SELECT COUNT(*) FROM employee WHERE role = 'ADMIN';";
+	QSqlQuery query = DatabaseManager::executeQuery(queryString);
+
+	if (query.next()) {
+		return query.value(0).toInt() > 0; // Nếu có ít nhất một tài khoản ADMIN
+	}
+
+	return false; // Nếu không có tài khoản ADMIN hoặc truy vấn thất bại
+}

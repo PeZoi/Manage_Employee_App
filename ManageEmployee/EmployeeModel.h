@@ -1,10 +1,7 @@
-// EmployeeModel.h
 #pragma once
-
 #include "DepartmentModel.h"
 #include <QString>
 #include <QDate>
-
 class EmployeeModel
 {
 public:

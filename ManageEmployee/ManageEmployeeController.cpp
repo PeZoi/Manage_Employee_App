@@ -16,8 +16,8 @@
 #include <QPixmap>
 
 
-ManageEmployeeController::ManageEmployeeController(ManageEmployee* view, QObject* parent)
-	: QObject(parent), meView(view)
+ManageEmployeeController::ManageEmployeeController(ManageEmployee* view, IDatabaseManager* _db, QObject* parent)
+	: QObject(parent), meView(view), db(_db)
 {
 	handleRenderTable();
 
@@ -45,8 +45,9 @@ void ManageEmployeeController::onClickAdd() {
 }
 
 void ManageEmployeeController::handleRenderTable() {
-	DatabaseManager::connectToDatabase();
-	QList<EmployeeModel> employeeList = EmployeeRepository::getAll();
+	db->connectToDatabase();
+	
+	QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getAll();
 
 	meView->getUi()->table->setRowCount(employeeList.size());
 
@@ -86,7 +87,7 @@ void ManageEmployeeController::handleRenderTable() {
 		}
 	}
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void ManageEmployeeController::handleRowClicked(const QModelIndex& index) {
@@ -102,7 +103,7 @@ void ManageEmployeeController::handleRowClicked(const QModelIndex& index) {
 }
 
 void ManageEmployeeController::onClickEdit() {
-	EmployeeModel employee = EmployeeRepository::getById(employeeSelected);
+	EmployeeModel employee = db->getEmployeeRepository()->getById(employeeSelected);
 
 	DialogFormEmployee* dialog = new DialogFormEmployee(meView);
 	dialog->setMode(true);
@@ -117,11 +118,11 @@ void ManageEmployeeController::onClickEdit() {
 }
 
 void ManageEmployeeController::onClickDelete() {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete employee ?", nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
 		
-		if (AttendanceEventRepository::_deleteByEmployeeId(employeeSelected) && EmployeeRepository::_delete(employeeSelected)) {
+		if (db->getAttendanceEventRepository()->_deleteByEmployeeId(employeeSelected) && db->getEmployeeRepository()->_delete(employeeSelected)) {
 			employeeSelected = "";
 			handleRenderTable();
 		}
@@ -129,21 +130,21 @@ void ManageEmployeeController::onClickDelete() {
 			qDebug() << "Xoá thất bại";
 		};
 	}
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void ManageEmployeeController::submitEmployee(const EmployeeModel& employee, bool isEditMode, DialogFormEmployee* employeeView) {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 
 	// Nếu không phải là mode edit
 	if (!isEditMode) {
 		// Kiểm tra xem id có tồn tại không
-		if (!EmployeeRepository::getById(employee.getId()).getId().isEmpty()) {
+		if (!db->getEmployeeRepository()->getById(employee.getId()).getId().isEmpty()) {
 			ErrorLabel* error = new ErrorLabel("  Employee ID exists.");
 			error->showTemporary(employeeView->getUi().errorLayout, 3000);
 			return;
 		}
-		if (EmployeeRepository::add(employee)) {
+		if (db->getEmployeeRepository()->add(employee)) {
 			handleRenderTable();
 		}
 		else {
@@ -153,7 +154,7 @@ void ManageEmployeeController::submitEmployee(const EmployeeModel& employee, boo
 		}
 	}
 	else {
-		if (EmployeeRepository::update(employee)) {
+		if (db->getEmployeeRepository()->update(employee)) {
 			handleRenderTable();
 		}
 		else {
@@ -165,17 +166,17 @@ void ManageEmployeeController::submitEmployee(const EmployeeModel& employee, boo
 
 	employeeView->accept();
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void ManageEmployeeController::handleToggleEnabled(QString id, bool checked) {
-	DatabaseManager::connectToDatabase();
-	EmployeeRepository::toggleEnabled(id, checked);
-	DatabaseManager::closeDatabase();
+	db->connectToDatabase();
+	db->getEmployeeRepository()->toggleEnabled(id, checked);
+	db->closeDatabase();
 }
 
 void ManageEmployeeController::handleUploadAvatar(DialogFormEmployee* employeeForm, bool isEditMode_employee) {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 	QString picpath = QFileDialog::getOpenFileName(nullptr, tr("Open file"), "C://Users//MY PC//OneDrive//Pictures", "JPG File(*.jpg);;PNG File(*.png)");
 	QString savePath = "D://IriTech//Code//ManageEmployee//image//" + QFileInfo(picpath).baseName() + "_" + employeeSelected + "." + QFileInfo(picpath).suffix();
 	QFile::copy(picpath, savePath);
@@ -192,21 +193,22 @@ void ManageEmployeeController::handleUploadAvatar(DialogFormEmployee* employeeFo
 	employeeForm->avatarPath = savePath;
 
 	if (isEditMode_employee) {
-		EmployeeRepository::changeAvatar(savePath, employeeSelected);
+		db->getEmployeeRepository()->changeAvatar(savePath, employeeSelected);
 	}
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void ManageEmployeeController::renderDepartments(Ui::DialogFormEmployeeClass employeeForm) {
-	DatabaseManager::connectToDatabase();
-	QList<DepartmentModel> employeeList = DepartmentRepository::getAll();
+	db->connectToDatabase();
+	
+	QList<DepartmentModel> employeeList = db->getDepartmentRepository()->getAll();
 
 	for (int i = 0; i < employeeList.size(); i++) {
 		employeeForm.department->addItem(employeeList.at(i).getName());
 	}
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 ManageEmployee* ManageEmployeeController::getMeView() {

@@ -45,6 +45,9 @@
     <Filter Include="Header Files\Repository">
       <UniqueIdentifier>{6a118ac8-8b52-4a97-9ec6-2ece6417ef47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Repository\Interface">
+      <UniqueIdentifier>{5da6d939-e8d7-4bc0-b572-94ec34395f27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ManageEmployee.qrc">
@@ -147,6 +150,18 @@
     </ClCompile>
     <ClCompile Include="DialogDeleteAttendanceEvent.cpp">
       <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseManagerSQLite.cpp">
+      <Filter>Source Files\Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeRepositorySQLite.cpp">
+      <Filter>Source Files\Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="DepartmentRepositorySQLite.cpp">
+      <Filter>Source Files\Repository</Filter>
+    </ClCompile>
+    <ClCompile Include="AttendanceEventRepositorySQLite.cpp">
+      <Filter>Source Files\Repository</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -294,6 +309,30 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IDatabaseManager.h">
+      <Filter>Header Files\Repository\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IDepartmentRepository.h">
+      <Filter>Header Files\Repository\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IEmployeeRepository.h">
+      <Filter>Header Files\Repository\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="IAttendanceEventRepository.h">
+      <Filter>Header Files\Repository\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseManagerSQLite.h">
+      <Filter>Header Files\Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="EmployeeRepositorySQLite.h">
+      <Filter>Header Files\Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="DepartmentRepositorySQLite.h">
+      <Filter>Header Files\Repository</Filter>
+    </ClInclude>
+    <ClInclude Include="AttendanceEventRepositorySQLite.h">
+      <Filter>Header Files\Repository</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

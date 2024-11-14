@@ -3,12 +3,13 @@
 #include "Navbar.h"
 #include "EmployeeCheckInOutController.h"
 #include <QMessageBox>
+#include "IDatabaseManager.h"
 
 class NavbarController : public QObject {
 	Q_OBJECT
 public:
 	explicit NavbarController(QObject* parent = nullptr);
-	NavbarController(Navbar* view, QObject* parent = nullptr);
+	NavbarController(Navbar* view, IDatabaseManager* _db, QObject* parent = nullptr);
 	Navbar* getUi();
 
 	void setEmployeeCheckInOutController(EmployeeCheckInOutController* employeeCheckInOutController);
@@ -35,5 +36,7 @@ private:
 	Navbar* navbarView;
 	EmployeeCheckInOutController* employeeCheckInOutController;
 	QMessageBox msgBox;
+
+	IDatabaseManager* db;
 };
 

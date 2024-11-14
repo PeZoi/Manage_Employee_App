@@ -8,8 +8,8 @@
 #include <QTime>
 #include <QSortFilterProxyModel>
 
-EmployeeCheckInOutController::EmployeeCheckInOutController(EmployeeCheckInOut* view, QObject* parent)
-	: QObject(parent), view(view)
+EmployeeCheckInOutController::EmployeeCheckInOutController(EmployeeCheckInOut* view, IDatabaseManager* _db, QObject* parent)
+	: QObject(parent), view(view), db(_db)
 {
 	view->getUi()->stack_checkin_out->setCurrentIndex(0);
 	view->getUi()->password->setEchoMode(QLineEdit::Password);
@@ -56,8 +56,8 @@ void EmployeeCheckInOutController::updateDateTime() {
 }
 
 void EmployeeCheckInOutController::onClickShowAll() {
-	DatabaseManager::connectToDatabase();
-	QList<EmployeeModel> employeeList = EmployeeRepository::getAll();
+	db->connectToDatabase();
+	QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getAll();
 
 	view->getUi()->name_list->clear();
 	view->getUi()->show_all->setDisabled(true);
@@ -68,21 +68,21 @@ void EmployeeCheckInOutController::onClickShowAll() {
 		view->getUi()->name_list->addItem(displayName);
 	}
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void EmployeeCheckInOutController::loadEmployee() {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 
 	bool checkHasEmployee = false;
 
 	QStandardItemModel* model = new QStandardItemModel(this);
 	view->getUi()->companyTreeView->header()->setVisible(false);
 
-	QList<DepartmentModel> departmentList = DepartmentRepository::getAll();
+	QList<DepartmentModel> departmentList = db->getDepartmentRepository()->getAll();
 
 	for (int i = 0; i < departmentList.size(); i++) {
-		QList<EmployeeModel> employeeList = EmployeeRepository::getByDepartment(departmentList.at(i).getName());
+		QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getByDepartment(departmentList.at(i).getName());
 
 		QString departmentDisplay = QString("%1 (%2)").arg(departmentList.at(i).getName()).arg(employeeList.size());
 		QStandardItem* departmentItem = new QStandardItem(departmentDisplay);
@@ -124,11 +124,11 @@ void EmployeeCheckInOutController::loadEmployee() {
 		view->getUi()->stackedWidget->setCurrentIndex(1);
 	}
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void EmployeeCheckInOutController::handleSelectEmployee(const QModelIndex& index) {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 
 	CustomFilterProxyModel* filterModel = qobject_cast<CustomFilterProxyModel*>(view->getUi()->companyTreeView->model());
 	QStandardItemModel* sourceModel = qobject_cast<QStandardItemModel*>(filterModel->sourceModel());
@@ -148,8 +148,8 @@ void EmployeeCheckInOutController::handleSelectEmployee(const QModelIndex& index
 
 			view->getUi()->stack_checkin_out->setCurrentIndex(1);
 
-			EmployeeModel employee = EmployeeRepository::getById(employeeSelected);
-			QList<EmployeeModel> employeeList = EmployeeRepository::getByDepartment(employee.getDepartment().getName());
+			EmployeeModel employee = db->getEmployeeRepository()->getById(employeeSelected);
+			QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getByDepartment(employee.getDepartment().getName());
 
 			view->getUi()->name_list->clear();
 
@@ -172,17 +172,17 @@ void EmployeeCheckInOutController::handleSelectEmployee(const QModelIndex& index
 		}
 	}
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void EmployeeCheckInOutController::handleSelectEmployeeByCombo(const QString& name) {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 
 	QRegularExpression re("\\(([^)]+)\\)");
 	QRegularExpressionMatch match = re.match(name);
 	employeeSelected = match.captured(1);
 
-	EmployeeModel employee = EmployeeRepository::getById(employeeSelected);
+	EmployeeModel employee = db->getEmployeeRepository()->getById(employeeSelected);
 
 	if (employee.getStatus() == "IN") {
 		view->getUi()->submit_checkin_out->setText("Check Out");
@@ -192,12 +192,12 @@ void EmployeeCheckInOutController::handleSelectEmployeeByCombo(const QString& na
 	}
 	view->getUi()->password->setText("");
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 
 void EmployeeCheckInOutController::handleSubmitForPassword() {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 	QString displayNameSelected = view->getUi()->name_list->currentText();
 	QString password = view->getUi()->password->text().trimmed();
 
@@ -210,9 +210,9 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 	QRegularExpressionMatch match = re.match(displayNameSelected);
 	QString id = match.captured(1);
 
-	EmployeeModel employee = EmployeeRepository::getById(id);
+	EmployeeModel employee = db->getEmployeeRepository()->getById(id);
 
-	if (!EmployeeRepository::signInStaff(id, password)) {
+	if (!db->getEmployeeRepository()->signInStaff(id, password)) {
 		qDebug() << "Đăng nhập thất bại";
 		return;
 	}
@@ -229,7 +229,7 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 		attendanceEvent.setTypeEvent("IN");
 	}
 	else {
-		QList<AttendanceEventModel> events = AttendanceEventRepository::getByEmployeeId(employeeSelected);
+		QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getByEmployeeId(employeeSelected);
 		QList<int> sessionList;
 		for (int i = 0; i < events.size(); i++) {
 			sessionList.append(events.at(i).getSession());
@@ -241,7 +241,7 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 		attendanceEvent.setTypeEvent("OUT");
 	}
 
-	if (!AttendanceEventRepository::add(attendanceEvent)) {
+	if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
 		// Báo lỗi
 		return;
 	}
@@ -249,13 +249,13 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 	qDebug() << "Điểm danh thành công";
 
 	if (employee.getStatus() == "OUT") {
-		EmployeeRepository::updateStatus("IN", id);
+		db->getEmployeeRepository()->updateStatus("IN", id);
 	}
 	else {
-		EmployeeRepository::updateStatus("OUT", id);
+		db->getEmployeeRepository()->updateStatus("OUT", id);
 	}
 
-	QList<AttendanceEventModel> events = AttendanceEventRepository::getByEmployeeId(employee.getId());
+	QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getByEmployeeId(employee.getId());
 	std::sort(events.begin(), events.end(), [](const AttendanceEventModel& a, const AttendanceEventModel& b) {
 		return a.getSession() < b.getSession();
 		});
@@ -310,5 +310,5 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 
 	timer->start(3000);
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }

@@ -1,11 +1,12 @@
 #pragma once
 #include <QObject>
 #include "ManageDepartment.h"
+#include "IDatabaseManager.h"
 class ManageDepartmentController : public QObject {
 	Q_OBJECT
 
 public:
-	ManageDepartmentController(ManageDepartment* view, QObject* parent = nullptr);
+	ManageDepartmentController(ManageDepartment* view, IDatabaseManager* _db, QObject* parent = nullptr);
 	QString departmentSelected;
 
 public slots:
@@ -22,6 +23,7 @@ public slots:
 	
 
 private:
+	IDatabaseManager* db;
 	ManageDepartment* mdView;
 };
 

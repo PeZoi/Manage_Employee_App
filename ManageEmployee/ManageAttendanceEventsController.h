@@ -4,11 +4,12 @@
 #include "DepartmentRepository.h"
 #include "DialogFormAttendanceEvents.h"
 #include "EmployeeRepository.h"
+#include "IDatabaseManager.h"
 class ManageAttendanceEventsController : public QObject {
 	Q_OBJECT
 
 public:
-	ManageAttendanceEventsController(ManageAttendanceEvents* view, QObject* parent = nullptr);
+	ManageAttendanceEventsController(ManageAttendanceEvents* view, IDatabaseManager* _db, QObject* parent = nullptr);
 	void loadEmployee();
 
 	ManageAttendanceEvents* getView();
@@ -31,6 +32,7 @@ public slots:
 	QList<AttendanceEventModel> filterEvents(const QList<AttendanceEventModel>& eventList, const QString& filter);
 
 private:
+	IDatabaseManager* db;
 	ManageAttendanceEvents* view;
 };
 

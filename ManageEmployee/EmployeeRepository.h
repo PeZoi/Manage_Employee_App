@@ -20,5 +20,6 @@ public:
 	static QList<EmployeeModel> getByDepartment(QString department);
 	static bool checkStatusIn(QString id);
 	static bool updateStatus(QString status, QString id);
+	static bool checkExistAdmin();
 };
 

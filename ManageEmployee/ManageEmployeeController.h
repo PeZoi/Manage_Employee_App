@@ -2,12 +2,13 @@
 #include <QObject>
 #include "ManageEmployee.h"
 #include "EmployeeModel.h"
+#include "IDatabaseManager.h"
 
 class ManageEmployeeController : public QObject {
 	Q_OBJECT
 
 public:
-	ManageEmployeeController(ManageEmployee* view, QObject* parent = nullptr);
+	ManageEmployeeController(ManageEmployee* view, IDatabaseManager* _db, QObject* parent = nullptr);
 	QString employeeSelected;
 
 public slots:
@@ -27,6 +28,7 @@ public slots:
 
 
 private:
+	IDatabaseManager* db;
 	ManageEmployee* meView;
 };
 

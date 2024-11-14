@@ -7,8 +7,8 @@ NavbarController::NavbarController(QObject* parent)
 	: QObject(parent)
 {}
 
-NavbarController::NavbarController(Navbar* view, QObject* parent)
-	: QObject(parent), navbarView(view)
+NavbarController::NavbarController(Navbar* view, IDatabaseManager* _db, QObject* parent)
+	: QObject(parent), navbarView(view), db(_db)
 {
 	connect(navbarView->getUi()->logout, SIGNAL(clicked()), this, SLOT(handleClickLogout()));
 	connect(navbarView->getUi()->login, SIGNAL(clicked()), this, SLOT(handleClickLogin()));
@@ -72,8 +72,9 @@ Navbar* NavbarController::getUi() {
 }
 
 void NavbarController::handleSignInAdmin(QString pass, DialogFormLoginAdmin* dialog) {
-	DatabaseManager::connectToDatabase();
-	if (EmployeeRepository::signInAdmin(pass)) {
+	
+	db->connectToDatabase();
+	if (db->getEmployeeRepository()->signInAdmin(pass)) {
 		dialog->accept();
 		onLoginSuccess();
 	}
@@ -82,7 +83,7 @@ void NavbarController::handleSignInAdmin(QString pass, DialogFormLoginAdmin* dia
 		error->showTemporary(dialog->getUi().verticalLayout, 3000);
 		dialog->adjustSize();
 	}
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void NavbarController::setEmployeeCheckInOutController(EmployeeCheckInOutController* _employeeCheckInOutController) {

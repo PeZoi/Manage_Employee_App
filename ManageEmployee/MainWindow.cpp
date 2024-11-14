@@ -2,8 +2,8 @@
 
 #include <QHBoxLayout>
 
-MainWindow::MainWindow(QWidget* parent)
-    : QMainWindow(parent), ui(new Ui::MainWindowClass), navbarController(new NavbarController(new Navbar(nullptr), this)),
+MainWindow::MainWindow(IDatabaseManager* _db, QWidget* parent)
+    : QMainWindow(parent), ui(new Ui::MainWindowClass), navbarController(new NavbarController(new Navbar(nullptr), _db, this)),
     menu(new MenuList(this))
 {
     ui->setupUi(this);

@@ -2,24 +2,24 @@
 #include "EmployeeRepository.h"
 #include <QSettings>
 
-MainWindowController::MainWindowController(MainWindow* view, QObject* parent)
-	: QObject(parent), mainWindowView(view)
+MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager* _db, QObject* parent)
+	: QObject(parent), mainWindowView(view), db(_db)
 {
 	// Khởi tạo manage department controller
 	ManageDepartment* md = new ManageDepartment(nullptr);
-	mdController = new ManageDepartmentController(md, this);
+	mdController = new ManageDepartmentController(md,_db, this);
 
 	// Khởi tạo manage employee controller
 	ManageEmployee* me = new ManageEmployee(nullptr);
-	meController = new ManageEmployeeController(me, this);
+	meController = new ManageEmployeeController(me,_db, this);
 
 	// Khởi tạo employee check in-out controller
 	EmployeeCheckInOut* ecio = new EmployeeCheckInOut(nullptr);
-	ecioController = new EmployeeCheckInOutController(ecio, this);
+	ecioController = new EmployeeCheckInOutController(ecio, _db, this);
 
 	// Khởi tạo manage attendance events controller
 	ManageAttendanceEvents* mae = new ManageAttendanceEvents(nullptr);
-	maeController = new ManageAttendanceEventsController(mae, this);
+	maeController = new ManageAttendanceEventsController(mae, _db, this);
 
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
@@ -48,13 +48,16 @@ MainWindowController::MainWindowController(MainWindow* view, QObject* parent)
 }
 
 void MainWindowController::handleLogout() {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
+	
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
 	handleHiddenMenu();
 
-	QList<EmployeeModel> employeeList = EmployeeRepository::getAll();
+	
+
+	QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getAll();
 	if (employeeList.isEmpty()) {
 		ecioController->getView()->getUi()->stackedWidget->setCurrentIndex(1);
 	}
@@ -66,7 +69,7 @@ void MainWindowController::handleLogout() {
 	ecioController->loadEmployee();
 
 	handleShowCheckInOut();
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void MainWindowController::handleLogin() {

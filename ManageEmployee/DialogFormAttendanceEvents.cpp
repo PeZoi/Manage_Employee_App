@@ -3,8 +3,8 @@
 #include "AttendanceEventRepository.h"
 #include "EmployeeRepository.h"
 
-DialogFormAttendanceEvents::DialogFormAttendanceEvents(QString employeeSelected, QWidget* parent)
-	: QDialog(parent), employeeSelected(employeeSelected)
+DialogFormAttendanceEvents::DialogFormAttendanceEvents(QString employeeSelected, IDatabaseManager* _db,  QWidget* parent)
+	: QDialog(parent), employeeSelected(employeeSelected), db(_db)
 	, ui(new Ui::DialogFormAttendanceEventsClass())
 {
 	ui->setupUi(this);
@@ -115,7 +115,7 @@ void DialogFormAttendanceEvents::setValue(const QList<AttendanceEventModel>& eve
 }
 
 QString DialogFormAttendanceEvents::handleCheckTimeCheckInOut() {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 	QDateTime now = QDateTime::currentDateTime();
 
 	QDateTime checkin = ui->dateTime_checkin->dateTime();
@@ -124,7 +124,7 @@ QString DialogFormAttendanceEvents::handleCheckTimeCheckInOut() {
 	QString errorMsg = "";
 
 	if (ui->radio_in_out->isChecked()) {
-		EmployeeModel employee = EmployeeRepository::getById(employeeSelected);
+		EmployeeModel employee = db->getEmployeeRepository()->getById(employeeSelected);
 
 		if (checkin.date() < employee.getStartDateOfWork()) {
 			errorMsg = "  Event time must be later than the start of working date.";
@@ -161,7 +161,7 @@ QString DialogFormAttendanceEvents::handleCheckTimeCheckInOut() {
 		QString formattedHours = QString::number(hours, 'f', 2);
 		ui->hours->setText(formattedHours);
 
-		DatabaseManager::closeDatabase();
+		db->closeDatabase();
 		return "";
 	}
 	else if (ui->radio_in->isChecked()) {

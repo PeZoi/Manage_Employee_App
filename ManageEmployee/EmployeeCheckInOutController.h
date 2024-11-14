@@ -3,12 +3,13 @@
 #include "EmployeeCheckInOut.h"
 #include "DepartmentRepository.h"
 #include "EmployeeRepository.h"
+#include "IDatabaseManager.h"
 
 class EmployeeCheckInOutController : public QObject {
 	Q_OBJECT
 
 public:
-	EmployeeCheckInOutController(EmployeeCheckInOut* view, QObject* parent = nullptr);
+	EmployeeCheckInOutController(EmployeeCheckInOut* view, IDatabaseManager* _db, QObject* parent = nullptr);
 	EmployeeCheckInOut* getView();
 
 	QString employeeSelected;
@@ -26,6 +27,7 @@ public slots:
 	void handleSubmitForPassword();
 
 private:
+	IDatabaseManager* db;
 	EmployeeCheckInOut* view;
 };
 

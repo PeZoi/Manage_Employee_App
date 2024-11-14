@@ -6,11 +6,12 @@
 #include "ManageAttendanceEventsController.h"
 #include "NavbarController.h"
 #include "MainWindow.h"
+#include "IDatabaseManager.h"
 class MainWindowController : public QObject {
     Q_OBJECT
 
 public:
-    MainWindowController(MainWindow* view, QObject* parent = nullptr);
+    MainWindowController(MainWindow* view, IDatabaseManager* _db, QObject* parent = nullptr);
 
 public slots:
     void handleLogout();
@@ -40,5 +41,7 @@ private:
     ManageEmployeeController* meController;
     EmployeeCheckInOutController* ecioController;
     ManageAttendanceEventsController* maeController;
+
+    IDatabaseManager* db;
 };
 

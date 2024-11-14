@@ -5,8 +5,8 @@
 #include <QStandardItemModel>
 #include <QTableView>
 
-ManageDepartmentController::ManageDepartmentController(ManageDepartment* view, QObject* parent)
-	: QObject(parent), mdView(view)
+ManageDepartmentController::ManageDepartmentController(ManageDepartment* view, IDatabaseManager* _db, QObject* parent)
+	: QObject(parent), mdView(view), db(_db)
 {
 	handleRenderTable();
 
@@ -31,7 +31,9 @@ void ManageDepartmentController::onClickAdd() {
 }
 
 void ManageDepartmentController::handleRenderTable() {
-	QList<DepartmentModel> departmentList = DepartmentRepository::getAllIgnoreOthers();
+	db->connectToDatabase();
+	
+	QList<DepartmentModel> departmentList = db->getDepartmentRepository()->getAllIgnoreOthers();
 
 	mdView->getUi()->table->setRowCount(departmentList.size());
 
@@ -52,6 +54,7 @@ void ManageDepartmentController::handleRenderTable() {
 			}
 		}
 	}
+	db->closeDatabase();
 }
 
 void ManageDepartmentController::handleRowClicked(const QModelIndex& index) {
@@ -67,7 +70,7 @@ void ManageDepartmentController::handleRowClicked(const QModelIndex& index) {
 }
 
 void ManageDepartmentController::onClickEdit() {
-	DepartmentModel department = DepartmentRepository::getByName(departmentSelected);
+	DepartmentModel department = db->getDepartmentRepository()->getByName(departmentSelected);
 
 	DialogFormDepartment* dialog = new DialogFormDepartment(mdView);
 	dialog->setMode(true);
@@ -83,7 +86,7 @@ void ManageDepartmentController::onClickEdit() {
 void ManageDepartmentController::onClickDelete() {
 	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete department ?", nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
-		if (DepartmentRepository::_delete(departmentSelected)) {
+		if (db->getDepartmentRepository()->_delete(departmentSelected)) {
 			departmentSelected = "";
 			handleRenderTable();
 		}
@@ -95,28 +98,28 @@ void ManageDepartmentController::onClickDelete() {
 }
 
 void ManageDepartmentController::submitDepartment(const DepartmentModel& department, bool isEditMode, DialogFormDepartment* departmentView) {
-	DatabaseManager::connectToDatabase();
-
+	db->connectToDatabase();
 	// Nếu không phải là mode edit
 	if (!isEditMode) {
 		// Kiểm tra xem name có tồn tại không
-		if (DepartmentRepository::getByName(department.getName()).getName() != "") {
+		if (db->getDepartmentRepository()->getByName(department.getName()).getName() != "") {
 			ErrorLabel* error = new ErrorLabel("  The name already exists");
 			error->showTemporary(departmentView->getUi()->verticalLayout, 3000);
 			return;
 		}
-		if (DepartmentRepository::add(department)) {
+		if (db->getDepartmentRepository()->add(department)) {
 			handleRenderTable();
 		};
 	}
 	else {
-		if (DepartmentRepository::update(department)) {
+		if (db->getDepartmentRepository()->update(department)) {
 			handleRenderTable();
 		};
 	}
 	departmentView->accept();
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
+	
 }
 
 ManageDepartment* ManageDepartmentController::getMdView() {

@@ -10,13 +10,14 @@
 #include "ManageDepartment.h"
 #include "ManageEmployee.h"
 #include "NavbarController.h"
+#include "IDatabaseManager.h"
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget* parent = nullptr);
+    MainWindow(IDatabaseManager* _db, QWidget* parent = nullptr);
     ~MainWindow();
 
     DialogFormLoginAdmin& getFormLogin();
@@ -30,4 +31,6 @@ private:
     QSettings settings;
     MenuList* menu;
     NavbarController* navbarController;
+
+    IDatabaseManager* db;
 };

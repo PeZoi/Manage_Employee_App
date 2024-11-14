@@ -9,8 +9,8 @@
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 
-ManageAttendanceEventsController::ManageAttendanceEventsController(ManageAttendanceEvents* view, QObject* parent)
-	: QObject(parent), view(view)
+ManageAttendanceEventsController::ManageAttendanceEventsController(ManageAttendanceEvents* view, IDatabaseManager* _db, QObject* parent)
+	: QObject(parent), view(view), db(_db)
 {
 	loadEmployee();
 
@@ -38,15 +38,19 @@ ManageAttendanceEvents* ManageAttendanceEventsController::getView() {
 
 
 void ManageAttendanceEventsController::loadEmployee() {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
+	
+	
 
 	QStandardItemModel* model = new QStandardItemModel(this);
 	view->getUi()->companyTreeView->header()->setVisible(false);
 
-	QList<DepartmentModel> departmentList = DepartmentRepository::getAll();
+
+	QList<DepartmentModel> departmentList = db->getDepartmentRepository()->getAll();
 
 	for (int i = 0; i < departmentList.size(); i++) {
-		QList<EmployeeModel> employeeList = EmployeeRepository::getByDepartment(departmentList.at(i).getName());
+		
+		QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getByDepartment(departmentList.at(i).getName());
 
 		QString departmentDisplay = QString("%1 (%2)").arg(departmentList.at(i).getName()).arg(employeeList.size());
 		QStandardItem* departmentItem = new QStandardItem(departmentDisplay);
@@ -82,11 +86,11 @@ void ManageAttendanceEventsController::loadEmployee() {
 
 	connect(view->getUi()->searchLineEdit, &QLineEdit::textChanged, filterModel, &CustomFilterProxyModel::setFilterFixedString);
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void ManageAttendanceEventsController::onClickAdd() {
-	DialogFormAttendanceEvents* dialog = new DialogFormAttendanceEvents(employeeSelected, nullptr);
+	DialogFormAttendanceEvents* dialog = new DialogFormAttendanceEvents(employeeSelected, db, nullptr);
 	dialog->setMode(false);
 
 	connect(dialog, &DialogFormAttendanceEvents::submit, this, &ManageAttendanceEventsController::handleSubmit);
@@ -94,22 +98,24 @@ void ManageAttendanceEventsController::onClickAdd() {
 	dialog->exec();
 }
 void ManageAttendanceEventsController::onClickEdit() {
-	DatabaseManager::connectToDatabase();
-	QList<AttendanceEventModel> events = AttendanceEventRepository::getBySession(attendanceEventSelected.getSession());
-	DialogFormAttendanceEvents* dialog = new DialogFormAttendanceEvents(employeeSelected, nullptr);
+	db->connectToDatabase();
+	
+	QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getBySession(attendanceEventSelected.getSession());
+	DialogFormAttendanceEvents* dialog = new DialogFormAttendanceEvents(employeeSelected, db, nullptr);
 	dialog->setMode(true);
 	dialog->setValue(events);
 
 	connect(dialog, &DialogFormAttendanceEvents::submit, this, &ManageAttendanceEventsController::handleSubmit);
 
 	dialog->exec();
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
+	
 }
 void ManageAttendanceEventsController::onClickDelete() {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 	DialogDeleteAttendanceEvent* dialog = new DialogDeleteAttendanceEvent(nullptr);
 
-	QList<AttendanceEventModel> events = AttendanceEventRepository::getBySession(attendanceEventSelected.getSession());
+	QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getBySession(attendanceEventSelected.getSession());
 	dialog->getUi()->date_checkin->setText(events.at(0).getDateEvent());
 	dialog->getUi()->time_checkin->setText(events.at(0).getTime());
 	if (events.size() == 2) {
@@ -121,13 +127,13 @@ void ManageAttendanceEventsController::onClickDelete() {
 	}
 
 	if (dialog->exec() == QDialog::Accepted) {
-		if (!AttendanceEventRepository::deleteBySession(attendanceEventSelected.getSession())) {
+		if (!db->getAttendanceEventRepository()->deleteBySession(attendanceEventSelected.getSession())) {
 			ErrorLabel* error = new ErrorLabel("  Delete failed.");
 			error->showTemporary(view->getUi()->verticalLayout, 3000);
 			return;
 		}
 
-		EmployeeRepository::updateStatus("OUT", employeeSelected);
+		db->getEmployeeRepository()->updateStatus("OUT", employeeSelected);
 		handleRenderTable(filter);
 	}
 
@@ -136,13 +142,13 @@ void ManageAttendanceEventsController::onClickDelete() {
 	employeeSelected = "";
 	view->getUi()->edit->setDisabled(true);
 	view->getUi()->delete_2->setDisabled(true);
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 	dialog->accept();
 }
 void ManageAttendanceEventsController::handleCheckout() {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 
-	QList<AttendanceEventModel> events = AttendanceEventRepository::getByEmployeeId(employeeSelected);
+	QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getByEmployeeId(employeeSelected);
 	QDateTime checkinLastest = QDateTime::fromString("01/01/1990 00:00:00", "dd/MM/yyyy HH:mm:ss");
 	int sessionEvent = 0;
 
@@ -165,21 +171,21 @@ void ManageAttendanceEventsController::handleCheckout() {
 	attendanceEvent.setDateEvent(QDate::currentDate().toString("dd/MM/yyyy"));
 	attendanceEvent.setTime(QTime::currentTime().toString("HH:mm:ss"));
 
-	if (!AttendanceEventRepository::add(attendanceEvent)) {
+	if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
 		ErrorLabel* error = new ErrorLabel("  Checkout failed");
 		error->showTemporary(view->getUi()->verticalLayout, 3000);
 		return;
 	}
 
-	EmployeeRepository::updateStatus("OUT", employeeSelected);
+	db->getEmployeeRepository()->updateStatus("OUT", employeeSelected);
 	view->getUi()->check_out->setDisabled(true);
 
 	handleRenderTable(filter);
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void ManageAttendanceEventsController::handleSelectEmployee(const QModelIndex& index) {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 
 	CustomFilterProxyModel* filterModel = qobject_cast<CustomFilterProxyModel*>(view->getUi()->companyTreeView->model());
 	QStandardItemModel* sourceModel = qobject_cast<QStandardItemModel*>(filterModel->sourceModel());
@@ -199,7 +205,7 @@ void ManageAttendanceEventsController::handleSelectEmployee(const QModelIndex& i
 
 			handleRenderTable(filter);
 
-			EmployeeModel employee = EmployeeRepository::getById(employeeSelected);
+			EmployeeModel employee = db->getEmployeeRepository()->getById(employeeSelected);
 
 			view->getUi()->add->setDisabled(false);
 
@@ -215,13 +221,13 @@ void ManageAttendanceEventsController::handleSelectEmployee(const QModelIndex& i
 
 	view->getUi()->filter_range->setCurrentText(filter);
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void ManageAttendanceEventsController::handleRenderTable(QString filter) {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 
-	QList<AttendanceEventModel> eventList = AttendanceEventRepository::getByEmployeeId(employeeSelected);
+	QList<AttendanceEventModel> eventList = db->getAttendanceEventRepository()->getByEmployeeId(employeeSelected);
 
 	std::sort(eventList.begin(), eventList.end(), [](const AttendanceEventModel& a, const AttendanceEventModel& b) {
 		return a.getSession() < b.getSession();
@@ -263,7 +269,7 @@ void ManageAttendanceEventsController::handleRenderTable(QString filter) {
 		}
 	}
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 QList<AttendanceEventModel> ManageAttendanceEventsController::filterEvents(
@@ -286,8 +292,8 @@ QList<AttendanceEventModel> ManageAttendanceEventsController::filterEvents(
 }
 
 void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, bool isEditMode, DialogFormAttendanceEvents* dialog) {
-	DatabaseManager::connectToDatabase();
-	EmployeeModel employee = EmployeeRepository::getById(_employeeSelected);
+	db->connectToDatabase();
+	EmployeeModel employee = db->getEmployeeRepository()->getById(_employeeSelected);
 	bool checkStatusIn = employee.getStatus() == "IN" ? true : false;
 
 
@@ -302,9 +308,9 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 	AttendanceEventModel attendanceEvent;
 
 	if (dialog->getUi()->radio_in_out->isChecked()) {
-		DatabaseManager::connectToDatabase();
+		db->connectToDatabase();
 
-		QList<AttendanceEventModel> events = AttendanceEventRepository::getByEmployeeId(employeeSelected);
+		QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getByEmployeeId(employeeSelected);
 		QSet<int> sessionList;
 		for (auto ev : events) {
 			sessionList.insert(ev.getSession());
@@ -332,7 +338,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 		}
 
 		for (int session : sessionList) {
-			QList<AttendanceEventModel> eventsBySession = AttendanceEventRepository::getBySession(session);
+			QList<AttendanceEventModel> eventsBySession = db->getAttendanceEventRepository()->getBySession(session);
 
 			if (eventsBySession.size() == 1) {
 				continue;
@@ -371,7 +377,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 			}
 		}
 
-		QList<AttendanceEventModel> checkin_outList = AttendanceEventRepository::getBySession(attendanceEventSelected.getSession());
+		QList<AttendanceEventModel> checkin_outList = db->getAttendanceEventRepository()->getBySession(attendanceEventSelected.getSession());
 
 		if (!isEditMode) {
 			qint64 session = QDateTime::currentDateTime().toSecsSinceEpoch();
@@ -390,14 +396,14 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 		}
 
 		if (!isEditMode) {
-			if (!AttendanceEventRepository::add(attendanceEvent)) {
+			if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
 				ErrorLabel* error = new ErrorLabel("  Additon failed");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 		}
 		else {
-			if (!AttendanceEventRepository::update(attendanceEvent)) {
+			if (!db->getAttendanceEventRepository()->update(attendanceEvent)) {
 				ErrorLabel* error = new ErrorLabel("  Edit failed");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
@@ -415,14 +421,14 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 		}
 
 		if (!isEditMode) {
-			if (!AttendanceEventRepository::add(attendanceEvent)) {
+			if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
 				ErrorLabel* error = new ErrorLabel("  Additon failed");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 		}
 		else {
-			if (!AttendanceEventRepository::update(attendanceEvent)) {
+			if (!db->getAttendanceEventRepository()->update(attendanceEvent)) {
 				ErrorLabel* error = new ErrorLabel("  Edit failed");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
@@ -437,7 +443,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 			return;
 		}
 
-		QList<AttendanceEventModel> events = AttendanceEventRepository::getByEmployeeId(_employeeSelected);
+		QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getByEmployeeId(_employeeSelected);
 		QDateTime checkoutLast = QDateTime::fromString("01/01/1990 00:00:00", "dd/MM/yyyy HH:mm:ss");
 
 		for (int i = 0; i < events.size(); i++) {
@@ -456,7 +462,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 			return;
 		}
 
-		QList<AttendanceEventModel> checkin_outList = AttendanceEventRepository::getBySession(attendanceEventSelected.getSession());
+		QList<AttendanceEventModel> checkin_outList = db->getAttendanceEventRepository()->getBySession(attendanceEventSelected.getSession());
 
 		if (!isEditMode) {
 			qint64 session = QDateTime::currentDateTime().toSecsSinceEpoch();
@@ -473,14 +479,14 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 		attendanceEvent.setTime(timeCheckin);
 
 		if (!isEditMode) {
-			if (!AttendanceEventRepository::add(attendanceEvent)) {
+			if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
 				ErrorLabel* error = new ErrorLabel("  Additon failed");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 		}
 		else {
-			if (!AttendanceEventRepository::update(attendanceEvent)) {
+			if (!db->getAttendanceEventRepository()->update(attendanceEvent)) {
 				ErrorLabel* error = new ErrorLabel("  Edit failed");
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
@@ -489,7 +495,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 
 		view->getUi()->check_out->setDisabled(false);
 
-		EmployeeRepository::updateStatus("IN", _employeeSelected);
+		db->getEmployeeRepository()->updateStatus("IN", _employeeSelected);
 	}
 
 	if (dialog->getUi()->radio_out->isChecked()) {
@@ -499,7 +505,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 			return;
 		}
 
-		QList<AttendanceEventModel> events = AttendanceEventRepository::getByEmployeeId(employeeSelected);
+		QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getByEmployeeId(employeeSelected);
 		QList<int> sessionList;
 		for (int i = 0; i < events.size(); i++) {
 			sessionList.append(events.at(i).getSession());
@@ -507,7 +513,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 
 		int sessionSigle = Utils::getSigleNumber(sessionList);
 
-		events = AttendanceEventRepository::getBySession(sessionSigle);
+		events = db->getAttendanceEventRepository()->getBySession(sessionSigle);
 		QDateTime checkinDB = QDateTime::fromString(events.at(0).getDateEvent() + " " + events.at(0).getTime(), "dd/MM/yyyy HH:mm:ss");
 
 		if (dateTimeCheckout <= checkinDB) {
@@ -523,7 +529,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 		attendanceEvent.setDateEvent(dateCheckout);
 		attendanceEvent.setTime(timeCheckout);
 
-		if (!AttendanceEventRepository::add(attendanceEvent)) {
+		if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
 			ErrorLabel* error = new ErrorLabel("  Additon failed");
 			error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 			return;
@@ -531,30 +537,30 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 
 		view->getUi()->check_out->setDisabled(true);
 
-		EmployeeRepository::updateStatus("OUT", _employeeSelected);
+		db->getEmployeeRepository()->updateStatus("OUT", _employeeSelected);
 	}
 
 	dialog->accept();
 	handleRenderTable(filter);
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void ManageAttendanceEventsController::handleRowClicked(const QModelIndex& index) {
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 	if (!index.isValid()) {
 		return; // Kiểm tra xem chỉ mục có hợp lệ không
 	}
 	QString dateEvent = index.sibling(index.row(), 1).data().toString();
 	QString timeEvent = index.sibling(index.row(), 2).data().toString();
 
-	attendanceEventSelected = AttendanceEventRepository::getByDateAndTimeAndEmployeeId(dateEvent, timeEvent, employeeSelected);
+	attendanceEventSelected = db->getAttendanceEventRepository()->getByDateAndTimeAndEmployeeId(dateEvent, timeEvent, employeeSelected);
 
 	view->getUi()->edit->setDisabled(false);
 	view->getUi()->delete_2->setDisabled(false);
 
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 }
 
 void ManageAttendanceEventsController::handleFilterRange(const QString& value) {

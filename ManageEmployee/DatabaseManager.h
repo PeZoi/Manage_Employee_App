@@ -22,7 +22,6 @@ public:
     static bool executeCreate(const QString& queryStr, const QMap<QString, QVariant>& params);
     static QSqlQuery executeQuery(const QString& queryStr);
     static QSqlQuery executeQuery2(const QString& queryStr, const QMap<QString, QVariant>& params);
-    static bool checkExistAdmin();
 
 private:
     static QSqlDatabase db;
