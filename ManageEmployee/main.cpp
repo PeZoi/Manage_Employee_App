@@ -4,6 +4,7 @@
 #include "SignUpAdminController.h"
 #include "IDatabaseManager.h"
 #include "DatabaseManagerSQLite.h"
+#include "DatabaseManagerMYSQL.h"
 #include <QtWidgets/QApplication>
 #include <QSqlDatabase>
 #include <QStandardPaths>
@@ -22,7 +23,7 @@ int main(int argc, char* argv[])
 	// Xử lý hiện để chọn sql
 	if (settings.value("database/type").toString() == "MYSQL") {
 		settings.setValue("database/type", "MYSQL");
-		db = new DatabaseManagerSQLite();
+		db = new DatabaseManagerMYSQL();
 	}
 	else {
 		settings.setValue("database/type", "SQLITE");

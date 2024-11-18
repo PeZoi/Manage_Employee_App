@@ -107,9 +107,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AttendaceEventModel.cpp" />
+    <ClCompile Include="AttendanceEventRepositoryMYSQL.cpp" />
     <ClCompile Include="AttendanceEventRepositorySQLite.cpp" />
+    <ClCompile Include="DatabaseManagerMYSQL.cpp" />
     <ClCompile Include="DatabaseManagerSQLite.cpp" />
     <ClCompile Include="DepartmentModel.cpp" />
+    <ClCompile Include="DepartmentRepositoryMYSQL.cpp" />
     <ClCompile Include="DepartmentRepositorySQLite.cpp" />
     <ClCompile Include="DialogConfirm.cpp" />
     <ClCompile Include="DialogDeleteAttendanceEvent.cpp" />
@@ -120,6 +123,7 @@
     <ClCompile Include="EmployeeCheckInOut.cpp" />
     <ClCompile Include="EmployeeCheckInOutController.cpp" />
     <ClCompile Include="EmployeeModel.cpp" />
+    <ClCompile Include="EmployeeRepositoryMYSQL.cpp" />
     <ClCompile Include="EmployeeRepositorySQLite.cpp" />
     <ClCompile Include="IriTracker.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -179,9 +183,13 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DialogDeleteAttendanceEvent.h" />
+    <ClInclude Include="AttendanceEventRepositoryMYSQL.h" />
     <ClInclude Include="AttendanceEventRepositorySQLite.h" />
+    <ClInclude Include="DatabaseManagerMYSQL.h" />
     <ClInclude Include="DatabaseManagerSQLite.h" />
+    <ClInclude Include="DepartmentRepositoryMYSQL.h" />
     <ClInclude Include="DepartmentRepositorySQLite.h" />
+    <ClInclude Include="EmployeeRepositoryMYSQL.h" />
     <ClInclude Include="EmployeeRepositorySQLite.h" />
     <ClInclude Include="IAttendanceEventRepository.h" />
     <ClInclude Include="IDatabaseManager.h" />

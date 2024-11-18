@@ -48,6 +48,18 @@
     <Filter Include="Header Files\Repository\Interface">
       <UniqueIdentifier>{5da6d939-e8d7-4bc0-b572-94ec34395f27}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Repository\MYSQL">
+      <UniqueIdentifier>{3b8934c7-b42b-40cf-9c24-89edd4a3ebb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Repository\SQLite">
+      <UniqueIdentifier>{be2263d3-437a-4118-b2f2-f1759c748db2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Repository\MYSQL">
+      <UniqueIdentifier>{3208380a-50e6-4a9f-8931-6054ecfa00da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Repository\SQLite">
+      <UniqueIdentifier>{577b86cf-eb9e-43f2-9605-86d88cf546ce}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ManageEmployee.qrc">
@@ -139,17 +151,29 @@
     <ClCompile Include="DialogDeleteAttendanceEvent.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
-    <ClCompile Include="DatabaseManagerSQLite.cpp">
-      <Filter>Source Files\Repository</Filter>
+    <ClCompile Include="AttendanceEventRepositorySQLite.cpp">
+      <Filter>Source Files\Repository\SQLite</Filter>
     </ClCompile>
-    <ClCompile Include="EmployeeRepositorySQLite.cpp">
-      <Filter>Source Files\Repository</Filter>
+    <ClCompile Include="DatabaseManagerMYSQL.cpp">
+      <Filter>Source Files\Repository\MYSQL</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseManagerSQLite.cpp">
+      <Filter>Source Files\Repository\SQLite</Filter>
     </ClCompile>
     <ClCompile Include="DepartmentRepositorySQLite.cpp">
-      <Filter>Source Files\Repository</Filter>
+      <Filter>Source Files\Repository\SQLite</Filter>
     </ClCompile>
-    <ClCompile Include="AttendanceEventRepositorySQLite.cpp">
-      <Filter>Source Files\Repository</Filter>
+    <ClCompile Include="EmployeeRepositorySQLite.cpp">
+      <Filter>Source Files\Repository\SQLite</Filter>
+    </ClCompile>
+    <ClCompile Include="AttendanceEventRepositoryMYSQL.cpp">
+      <Filter>Source Files\Repository\MYSQL</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeRepositoryMYSQL.cpp">
+      <Filter>Source Files\Repository\MYSQL</Filter>
+    </ClCompile>
+    <ClCompile Include="DepartmentRepositoryMYSQL.cpp">
+      <Filter>Source Files\Repository\MYSQL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,17 +322,29 @@
     <ClInclude Include="IAttendanceEventRepository.h">
       <Filter>Header Files\Repository\Interface</Filter>
     </ClInclude>
-    <ClInclude Include="DatabaseManagerSQLite.h">
-      <Filter>Header Files\Repository</Filter>
+    <ClInclude Include="AttendanceEventRepositoryMYSQL.h">
+      <Filter>Header Files\Repository\MYSQL</Filter>
     </ClInclude>
-    <ClInclude Include="EmployeeRepositorySQLite.h">
-      <Filter>Header Files\Repository</Filter>
+    <ClInclude Include="DepartmentRepositoryMYSQL.h">
+      <Filter>Header Files\Repository\MYSQL</Filter>
     </ClInclude>
-    <ClInclude Include="DepartmentRepositorySQLite.h">
-      <Filter>Header Files\Repository</Filter>
+    <ClInclude Include="EmployeeRepositoryMYSQL.h">
+      <Filter>Header Files\Repository\MYSQL</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseManagerMYSQL.h">
+      <Filter>Header Files\Repository\MYSQL</Filter>
     </ClInclude>
     <ClInclude Include="AttendanceEventRepositorySQLite.h">
-      <Filter>Header Files\Repository</Filter>
+      <Filter>Header Files\Repository\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="EmployeeRepositorySQLite.h">
+      <Filter>Header Files\Repository\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="DepartmentRepositorySQLite.h">
+      <Filter>Header Files\Repository\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseManagerSQLite.h">
+      <Filter>Header Files\Repository\SQLite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
