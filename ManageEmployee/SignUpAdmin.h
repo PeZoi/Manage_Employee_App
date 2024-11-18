@@ -1,11 +1,9 @@
 #pragma once
 
 #include <QMainWindow>
-#include <QMessageBox>
-
 #include "ui_SignUpAdmin.h"
-#include "MainWindow.h"
-#include "DatabaseManager.h"
+#include "EmployeeModel.h"
+#include <QMessageBox>
 
 class SignUpAdmin : public QMainWindow
 {

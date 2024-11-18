@@ -62,7 +62,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon;
-        icon.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/close.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8("../icon/close.png"), QSize(), QIcon::Normal, QIcon::Off);
         cancelButton->setIcon(icon);
         cancelButton->setIconSize(QSize(12, 12));
         submit = new QPushButton(DialogFormAttendanceEventsClass);
@@ -79,7 +79,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/check.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8("../icon/check.png"), QSize(), QIcon::Normal, QIcon::Off);
         submit->setIcon(icon1);
         submit->setIconSize(QSize(14, 14));
         verticalLayoutWidget = new QWidget(DialogFormAttendanceEventsClass);

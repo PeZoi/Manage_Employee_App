@@ -1,16 +1,15 @@
 #pragma once
-#include <QList>
-#include <QVariant>
 #include "DepartmentModel.h"
-#include "IDatabaseManager.h"
+#include <QString>
+#include <QList>
 class IDepartmentRepository {
 public:
 	virtual ~IDepartmentRepository() {}
 
-	virtual bool add(DepartmentModel department);
-	virtual bool update(DepartmentModel department);
-	virtual bool _delete(QString name);
-	virtual QList<DepartmentModel> getAll();
-	virtual QList<DepartmentModel> getAllIgnoreOthers();
-	virtual DepartmentModel getByName(QString name);
+	virtual bool add(DepartmentModel department) = 0;
+	virtual bool update(DepartmentModel department) = 0;
+	virtual bool _delete(QString name) = 0;
+	virtual QList<DepartmentModel> getAll() = 0;
+	virtual QList<DepartmentModel> getAllIgnoreOthers() = 0;
+	virtual DepartmentModel getByName(QString name) = 0;
 };

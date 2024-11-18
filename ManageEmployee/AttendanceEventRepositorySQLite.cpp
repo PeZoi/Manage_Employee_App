@@ -1,4 +1,8 @@
 #include "AttendanceEventRepositorySQLite.h"
+#include <QVariant>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
 
 AttendanceEventRepositorySQLite::AttendanceEventRepositorySQLite(IDatabaseManager* _db) {
     db = _db;

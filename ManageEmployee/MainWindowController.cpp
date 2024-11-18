@@ -1,5 +1,4 @@
 #include "MainWindowController.h"
-#include "EmployeeRepository.h"
 #include <QSettings>
 
 MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager* _db, QObject* parent)

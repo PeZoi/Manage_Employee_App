@@ -1,7 +1,5 @@
 #include "DialogFormAttendanceEvents.h"
 #include "ErrorLabel.h"
-#include "AttendanceEventRepository.h"
-#include "EmployeeRepository.h"
 
 DialogFormAttendanceEvents::DialogFormAttendanceEvents(QString employeeSelected, IDatabaseManager* _db,  QWidget* parent)
 	: QDialog(parent), employeeSelected(employeeSelected), db(_db)

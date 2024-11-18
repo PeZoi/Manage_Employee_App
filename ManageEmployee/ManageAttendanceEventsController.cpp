@@ -1,8 +1,6 @@
 #include "ManageAttendanceEventsController.h"
 #include "CustomFilterProxyModel.h"
 #include "DialogFormAttendanceEvents.h"
-#include "EmployeeRepository.h"
-#include "AttendanceEventRepository.h"
 #include "DialogDeleteAttendanceEvent.h"
 #include "ErrorLabel.h"
 #include "Utils.h"

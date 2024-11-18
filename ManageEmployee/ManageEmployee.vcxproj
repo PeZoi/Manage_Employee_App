@@ -107,17 +107,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AttendaceEventModel.cpp" />
-    <ClCompile Include="AttendanceEventRepository.cpp" />
     <ClCompile Include="AttendanceEventRepositorySQLite.cpp" />
-    <ClCompile Include="DatabaseManager.cpp">
-      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
-      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
-      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
-      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
-    </ClCompile>
     <ClCompile Include="DatabaseManagerSQLite.cpp" />
     <ClCompile Include="DepartmentModel.cpp" />
-    <ClCompile Include="DepartmentRepository.cpp" />
     <ClCompile Include="DepartmentRepositorySQLite.cpp" />
     <ClCompile Include="DialogConfirm.cpp" />
     <ClCompile Include="DialogDeleteAttendanceEvent.cpp" />
@@ -128,7 +120,6 @@
     <ClCompile Include="EmployeeCheckInOut.cpp" />
     <ClCompile Include="EmployeeCheckInOutController.cpp" />
     <ClCompile Include="EmployeeModel.cpp" />
-    <ClCompile Include="EmployeeRepository.cpp" />
     <ClCompile Include="EmployeeRepositorySQLite.cpp" />
     <ClCompile Include="IriTracker.cpp" />
     <ClCompile Include="MainWindow.cpp" />
@@ -166,9 +157,6 @@
     <QtMoc Include="SignUpAdmin.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="DatabaseManager.h" />
-  </ItemGroup>
-  <ItemGroup>
     <QtMoc Include="Navbar.h" />
   </ItemGroup>
   <ItemGroup>
@@ -204,18 +192,15 @@
     <QtMoc Include="ManageAttendanceEvents.h" />
     <QtMoc Include="CustomFilterProxyModel.h" />
     <ClInclude Include="AttendaceEventModel.h" />
-    <QtMoc Include="AttendanceEventRepository.h" />
     <ClInclude Include="DepartmentModel.h" />
     <QtMoc Include="NavbarController.h" />
     <QtMoc Include="SignUpAdminController.h" />
     <QtMoc Include="ManageEmployeeController.h" />
-    <QtMoc Include="DepartmentRepository.h" />
     <QtMoc Include="DialogConfirm.h" />
     <QtMoc Include="EmployeeCheckInOut.h" />
     <QtMoc Include="EmployeeCheckInOutController.h" />
     <QtMoc Include="DialogFormAttendanceEvents.h" />
     <ClInclude Include="EmployeeModel.h" />
-    <QtMoc Include="EmployeeRepository.h" />
     <QtMoc Include="ErrorLabel.h" />
     <QtMoc Include="IriTracker.h" />
     <QtMoc Include="ManageDepartmentController.h" />

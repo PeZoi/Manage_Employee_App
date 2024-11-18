@@ -87,7 +87,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon;
-        icon.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/add.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8("../icon/add.png"), QSize(), QIcon::Normal, QIcon::Off);
         add->setIcon(icon);
         add->setIconSize(QSize(14, 14));
         edit = new QPushButton(ManageDepartmentClass);
@@ -104,7 +104,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/edit.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8("../icon/edit.png"), QSize(), QIcon::Normal, QIcon::Off);
         edit->setIcon(icon1);
         edit->setIconSize(QSize(14, 14));
         delete_2 = new QPushButton(ManageDepartmentClass);
@@ -121,7 +121,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon2;
-        icon2.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/close.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8("../icon/close.png"), QSize(), QIcon::Normal, QIcon::Off);
         delete_2->setIcon(icon2);
         delete_2->setIconSize(QSize(12, 12));
 

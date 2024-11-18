@@ -117,7 +117,7 @@ QPushButton:hover {
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/add.png</normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/add.png</iconset>
+     <normaloff>../icon/add.png</normaloff>../icon/add.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -152,7 +152,7 @@ QPushButton:hover {
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/edit.png</normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/edit.png</iconset>
+     <normaloff>../icon/edit.png</normaloff>../icon/edit.png</iconset>
    </property>
    <property name="iconSize">
     <size>
@@ -187,7 +187,7 @@ QPushButton:hover {
    </property>
    <property name="icon">
     <iconset>
-     <normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/close.png</normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/close.png</iconset>
+     <normaloff>../icon/close.png</normaloff>../icon/close.png</iconset>
    </property>
    <property name="iconSize">
     <size>

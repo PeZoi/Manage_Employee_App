@@ -1,7 +1,7 @@
 #pragma once
 #include <QObject>
+#include "DialogFormEmployee.h"
 #include "ManageEmployee.h"
-#include "EmployeeModel.h"
 #include "IDatabaseManager.h"
 
 class ManageEmployeeController : public QObject {

@@ -3,9 +3,10 @@
 #include <QHBoxLayout>
 
 MainWindow::MainWindow(IDatabaseManager* _db, QWidget* parent)
-    : QMainWindow(parent), ui(new Ui::MainWindowClass), navbarController(new NavbarController(new Navbar(nullptr), _db, this)),
+    : QMainWindow(parent), ui(new Ui::MainWindowClass),
     menu(new MenuList(this))
 {
+    navbarController = new NavbarController(new Navbar(nullptr), _db, this);
     ui->setupUi(this);
 
     QLinearGradient gradient(0, 0, 0, this->height());

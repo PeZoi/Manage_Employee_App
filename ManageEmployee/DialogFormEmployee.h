@@ -1,11 +1,9 @@
 #pragma once
 
-#include <QDialog>
 #include "ui_DialogFormEmployee.h"
-#include "DatabaseManager.h"
-#include "EmployeeModel.h"
 #include "IriTracker.h"
-#include <QThread>
+#include "EmployeeModel.h"
+#include <QMessageBox>
 
 class DialogFormEmployee : public QDialog
 {

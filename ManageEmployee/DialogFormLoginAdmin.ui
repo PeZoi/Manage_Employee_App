@@ -68,7 +68,7 @@ QPushButton:hover {
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/forgot-password.png</normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/forgot-password.png</iconset>
+          <normaloff>../icon/forgot-password.png</normaloff>../icon/forgot-password.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -98,7 +98,7 @@ QPushButton:hover {
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/check.png</normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/check.png</iconset>
+          <normaloff>../icon/check.png</normaloff>../icon/check.png</iconset>
         </property>
         <property name="iconSize">
          <size>
@@ -128,7 +128,7 @@ QPushButton:hover {
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/close.png</normaloff>C:/Users/MY PC/Documents/Zalo Received Files/icons/close.png</iconset>
+          <normaloff>../icon/close.png</normaloff>../icon/close.png</iconset>
         </property>
         <property name="iconSize">
          <size>

@@ -1,5 +1,6 @@
 #pragma once
 #include <QObject>
+#include "DialogFormDepartment.h"
 #include "ManageDepartment.h"
 #include "IDatabaseManager.h"
 class ManageDepartmentController : public QObject {

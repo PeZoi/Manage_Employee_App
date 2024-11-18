@@ -66,7 +66,7 @@ public:
 "}"));
         verticalLayoutWidget = new QWidget(ManageAttendanceEventsClass);
         verticalLayoutWidget->setObjectName(QString::fromUtf8("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(0, 60, 260, 271));
+        verticalLayoutWidget->setGeometry(QRect(0, 60, 260, 286));
         verticalLayout = new QVBoxLayout(verticalLayoutWidget);
         verticalLayout->setSpacing(0);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -189,7 +189,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon;
-        icon.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/close.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8("../icon/close.png"), QSize(), QIcon::Normal, QIcon::Off);
         delete_2->setIcon(icon);
         delete_2->setIconSize(QSize(12, 12));
         edit = new QPushButton(ManageAttendanceEventsClass);
@@ -206,7 +206,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/edit.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8("../icon/edit.png"), QSize(), QIcon::Normal, QIcon::Off);
         edit->setIcon(icon1);
         edit->setIconSize(QSize(14, 14));
         add = new QPushButton(ManageAttendanceEventsClass);
@@ -223,7 +223,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon2;
-        icon2.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/add.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8("../icon/check.png"), QSize(), QIcon::Normal, QIcon::Off);
         add->setIcon(icon2);
         add->setIconSize(QSize(14, 14));
         check_out = new QPushButton(ManageAttendanceEventsClass);

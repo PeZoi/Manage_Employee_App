@@ -1,9 +1,8 @@
 #pragma once
 
-#include <QDialog>
 #include "ui_DialogFormDepartment.h"
-#include "DatabaseManager.h"
 #include "DepartmentModel.h"
+#include <QMessageBox>
 
 class DialogFormDepartment : public QDialog
 {

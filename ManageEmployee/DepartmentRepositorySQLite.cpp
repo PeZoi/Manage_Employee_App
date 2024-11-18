@@ -1,4 +1,8 @@
 #include "DepartmentRepositorySQLite.h"
+#include <QVariant>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
 
 DepartmentRepositorySQLite::DepartmentRepositorySQLite(IDatabaseManager* _db) {
 	db = _db;

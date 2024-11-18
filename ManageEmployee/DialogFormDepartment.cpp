@@ -1,6 +1,5 @@
 #include "DialogFormDepartment.h"
 #include "DepartmentModel.h"
-#include "DepartmentRepository.h"
 #include "ErrorLabel.h"
 #include <QStatusBar>
 

@@ -1,5 +1,7 @@
 #pragma once
 #include "IAttendanceEventRepository.h"
+#include "IDatabaseManager.h"
+#include "AttendaceEventModel.h"
 class AttendanceEventRepositorySQLite : public IAttendanceEventRepository
 {
 public:

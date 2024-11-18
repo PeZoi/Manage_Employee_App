@@ -2,8 +2,6 @@
 
 #include <QWidget>
 #include "ui_ManageDepartment.h"
-#include "DatabaseManager.h"
-#include "DialogFormDepartment.h"
 
 class ManageDepartment : public QWidget
 {

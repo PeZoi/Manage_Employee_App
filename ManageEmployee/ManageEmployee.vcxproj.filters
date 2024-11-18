@@ -100,15 +100,6 @@
     <ClCompile Include="ManageDepartmentController.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="DepartmentRepository.cpp">
-      <Filter>Source Files\Repository</Filter>
-    </ClCompile>
-    <ClCompile Include="DatabaseManager.cpp">
-      <Filter>Source Files\Repository</Filter>
-    </ClCompile>
-    <ClCompile Include="EmployeeRepository.cpp">
-      <Filter>Source Files\Repository</Filter>
-    </ClCompile>
     <ClCompile Include="ManageEmployeeController.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
@@ -139,9 +130,6 @@
     <ClCompile Include="AttendaceEventModel.cpp">
       <Filter>Source Files\Model</Filter>
     </ClCompile>
-    <ClCompile Include="AttendanceEventRepository.cpp">
-      <Filter>Source Files\Repository</Filter>
-    </ClCompile>
     <ClCompile Include="ManageAttendanceEvents.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
@@ -165,12 +153,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="DatabaseManager.h">
-      <Filter>Header Files\Repository</Filter>
-    </QtMoc>
-    <QtMoc Include="DepartmentRepository.h">
-      <Filter>Header Files\Repository</Filter>
-    </QtMoc>
     <QtMoc Include="DialogFormDepartment.h">
       <Filter>Header Files\View</Filter>
     </QtMoc>
@@ -179,9 +161,6 @@
     </QtMoc>
     <QtMoc Include="DialogFormLoginAdmin.h">
       <Filter>Header Files\View</Filter>
-    </QtMoc>
-    <QtMoc Include="EmployeeRepository.h">
-      <Filter>Header Files\Repository</Filter>
     </QtMoc>
     <QtMoc Include="MainWindow.h">
       <Filter>Header Files\View</Filter>
@@ -239,9 +218,6 @@
     </QtMoc>
     <QtMoc Include="DialogFormAttendanceEvents.h">
       <Filter>Header Files\View</Filter>
-    </QtMoc>
-    <QtMoc Include="AttendanceEventRepository.h">
-      <Filter>Header Files\Repository</Filter>
     </QtMoc>
     <QtMoc Include="DialogDeleteAttendanceEvent.h">
       <Filter>Header Files\View</Filter>

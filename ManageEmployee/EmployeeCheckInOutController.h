@@ -1,8 +1,6 @@
 #pragma once
 #include <QObject>
 #include "EmployeeCheckInOut.h"
-#include "DepartmentRepository.h"
-#include "EmployeeRepository.h"
 #include "IDatabaseManager.h"
 
 class EmployeeCheckInOutController : public QObject {

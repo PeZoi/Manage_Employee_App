@@ -1,10 +1,7 @@
 #pragma once
 #include <QObject>
 #include "ManageAttendanceEvents.h"
-#include "DepartmentRepository.h"
 #include "DialogFormAttendanceEvents.h"
-#include "EmployeeRepository.h"
-#include "IDatabaseManager.h"
 class ManageAttendanceEventsController : public QObject {
 	Q_OBJECT
 

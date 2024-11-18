@@ -2,6 +2,8 @@
 #include "CustomFilterProxyModel.h"
 #include "AttendanceEventRepository.h"
 #include "Utils.h"
+#include "IDatabaseManager.h"
+#include "EmployeeModel.h"
 #include <QStandardItemModel>
 #include <QTimer>
 #include <QDate>

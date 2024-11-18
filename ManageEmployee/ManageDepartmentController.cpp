@@ -1,9 +1,11 @@
 #include "ManageDepartmentController.h"
-#include "DepartmentRepository.h"
 #include "ErrorLabel.h"
 #include "DialogConfirm.h"
+#include "ManageDepartment.h"
+#include "IDatabaseManager.h"
 #include <QStandardItemModel>
 #include <QTableView>
+#include <QDebug>
 
 ManageDepartmentController::ManageDepartmentController(ManageDepartment* view, IDatabaseManager* _db, QObject* parent)
 	: QObject(parent), mdView(view), db(_db)
@@ -70,6 +72,7 @@ void ManageDepartmentController::handleRowClicked(const QModelIndex& index) {
 }
 
 void ManageDepartmentController::onClickEdit() {
+	db->connectToDatabase();
 	DepartmentModel department = db->getDepartmentRepository()->getByName(departmentSelected);
 
 	DialogFormDepartment* dialog = new DialogFormDepartment(mdView);
@@ -80,10 +83,11 @@ void ManageDepartmentController::onClickEdit() {
 	connect(dialog, &DialogFormDepartment::submit, this, &ManageDepartmentController::submitDepartment);
 
 	dialog->exec();
-
+	db->closeDatabase();
 }
 
 void ManageDepartmentController::onClickDelete() {
+	db->connectToDatabase();
 	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete department ?", nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
 		if (db->getDepartmentRepository()->_delete(departmentSelected)) {
@@ -95,6 +99,7 @@ void ManageDepartmentController::onClickDelete() {
 
 		};
 	}
+	db->closeDatabase();
 }
 
 void ManageDepartmentController::submitDepartment(const DepartmentModel& department, bool isEditMode, DialogFormDepartment* departmentView) {

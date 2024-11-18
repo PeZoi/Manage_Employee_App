@@ -10,6 +10,7 @@
 #define UI_SIGNUPADMIN_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
@@ -105,6 +106,9 @@ public:
 "QPushButton:hover {\n"
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8("../icon/check.png"), QSize(), QIcon::Normal, QIcon::Off);
+        btn_signup_2->setIcon(icon);
         btn_signup_2->setIconSize(QSize(14, 14));
 
         horizontalLayout->addWidget(btn_signup_2);
@@ -123,6 +127,9 @@ public:
 "QPushButton:hover {\n"
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
+        QIcon icon1;
+        icon1.addFile(QString::fromUtf8("../icon/close.png"), QSize(), QIcon::Normal, QIcon::Off);
+        cancelButton->setIcon(icon1);
         cancelButton->setIconSize(QSize(12, 12));
 
         horizontalLayout->addWidget(cancelButton);

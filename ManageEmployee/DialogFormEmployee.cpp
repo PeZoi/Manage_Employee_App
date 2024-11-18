@@ -2,8 +2,11 @@
 #include "ManageDepartment.h"
 #include "IriTracker.h"
 #include "ErrorLabel.h"
+#include "DepartmentModel.h"
+#include "EmployeeModel.h"
 #include <QBuffer>
 #include <QThread>
+#include <QDebug>
 
 
 DialogFormEmployee::DialogFormEmployee(QWidget* parent)

@@ -1,9 +1,7 @@
 #pragma once
 
 #include <QWidget>
-#include <QMessageBox>
 #include "ui_Navbar.h"
-#include "DialogFormLoginAdmin.h"
 
 class Navbar : public QWidget
 {
@@ -17,5 +15,4 @@ public:
 
 private:
 	Ui::Navbar* ui;
-	QMessageBox msgBox;
 };

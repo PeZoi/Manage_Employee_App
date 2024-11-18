@@ -2,8 +2,9 @@
 #include <QObject>
 #include "Navbar.h"
 #include "EmployeeCheckInOutController.h"
-#include <QMessageBox>
 #include "IDatabaseManager.h"
+#include "DialogFormLoginAdmin.h"
+#include <QMessageBox>
 
 class NavbarController : public QObject {
 	Q_OBJECT

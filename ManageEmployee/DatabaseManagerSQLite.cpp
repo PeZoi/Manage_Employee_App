@@ -3,8 +3,15 @@
 #include "DepartmentRepositorySQLite.h"
 #include "EmployeeRepositorySQLite.h"
 #include "AttendanceEventRepositorySQLite.h"
+#include "IDepartmentRepository.h"
+#include "IEmployeeRepository.h"
+#include "IAttendanceEventRepository.h"
 #include "DepartmentModel.h"
+#include <QSqlDatabase>
 #include <QFile>
+#include <QDebug>
+#include <QSqlError>
+#include <QSqlQuery>
 DatabaseManagerSQLite::DatabaseManagerSQLite()
 {
     departmentRepository = new DepartmentRepositorySQLite(this);
@@ -36,7 +43,7 @@ IAttendanceEventRepository* DatabaseManagerSQLite::getAttendanceEventRepository(
 
 bool DatabaseManagerSQLite::connectToDatabase()
 {
-    QString dbName = "D:/IriTech/Code/ManageEmployee/database/manage_employee_sqlite.db";
+    QString dbName = "manage_employee_sqlite.db";
     QFile dbFile(dbName);
 
     // Kiểm tra nếu tệp cơ sở dữ liệu đã tồn tại

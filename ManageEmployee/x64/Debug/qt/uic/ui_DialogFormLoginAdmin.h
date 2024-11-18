@@ -70,7 +70,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon;
-        icon.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/forgot-password.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8("../icon/forgot-password.png"), QSize(), QIcon::Normal, QIcon::Off);
         forgotButton->setIcon(icon);
         forgotButton->setIconSize(QSize(14, 14));
 
@@ -90,7 +90,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon1;
-        icon1.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/check.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon1.addFile(QString::fromUtf8("../icon/check.png"), QSize(), QIcon::Normal, QIcon::Off);
         login_2->setIcon(icon1);
         login_2->setIconSize(QSize(14, 14));
 
@@ -110,7 +110,7 @@ public:
 "	background-color: rgba(70, 133, 210, 0.7);\n"
 "}"));
         QIcon icon2;
-        icon2.addFile(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/close.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon2.addFile(QString::fromUtf8("../icon/close.png"), QSize(), QIcon::Normal, QIcon::Off);
         cancelButton->setIcon(icon2);
         cancelButton->setIconSize(QSize(12, 12));
 

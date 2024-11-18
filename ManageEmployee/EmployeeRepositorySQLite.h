@@ -1,5 +1,7 @@
 #pragma once
 #include "IEmployeeRepository.h"
+#include "IDatabaseManager.h"
+#include "EmployeeModel.h"
 class EmployeeRepositorySQLite : public IEmployeeRepository
 {
 public:

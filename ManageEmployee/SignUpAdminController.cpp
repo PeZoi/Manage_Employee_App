@@ -1,5 +1,4 @@
 #include "SignUpAdminController.h"
-#include "EmployeeRepository.h"
 #include "MainWindowController.h"
 #include "ErrorLabel.h"
 
@@ -43,7 +42,7 @@ void SignUpAdminController::handleSubmit() {
 		return;
 	}
 
-	DatabaseManager::connectToDatabase();
+	db->connectToDatabase();
 
 	EmployeeModel admin = EmployeeModel();
 	admin.setId("admin");
@@ -52,12 +51,12 @@ void SignUpAdminController::handleSubmit() {
 	admin.setRole("ADMIN");
 	admin.setEmail(email);
 
-	if (EmployeeRepository::add(admin)) {
+	if (db->getEmployeeRepository()->add(admin)) {
 		QSettings settings("Iritech", "Manage_Employee_App");
 		settings.setValue("isLoggedIn", true);
 	}
 
-	DatabaseManager::closeDatabase();
+	db->closeDatabase();
 
 	signUpView->hide();
 	

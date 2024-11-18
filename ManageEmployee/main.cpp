@@ -1,5 +1,4 @@
 #include "SignUpAdmin.h"
-#include "DatabaseManager.h"
 #include "MainWindow.h"
 #include "MainWindowController.h"
 #include "SignUpAdminController.h"
@@ -33,24 +32,19 @@ int main(int argc, char* argv[])
 	SignUpAdmin* signUpUI = new SignUpAdmin(nullptr);
 	SignUpAdminController* signUpController = new SignUpAdminController(signUpUI, db, nullptr);
 
-	MainWindow* mainWindowUI = new MainWindow(nullptr);
+	MainWindow* mainWindowUI = new MainWindow(db, nullptr);
 	MainWindowController* mainWindowController = new MainWindowController(mainWindowUI, db, nullptr);
 
 
-
-	//DatabaseManager db;
-
-	//db.connectToDatabase();
-
-	//if (!db.checkExistAdmin()) {
-	//    signUpController->getSignUpView()->show();
-	//}
-	//else {
-	//    mainWindowController->getMainWindowView()->show();
-	//}
-
-	//// Đóng kết nối cơ sở dữ liệu sau khi ứng dụng thoát
-	//db.closeDatabase();
+	db->connectToDatabase();
+	if (!db->getEmployeeRepository()->checkExistAdmin()) {
+	    signUpController->getSignUpView()->show();
+	}
+	else {
+	    mainWindowController->getMainWindowView()->show();
+	}
+	int result = a.exec();
+	db->closeDatabase();
 
 	 //Giải phóng bộ nhớ
 	delete mainWindowController;
@@ -58,6 +52,8 @@ int main(int argc, char* argv[])
 
 	delete signUpController;
 	delete signUpUI;
+
+	delete db;
 
 	
 
@@ -75,6 +71,6 @@ int main(int argc, char* argv[])
 		qDebug() << "Kết nối thất bại: " << db.lastError().text();
 	}*/
 
-	int result = a.exec();
+	
 	return result;
 }

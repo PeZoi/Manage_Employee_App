@@ -349,7 +349,7 @@ public:
         retranslateUi(EmployeeCheckInOutClass);
 
         stackedWidget->setCurrentIndex(0);
-        stack_checkin_out->setCurrentIndex(2);
+        stack_checkin_out->setCurrentIndex(1);
 
 
         QMetaObject::connectSlotsByName(EmployeeCheckInOutClass);

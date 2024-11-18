@@ -1,10 +1,8 @@
 #pragma once
 
 #include <QDialog>
-#include <QString>
-#include <QMessageBox>
 #include "ui_DialogFormLoginAdmin.h"
-#include "DatabaseManager.h"
+#include <QMessageBox>
 
 class DialogFormLoginAdmin : public QDialog
 {
@@ -24,5 +22,4 @@ private slots:
 private:
 	Ui::DialogFormLoginAdminClass ui;
 	QMessageBox msgBox;
-	DatabaseManager db;
 };

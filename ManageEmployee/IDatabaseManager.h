@@ -1,18 +1,11 @@
 #pragma once
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlError>
+#include <QString>
 #include <QMap>
 #include <QVariant>
-#include <QDebug>
-#include <QList>
-#include <QString>
-
-#include "AttendaceEventModel.h"
-
-#include "IAttendanceEventRepository.h"
-#include "IEmployeeRepository.h"
+#include <QSqlQuery>
 #include "IDepartmentRepository.h"
+#include "IEmployeeRepository.h"
+#include "IAttendanceEventRepository.h"
 
 class IDatabaseManager {
 public:

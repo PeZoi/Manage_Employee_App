@@ -1,6 +1,5 @@
 #pragma once
 
-#include <QDialog>
 #include "ui_DialogFormAttendanceEvents.h"
 #include "AttendaceEventModel.h"
 #include "IDatabaseManager.h"

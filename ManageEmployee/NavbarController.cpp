@@ -1,5 +1,6 @@
 #include "NavbarController.h"
-#include "EmployeeRepository.h"
+#include "IDatabaseManager.h"
+#include "DialogFormLoginAdmin.h"
 #include "ErrorLabel.h"
 #include <QSettings>
 

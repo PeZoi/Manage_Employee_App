@@ -1,4 +1,9 @@
 #include "EmployeeRepositorySQLite.h"
+#include <QVariant>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
+
 
 
 EmployeeRepositorySQLite::EmployeeRepositorySQLite(IDatabaseManager* _db) {

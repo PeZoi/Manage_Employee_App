@@ -1,10 +1,7 @@
 #include "ManageEmployeeController.h"
 #include "DepartmentModel.h"
-#include "DepartmentRepository.h"
-#include "EmployeeRepository.h"
 #include "ErrorLabel.h"
 #include "DialogConfirm.h"
-#include "AttendanceEventRepository.h"
 #include <QAbstractItemView>
 #include <QStandardItem>
 #include <QSettings>
@@ -14,6 +11,7 @@
 #include <QFileDialog>
 #include <QGraphicsScene>
 #include <QPixmap>
+#include <QDebug>
 
 
 ManageEmployeeController::ManageEmployeeController(ManageEmployee* view, IDatabaseManager* _db, QObject* parent)

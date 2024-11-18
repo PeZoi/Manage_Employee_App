@@ -2,11 +2,8 @@
 #include <QObject>
 #include "ManageDepartmentController.h"
 #include "ManageEmployeeController.h"
-#include "EmployeeCheckInOutController.h"
 #include "ManageAttendanceEventsController.h"
-#include "NavbarController.h"
 #include "MainWindow.h"
-#include "IDatabaseManager.h"
 class MainWindowController : public QObject {
     Q_OBJECT
 
