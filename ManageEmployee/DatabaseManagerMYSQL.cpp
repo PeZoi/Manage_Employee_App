@@ -79,7 +79,7 @@ bool DatabaseManagerMYSQL::connectToDatabase()
 		"is_enabled BOOLEAN NOT NULL DEFAULT 1, "
 		"avatar TEXT, "
 		"role VARCHAR(255), "
-		"email VARCHAR(255) UNIQUE, "
+		"email VARCHAR(255), "
 		"phone_number VARCHAR(255), "
 		"address TEXT, "
 		"is_allow_password BOOLEAN NOT NULL DEFAULT 0, "

@@ -52,8 +52,8 @@ void SignUpAdminController::handleSubmit() {
 	admin.setEmail(email);
 
 	if (db->getEmployeeRepository()->add(admin)) {
-		QSettings settings("Iritech", "Manage_Employee_App");
-		settings.setValue("isLoggedIn", true);
+		qDebug() << "Có lỗi khi đăng ký admin";
+		return;
 	}
 
 	db->closeDatabase();

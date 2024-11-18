@@ -1,6 +1,5 @@
 #pragma once
 
-#pragma once
 #include "IDatabaseManager.h"
 #include "IDepartmentRepository.h"
 #include "IEmployeeRepository.h"

@@ -60,6 +60,12 @@
     <Filter Include="Header Files\Repository\SQLite">
       <UniqueIdentifier>{577b86cf-eb9e-43f2-9605-86d88cf546ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Repository\SQLServer">
+      <UniqueIdentifier>{f468e1ea-b0f2-4269-827c-b259fb23deea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Repository\SQLServer">
+      <UniqueIdentifier>{87da7e0a-3192-4e88-bf4d-737b107f0472}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="ManageEmployee.qrc">
@@ -174,6 +180,18 @@
     </ClCompile>
     <ClCompile Include="DepartmentRepositoryMYSQL.cpp">
       <Filter>Source Files\Repository\MYSQL</Filter>
+    </ClCompile>
+    <ClCompile Include="AttendanceEventRepositorySQLServer.cpp">
+      <Filter>Source Files\Repository\SQLServer</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseManagerSQLServer.cpp">
+      <Filter>Source Files\Repository\SQLServer</Filter>
+    </ClCompile>
+    <ClCompile Include="DepartmentRepositorySQLServer.cpp">
+      <Filter>Source Files\Repository\SQLServer</Filter>
+    </ClCompile>
+    <ClCompile Include="EmployeeRepositorySQLServer.cpp">
+      <Filter>Source Files\Repository\SQLServer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -345,6 +363,18 @@
     </ClInclude>
     <ClInclude Include="DatabaseManagerSQLite.h">
       <Filter>Header Files\Repository\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="AttendanceEventRepositorySQLServer.h">
+      <Filter>Header Files\Repository\SQLServer</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseManagerSQLServer.h">
+      <Filter>Header Files\Repository\SQLServer</Filter>
+    </ClInclude>
+    <ClInclude Include="DepartmentRepositorySQLServer.h">
+      <Filter>Header Files\Repository\SQLServer</Filter>
+    </ClInclude>
+    <ClInclude Include="EmployeeRepositorySQLServer.h">
+      <Filter>Header Files\Repository\SQLServer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

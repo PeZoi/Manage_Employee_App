@@ -5,10 +5,12 @@
 #include "IDatabaseManager.h"
 #include "DatabaseManagerSQLite.h"
 #include "DatabaseManagerMYSQL.h"
+#include "DatabaseManagerSQLServer.h"
 #include <QtWidgets/QApplication>
 #include <QSqlDatabase>
 #include <QStandardPaths>
 #include <QDir>
+#include <QSqlError>
 
 int main(int argc, char* argv[])
 {
@@ -21,14 +23,20 @@ int main(int argc, char* argv[])
 	IDatabaseManager* db;
 
 	// Xử lý hiện để chọn sql
-	if (settings.value("database/type").toString() == "MYSQL") {
+	/*if (settings.value("database/type").toString() == "MYSQL") {
 		settings.setValue("database/type", "MYSQL");
 		db = new DatabaseManagerMYSQL();
 	}
-	else {
+	else if (settings.value("database/type").toString() == "SQLITE") {
 		settings.setValue("database/type", "SQLITE");
 		db = new DatabaseManagerSQLite();
 	}
+	else {
+		settings.setValue("database/type", "SQLServer");
+		db = new DatabaseManagerSQLServer();
+	}*/
+
+	db = new DatabaseManagerSQLServer();
 
 	SignUpAdmin* signUpUI = new SignUpAdmin(nullptr);
 	SignUpAdminController* signUpController = new SignUpAdminController(signUpUI, db, nullptr);
@@ -55,22 +63,6 @@ int main(int argc, char* argv[])
 	delete signUpUI;
 
 	delete db;
-
-	
-
-	/*QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-	db.setHostName("localhost");
-	db.setPort(3306);
-	db.setDatabaseName("mysql_iritech");
-	db.setUserName("root");
-	db.setPassword("root");
-
-	if (db.open()) {
-		qDebug() << "Kết nối thành công";
-	}
-	else {
-		qDebug() << "Kết nối thất bại: " << db.lastError().text();
-	}*/
 
 	
 	return result;
