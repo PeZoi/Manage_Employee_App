@@ -117,6 +117,7 @@
     <ClCompile Include="DepartmentRepositoryMYSQL.cpp" />
     <ClCompile Include="DepartmentRepositorySQLite.cpp" />
     <ClCompile Include="DepartmentRepositorySQLServer.cpp" />
+    <ClCompile Include="DialogChangeDatabase.cpp" />
     <ClCompile Include="DialogConfirm.cpp" />
     <ClCompile Include="DialogDeleteAttendanceEvent.cpp" />
     <ClCompile Include="DialogFormAttendanceEvents.cpp" />
@@ -143,8 +144,11 @@
     <ClCompile Include="NavbarController.cpp" />
     <ClCompile Include="SignUpAdmin.cpp" />
     <ClCompile Include="SignUpAdminController.cpp" />
+    <ClCompile Include="Tools.cpp" />
+    <ClCompile Include="ToolsController.cpp" />
     <ClCompile Include="Utils.cpp" />
     <QtRcc Include="ManageEmployee.qrc" />
+    <QtUic Include="DialogChangeDatabase.ui" />
     <QtUic Include="DialogConfirm.ui" />
     <QtUic Include="DialogDeleteAttendanceEvent.ui" />
     <QtUic Include="DialogFormAttendanceEvents.ui" />
@@ -160,6 +164,7 @@
     <QtUic Include="MenuList.ui" />
     <QtUic Include="Navbar.ui" />
     <QtUic Include="SignUpAdmin.ui" />
+    <QtUic Include="Tools.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="SignUpAdmin.h" />
@@ -190,12 +195,14 @@
     <ClInclude Include="AttendanceEventRepositoryMYSQL.h" />
     <ClInclude Include="AttendanceEventRepositorySQLite.h" />
     <ClInclude Include="AttendanceEventRepositorySQLServer.h" />
+    <ClInclude Include="Constant.h" />
     <ClInclude Include="DatabaseManagerMYSQL.h" />
     <ClInclude Include="DatabaseManagerSQLite.h" />
     <ClInclude Include="DatabaseManagerSQLServer.h" />
     <ClInclude Include="DepartmentRepositoryMYSQL.h" />
     <ClInclude Include="DepartmentRepositorySQLite.h" />
     <ClInclude Include="DepartmentRepositorySQLServer.h" />
+    <QtMoc Include="DialogChangeDatabase.h" />
     <ClInclude Include="EmployeeRepositoryMYSQL.h" />
     <ClInclude Include="EmployeeRepositorySQLite.h" />
     <ClInclude Include="EmployeeRepositorySQLServer.h" />
@@ -203,6 +210,8 @@
     <ClInclude Include="IDatabaseManager.h" />
     <ClInclude Include="IDepartmentRepository.h" />
     <ClInclude Include="IEmployeeRepository.h" />
+    <QtMoc Include="Tools.h" />
+    <QtMoc Include="ToolsController.h" />
     <ClInclude Include="Utils.h" />
     <QtMoc Include="ManageAttendanceEventsController.h" />
     <QtMoc Include="ManageAttendanceEvents.h" />

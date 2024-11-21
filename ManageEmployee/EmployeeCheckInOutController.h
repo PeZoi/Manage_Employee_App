@@ -7,7 +7,7 @@ class EmployeeCheckInOutController : public QObject {
 	Q_OBJECT
 
 public:
-	EmployeeCheckInOutController(EmployeeCheckInOut* view, IDatabaseManager* _db, QObject* parent = nullptr);
+	EmployeeCheckInOutController(EmployeeCheckInOut* view, IDatabaseManager*& _db, QObject* parent = nullptr);
 	EmployeeCheckInOut* getView();
 
 	QString employeeSelected;
@@ -25,7 +25,7 @@ public slots:
 	void handleSubmitForPassword();
 
 private:
-	IDatabaseManager* db;
+	IDatabaseManager*& db;
 	EmployeeCheckInOut* view;
 };
 

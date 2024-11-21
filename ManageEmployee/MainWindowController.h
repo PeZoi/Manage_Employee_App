@@ -3,12 +3,13 @@
 #include "ManageDepartmentController.h"
 #include "ManageEmployeeController.h"
 #include "ManageAttendanceEventsController.h"
+#include "ToolsController.h"
 #include "MainWindow.h"
 class MainWindowController : public QObject {
     Q_OBJECT
 
 public:
-    MainWindowController(MainWindow* view, IDatabaseManager* _db, QObject* parent = nullptr);
+    MainWindowController(MainWindow* view, IDatabaseManager*& _db, QObject* parent = nullptr);
 
 public slots:
     void handleLogout();
@@ -30,6 +31,9 @@ public slots:
     void handleHiddenManageEvents();
     void handleShowManageEnvents();
 
+    void handleHiddenTools();
+    void handleShowTools();
+
     MainWindow* getMainWindowView();
 
 private:
@@ -38,7 +42,8 @@ private:
     ManageEmployeeController* meController;
     EmployeeCheckInOutController* ecioController;
     ManageAttendanceEventsController* maeController;
+    ToolsController* toolsController;
 
-    IDatabaseManager* db;
+    IDatabaseManager*& db;
 };
 

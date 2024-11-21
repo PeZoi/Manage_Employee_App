@@ -17,7 +17,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(IDatabaseManager* _db, QWidget* parent = nullptr);
+    MainWindow(IDatabaseManager*& _db, QWidget* parent = nullptr);
     ~MainWindow();
 
     DialogFormLoginAdmin& getFormLogin();
@@ -32,5 +32,5 @@ private:
     MenuList* menu;
     NavbarController* navbarController;
 
-    IDatabaseManager* db;
+    IDatabaseManager*& db;
 };

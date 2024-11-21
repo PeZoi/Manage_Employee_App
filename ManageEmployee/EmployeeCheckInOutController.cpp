@@ -1,6 +1,5 @@
 #include "EmployeeCheckInOutController.h"
 #include "CustomFilterProxyModel.h"
-#include "AttendanceEventRepository.h"
 #include "Utils.h"
 #include "IDatabaseManager.h"
 #include "EmployeeModel.h"
@@ -9,8 +8,9 @@
 #include <QDate>
 #include <QTime>
 #include <QSortFilterProxyModel>
+#include <QDebug>
 
-EmployeeCheckInOutController::EmployeeCheckInOutController(EmployeeCheckInOut* view, IDatabaseManager* _db, QObject* parent)
+EmployeeCheckInOutController::EmployeeCheckInOutController(EmployeeCheckInOut* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), view(view), db(_db)
 {
 	view->getUi()->stack_checkin_out->setCurrentIndex(0);

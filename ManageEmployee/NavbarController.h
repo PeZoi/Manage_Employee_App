@@ -9,8 +9,8 @@
 class NavbarController : public QObject {
 	Q_OBJECT
 public:
-	explicit NavbarController(QObject* parent = nullptr);
-	NavbarController(Navbar* view, IDatabaseManager* _db, QObject* parent = nullptr);
+	NavbarController(Navbar* view, IDatabaseManager*& _db, QObject* parent = nullptr);
+
 	Navbar* getUi();
 
 	void setEmployeeCheckInOutController(EmployeeCheckInOutController* employeeCheckInOutController);
@@ -38,6 +38,6 @@ private:
 	EmployeeCheckInOutController* employeeCheckInOutController;
 	QMessageBox msgBox;
 
-	IDatabaseManager* db;
+	IDatabaseManager*& db;
 };
 

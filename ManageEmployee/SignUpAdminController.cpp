@@ -2,7 +2,7 @@
 #include "MainWindowController.h"
 #include "ErrorLabel.h"
 
-SignUpAdminController::SignUpAdminController(SignUpAdmin* view, IDatabaseManager* _db, QObject* parent)
+SignUpAdminController::SignUpAdminController(SignUpAdmin* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), signUpView(view), db(_db)
 {
 
@@ -60,8 +60,8 @@ void SignUpAdminController::handleSubmit() {
 
 	signUpView->hide();
 	
-	MainWindow* mainWindowUI = new MainWindow(nullptr);
-	MainWindowController* mainWindowController = new MainWindowController(mainWindowUI, nullptr);
+	MainWindow* mainWindowUI = new MainWindow(db, nullptr);
+	MainWindowController* mainWindowController = new MainWindowController(mainWindowUI, db, nullptr);
 
 	mainWindowController->getMainWindowView()->show();
 }

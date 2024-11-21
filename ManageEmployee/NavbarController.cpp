@@ -4,11 +4,7 @@
 #include "ErrorLabel.h"
 #include <QSettings>
 
-NavbarController::NavbarController(QObject* parent)
-	: QObject(parent)
-{}
-
-NavbarController::NavbarController(Navbar* view, IDatabaseManager* _db, QObject* parent)
+NavbarController::NavbarController(Navbar* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), navbarView(view), db(_db)
 {
 	connect(navbarView->getUi()->logout, SIGNAL(clicked()), this, SLOT(handleClickLogout()));

@@ -7,7 +7,7 @@
 #include <QStandardItemModel>
 #include <QSortFilterProxyModel>
 
-ManageAttendanceEventsController::ManageAttendanceEventsController(ManageAttendanceEvents* view, IDatabaseManager* _db, QObject* parent)
+ManageAttendanceEventsController::ManageAttendanceEventsController(ManageAttendanceEvents* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), view(view), db(_db)
 {
 	loadEmployee();

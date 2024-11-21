@@ -1,10 +1,8 @@
 #include "MainWindow.h"
 
-#include <QHBoxLayout>
-
-MainWindow::MainWindow(IDatabaseManager* _db, QWidget* parent)
+MainWindow::MainWindow(IDatabaseManager*& _db, QWidget* parent)
     : QMainWindow(parent), ui(new Ui::MainWindowClass),
-    menu(new MenuList(this))
+    menu(new MenuList(this)), db(_db)
 {
     navbarController = new NavbarController(new Navbar(nullptr), _db, this);
     ui->setupUi(this);

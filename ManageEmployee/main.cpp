@@ -6,6 +6,7 @@
 #include "DatabaseManagerSQLite.h"
 #include "DatabaseManagerMYSQL.h"
 #include "DatabaseManagerSQLServer.h"
+#include "Constant.h"
 #include <QtWidgets/QApplication>
 #include <QSqlDatabase>
 #include <QStandardPaths>
@@ -16,34 +17,28 @@ int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
 
-	QString pathIni = "D:/IriTech/Code/ManageEmployee/database/config.ini";
+	QString pathIni = Constant::PATH_CONFIG;
 	QFile configFile(pathIni);
 	QSettings settings(pathIni, QSettings::IniFormat);
 	
 	IDatabaseManager* db;
 
 	// Xử lý hiện để chọn sql
-	/*if (settings.value("database/type").toString() == "MYSQL") {
-		settings.setValue("database/type", "MYSQL");
+	if (settings.value("database/type").toString() == Constant::MYSQL) {
 		db = new DatabaseManagerMYSQL();
 	}
-	else if (settings.value("database/type").toString() == "SQLITE") {
-		settings.setValue("database/type", "SQLITE");
+	else if (settings.value("database/type").toString() == Constant::SQLITE) {
 		db = new DatabaseManagerSQLite();
 	}
 	else {
-		settings.setValue("database/type", "SQLServer");
 		db = new DatabaseManagerSQLServer();
-	}*/
-
-	db = new DatabaseManagerSQLServer();
+	}
 
 	SignUpAdmin* signUpUI = new SignUpAdmin(nullptr);
 	SignUpAdminController* signUpController = new SignUpAdminController(signUpUI, db, nullptr);
 
 	MainWindow* mainWindowUI = new MainWindow(db, nullptr);
 	MainWindowController* mainWindowController = new MainWindowController(mainWindowUI, db, nullptr);
-
 
 	db->connectToDatabase();
 	if (!db->getEmployeeRepository()->checkExistAdmin()) {

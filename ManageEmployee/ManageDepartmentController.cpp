@@ -7,7 +7,7 @@
 #include <QTableView>
 #include <QDebug>
 
-ManageDepartmentController::ManageDepartmentController(ManageDepartment* view, IDatabaseManager* _db, QObject* parent)
+ManageDepartmentController::ManageDepartmentController(ManageDepartment* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), mdView(view), db(_db)
 {
 	handleRenderTable();

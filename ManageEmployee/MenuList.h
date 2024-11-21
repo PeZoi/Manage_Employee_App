@@ -17,6 +17,7 @@ signals:
 	void onClickDepartment();
 	void onClickEmployee();
 	void onClickAttendanceEvents();
+	void onClickTools();
 
 private:
 	Ui::MenuListClass ui;

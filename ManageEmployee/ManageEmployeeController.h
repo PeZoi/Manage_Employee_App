@@ -8,7 +8,7 @@ class ManageEmployeeController : public QObject {
 	Q_OBJECT
 
 public:
-	ManageEmployeeController(ManageEmployee* view, IDatabaseManager* _db, QObject* parent = nullptr);
+	ManageEmployeeController(ManageEmployee* view, IDatabaseManager*& _db, QObject* parent = nullptr);
 	QString employeeSelected;
 
 public slots:
@@ -28,7 +28,7 @@ public slots:
 
 
 private:
-	IDatabaseManager* db;
+	IDatabaseManager*& db;
 	ManageEmployee* meView;
 };
 

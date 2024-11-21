@@ -193,6 +193,15 @@
     <ClCompile Include="EmployeeRepositorySQLServer.cpp">
       <Filter>Source Files\Repository\SQLServer</Filter>
     </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolsController.cpp">
+      <Filter>Source Files\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogChangeDatabase.cpp">
+      <Filter>Source Files\View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DialogFormDepartment.h">
@@ -267,6 +276,18 @@
     <QtMoc Include="IriTracker.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Tools.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="Tools.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
+    <QtMoc Include="ToolsController.h">
+      <Filter>Header Files\Controller</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogChangeDatabase.h">
+      <Filter>Header Files\View</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SignUpAdmin.ui">
@@ -312,6 +333,15 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="DialogDeleteAttendanceEvent.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Tools.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Tools.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DialogChangeDatabase.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -375,6 +405,9 @@
     </ClInclude>
     <ClInclude Include="EmployeeRepositorySQLServer.h">
       <Filter>Header Files\Repository\SQLServer</Filter>
+    </ClInclude>
+    <ClInclude Include="Constant.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

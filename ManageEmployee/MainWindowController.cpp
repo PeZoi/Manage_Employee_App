@@ -1,28 +1,36 @@
 #include "MainWindowController.h"
+#include "DatabaseManagerMYSQL.h"
+#include "DatabaseManagerSQLite.h"
+#include "DatabaseManagerSQLServer.h"
 #include <QSettings>
 
-MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager* _db, QObject* parent)
+MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), mainWindowView(view), db(_db)
 {
 	// Khởi tạo manage department controller
 	ManageDepartment* md = new ManageDepartment(nullptr);
-	mdController = new ManageDepartmentController(md,_db, this);
+	mdController = new ManageDepartmentController(md, db, this);
 
 	// Khởi tạo manage employee controller
 	ManageEmployee* me = new ManageEmployee(nullptr);
-	meController = new ManageEmployeeController(me,_db, this);
+	meController = new ManageEmployeeController(me, db, this);
 
 	// Khởi tạo employee check in-out controller
 	EmployeeCheckInOut* ecio = new EmployeeCheckInOut(nullptr);
-	ecioController = new EmployeeCheckInOutController(ecio, _db, this);
+	ecioController = new EmployeeCheckInOutController(ecio, db, this);
 
 	// Khởi tạo manage attendance events controller
 	ManageAttendanceEvents* mae = new ManageAttendanceEvents(nullptr);
-	maeController = new ManageAttendanceEventsController(mae, _db, this);
+	maeController = new ManageAttendanceEventsController(mae, db, this);
+
+	// Khởi tạo tools controller
+	Tools* tools = new Tools(nullptr);
+	toolsController = new ToolsController(tools, db, this);
 
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
+	handleHiddenTools();
 	handleHiddenMenu();
 
 	handleShowCheckInOut();
@@ -42,19 +50,23 @@ MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager* _
 	connect(mainWindowView->getMenu(), &MenuList::onClickAttendanceEvents, this, &MainWindowController::handleShowManageEnvents);
 	connect(mainWindowView->getMenu(), &MenuList::onClickAttendanceEvents, mainWindowView->getNavbarController(), &NavbarController::handleShowBack);
 
+	connect(mainWindowView->getMenu(), &MenuList::onClickTools, this, &MainWindowController::handleShowTools);
+	connect(mainWindowView->getMenu(), &MenuList::onClickTools, mainWindowView->getNavbarController(), &NavbarController::handleShowBack);
+
 	// Xử lý khi nhấn nút back
 	connect(mainWindowView->getNavbarController(), &NavbarController::back, this, &MainWindowController::handleBack);
 }
 
 void MainWindowController::handleLogout() {
 	db->connectToDatabase();
-	
+
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
+	handleHiddenTools();
 	handleHiddenMenu();
 
-	
+
 
 	QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getAll();
 	if (employeeList.isEmpty()) {
@@ -76,6 +88,7 @@ void MainWindowController::handleLogin() {
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
 	handleHiddenCheckInOut();
+	handleHiddenTools();
 
 	handleShowMenu();
 }
@@ -84,6 +97,7 @@ void MainWindowController::handleBack() {
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
+	handleHiddenTools();
 
 	handleShowMenu();
 }
@@ -165,6 +179,16 @@ void MainWindowController::handleShowManageEnvents() {
 
 	maeController->handleRenderTable();
 	maeController->loadEmployee();
+}
+
+void MainWindowController::handleHiddenTools() {
+	mainWindowView->getUi()->content->layout()->removeWidget(toolsController->getView());
+	toolsController->getView()->hide();
+}
+void MainWindowController::handleShowTools() {
+	handleHiddenMenu();
+	mainWindowView->getUi()->content->layout()->addWidget(toolsController->getView());
+	toolsController->getView()->show();
 }
 
 MainWindow* MainWindowController::getMainWindowView() { return this->mainWindowView; }

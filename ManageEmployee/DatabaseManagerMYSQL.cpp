@@ -6,11 +6,13 @@
 #include "IEmployeeRepository.h"
 #include "IAttendanceEventRepository.h"
 #include "DepartmentModel.h"
+#include "Constant.h"
 #include <QSqlDatabase>
 #include <QFile>
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSettings>
 
 DatabaseManagerMYSQL::DatabaseManagerMYSQL()
 {
@@ -43,17 +45,21 @@ IAttendanceEventRepository* DatabaseManagerMYSQL::getAttendanceEventRepository()
 
 bool DatabaseManagerMYSQL::connectToDatabase()
 {
-	QString hostName = "localhost";
-	QString dbName = "mysql_iritech";
-	QString userName = "root";
-	QString password = "root";
+	QString pathIni = Constant::PATH_CONFIG;
+	QSettings settings(pathIni, QSettings::IniFormat);
+
+	QString hostName = settings.value("database/hostName").toString();
+	QString dbName = settings.value("database/dbName").toString();
+	QString userName = settings.value("database/username").toString();
+	QString password = settings.value("database/password").toString();
+	int port = settings.value("database/port").toInt();
 
 	db = QSqlDatabase::addDatabase("QMYSQL");
 	db.setHostName(hostName);
 	db.setDatabaseName(dbName);
 	db.setUserName(userName);
 	db.setPassword(password);
-	db.setPort(3306);
+	db.setPort(port);
 
 	if (!db.open()) {
 		qDebug() << "Failed to connect to MySQL database:" << db.lastError().text();

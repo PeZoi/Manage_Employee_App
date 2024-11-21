@@ -6,11 +6,13 @@
 #include "IEmployeeRepository.h"
 #include "IAttendanceEventRepository.h"
 #include "DepartmentModel.h"
+#include "Constant.h"
 #include <QSqlDatabase>
 #include <QFile>
 #include <QDebug>
 #include <QSqlError>
 #include <QSqlQuery>
+#include <QSettings>
 
 DatabaseManagerSQLServer::DatabaseManagerSQLServer()
 {
@@ -43,10 +45,22 @@ IAttendanceEventRepository* DatabaseManagerSQLServer::getAttendanceEventReposito
 
 bool DatabaseManagerSQLServer::connectToDatabase()
 {
-	QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
-	db.setDatabaseName("sqlserver_iritech");
-	db.setUserName("sa");
-	db.setPassword("123456asd");
+	QString pathIni = Constant::PATH_CONFIG;
+	QSettings settings(pathIni, QSettings::IniFormat);
+
+	QString hostName = settings.value("database/hostName").toString();
+	QString dbName = settings.value("database/dbName").toString();
+	QString userName = settings.value("database/username").toString();
+	QString password = settings.value("database/password").toString();
+	int port = settings.value("database/port").toInt();
+
+	db = QSqlDatabase::addDatabase("QODBC");
+	db.setHostName(hostName);
+	db.setDatabaseName(dbName);
+	db.setUserName(userName);
+	db.setPassword(password);
+	db.setPort(port);
+	
 
 	if (!db.open()) {
 		qDebug() << "Failed to connect to SQL Server database:" << db.lastError().text();

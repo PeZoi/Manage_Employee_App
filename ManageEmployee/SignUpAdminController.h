@@ -7,12 +7,12 @@
 class SignUpAdminController : public QObject {
 	Q_OBJECT
 public:
-	SignUpAdminController(SignUpAdmin* view, IDatabaseManager* _db, QObject* parent = nullptr);
+	SignUpAdminController(SignUpAdmin* view, IDatabaseManager*& _db, QObject* parent = nullptr);
 	void handleSubmit();
 	SignUpAdmin* getSignUpView();
 
 private:
 	SignUpAdmin* signUpView;
-	IDatabaseManager* db;
+	IDatabaseManager*& db;
 };
 

@@ -14,7 +14,7 @@
 #include <QDebug>
 
 
-ManageEmployeeController::ManageEmployeeController(ManageEmployee* view, IDatabaseManager* _db, QObject* parent)
+ManageEmployeeController::ManageEmployeeController(ManageEmployee* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), meView(view), db(_db)
 {
 	handleRenderTable();

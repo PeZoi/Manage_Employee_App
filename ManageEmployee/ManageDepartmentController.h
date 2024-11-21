@@ -7,7 +7,7 @@ class ManageDepartmentController : public QObject {
 	Q_OBJECT
 
 public:
-	ManageDepartmentController(ManageDepartment* view, IDatabaseManager* _db, QObject* parent = nullptr);
+	ManageDepartmentController(ManageDepartment* view, IDatabaseManager*& _db, QObject* parent = nullptr);
 	QString departmentSelected;
 
 public slots:
@@ -24,7 +24,7 @@ public slots:
 	
 
 private:
-	IDatabaseManager* db;
+	IDatabaseManager*& db;
 	ManageDepartment* mdView;
 };
 
