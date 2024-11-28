@@ -7,15 +7,20 @@
 #include "DatabaseManagerMYSQL.h"
 #include "DatabaseManagerSQLServer.h"
 #include "Constant.h"
+#include "IriTracker.h"
+#include "DatabaseSingleton.h"
 #include <QtWidgets/QApplication>
 #include <QSqlDatabase>
 #include <QStandardPaths>
 #include <QDir>
 #include <QSqlError>
+#include <QImageReader>
 
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
+
+	IriTracker::get_divice();
 
 	QString pathIni = Constant::PATH_CONFIG;
 	QFile configFile(pathIni);
@@ -33,6 +38,8 @@ int main(int argc, char* argv[])
 	else {
 		db = new DatabaseManagerSQLServer();
 	}
+
+	DatabaseSingleton::getInstance()->setDB(db);
 
 	SignUpAdmin* signUpUI = new SignUpAdmin(nullptr);
 	SignUpAdminController* signUpController = new SignUpAdminController(signUpUI, db, nullptr);
@@ -59,6 +66,7 @@ int main(int argc, char* argv[])
 
 	delete db;
 
-	
+
+
 	return result;
 }

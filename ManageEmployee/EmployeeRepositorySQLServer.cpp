@@ -53,7 +53,8 @@ bool EmployeeRepositorySQLServer::update(EmployeeModel employee) {
 		"email = :email, "
 		"phone_number = :phone_number, "
 		"address = :address, "
-		"is_allow_password = :is_allow_password "
+		"iri_right = :iri_right, "
+		"iri_left = :iri_left, "
 		"WHERE id = :id;";
 
 	QMap<QString, QVariant> params;
@@ -70,6 +71,8 @@ bool EmployeeRepositorySQLServer::update(EmployeeModel employee) {
 	params[":is_enabled"] = employee.getIsEnabled();
 	params[":is_allow_password"] = employee.getIsAllowPassword();
 	params[":avatar"] = employee.getAvatar().isEmpty() ? QVariant() : employee.getAvatar();
+	params[":iri_right"] = employee.getIriRight();
+	params[":iri_left"] = employee.getIriLeft();
 
 	return db->executeCreate(query, params);
 }

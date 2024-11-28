@@ -5,418 +5,301 @@
 #include <QDateTime>
 #include <QDebug>
 #include <utility>
-#include <QImage>
-#include <QBuffer>
-#include <QImageWriter>
-
-QString path = "D://IriTech//Code//ManageEmployee//image//";
-QString imgReturn = "";
+#include "Iddk2000_features.h"
+#include "IriLivenessBase.h"
 
 IriTracker::IriTracker()
 {
-	hdev = NULL;
 }
 
-int write_binary_file(const QString& fname, const void* buff, unsigned len)
+void IriTracker::get_divice() {
+	get_device_handle_custom();
+}
+
+void IriTracker::run()
 {
-	QFile file(fname);
-	if (file.open(QIODevice::WriteOnly))
+	/*Params default*/
+	bool bDefaultParams = false;
+	bool bMultiple = true;
+	bool bProcessResult = true;
+
+	/* For streaming images */
+	IddkImage* pImages = NULL;
+	int nMaxEyeSubtypes = 0;
+	IddkEyeSubtype eyeSubtype = IDDK_UNKNOWN_EYE;
+
+	/* Parameters for capturing */
+	IddkCaptureMode captureMode = IDDK_TIMEBASED;
+	IddkQualityMode qualityMode = IDDK_QUALITY_VERY_HIGH;
+	bool autoLeds = true;
+	bool bStreamMode = true;
+	int iCount = 3;
+
+	/* Other params */
+	IddkResult iRet = IDDK_OK;
+	IddkCaptureStatus captureStatus = IDDK_IDLE;
+	bool bRun = true;
+	int imageWidth = 640, imageHeight = 480;
+	int i = 0;
+	bool eyeDetected = false;
+	int option = -1;
+	int times = 0;
+
+	IddkIrisQuality* pQualities;
+	int nQualityCount = 0;
+
+	/* We have to init camera first */
+	iRet = Iddk_InitCamera(g_hDevice, &imageWidth, &imageHeight);
+	qDebug() << "IRet: " << iRet;
+	if (iRet != IDDK_OK)
 	{
-		qint64 written = file.write(reinterpret_cast<const char*>(buff), len);
-		file.close();
-		return written == len ? 0 : 1;
+		handle_error(iRet);
+		return;
 	}
-	return 1; // failure
-}
-void generate_time_string(QString& timestamp)
-{
-	timestamp = QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss");
-}
 
-
-void log_lib_error(int fail)
-{
-	qDebug() << "Library error:" << IIC_GetErrorName(fail);
-}
-
-
-IICHandle open_first_device(const char devicePaths[][256], int deviceCount)
-{
-	for (int i = 0; i < deviceCount; ++i)
+	/* OK, we capture many times until user exits */
+	while (true)
 	{
-		IICHandle _hdev = 0;
-		int fail = IIC_OpenDevice(devicePaths[i], NULL, &_hdev);
-		if (fail)
+		/* Init variables in inner loop */
+		i = 0;
+		bRun = true;
+		eyeDetected = false;
+		times++;
+
+		/* Ask user to fill in all parameters again */
+//		if (!bDefaultParams)
+//		{
+//			prepare_param_for_capturing(captureMode, qualityMode, eyeSubtype, autoLeds, iCount);
+//		}
+
+		/* Now, we capture user's eyes */
+		iRet = Iddk_StartCapture(g_hDevice, captureMode, iCount, qualityMode, IDDK_AUTO_CAPTURE, eyeSubtype, autoLeds, NULL, NULL);
+
+
+#ifdef _MSC_VER
+		/******************************************************************************************/
+		/* Below is an example how to use the Iddk_StartCapture with a callback function to get stream images*/
+		/*
+		HANDLE hEvent = CreateEvent(0, FALSE, FALSE, 0);
+		iRet = Iddk_StartCapture(g_hDevice, captureMode, iCount, qualityMode, IDDK_AUTO_CAPTURE, eyeSubtype, autoLeds, capture_proc, hEvent);
+		if(iRet != IDDK_OK)
 		{
-			log_lib_error(fail);
-			printf("...while open device: %s\n", devicePaths[i]);
-			continue;
+			handle_error(iRet);
 		}
-		return _hdev;
-	}
-	return 0;
-}
 
-const char* translate_capture_status(int sttValue)
-{
-	switch (sttValue)
-	{
-	case CAPTURE_STATUS_IDLE:
-		return "idle";
-	case CAPTURE_STATUS_READY:
-		return "ready";
-	case CAPTURE_STATUS_CAPTURING:
-		return "capturing";
-	case CAPTURE_STATUS_COMPLETE:
-		return "complete";
-	case CAPTURE_STATUS_ABORT:
-		return "aborted";
-	case CAPTURE_STATUS_FAILED_TO_CAPTURE:
-		return "failed to capture";
-	default:
-		return "invalid value";
-	}
-}
+		WaitForSingleObject(hEvent, 30000);
 
-const char* translate_quality_metric_index(int idx)
-{
-	switch (idx)
-	{
-	case IRIS_QM_TOTAL_SCORE:
-		return "Total score";
-	case IRIS_QM_USABLE_AREA:
-		return "Usable area";
-	case IRIS_QM_LOWER_USABLE_AREA:
-		return "Lower usable area";
-	default:
-		return "Unknown metric";
-	}
-}
+		Iddk_StopCapture(g_hDevice);
 
-int query_result_image(IICHandle hDevice)
-{
-	int fail = 0;
+		return;
+		*/
+#endif
 
-	// result image: PNG for saving and viewing
-	const unsigned char* imageData;
-	int imageLen, imageWidth, imageHeight;
-	fail = IIC_GetResultImage(hDevice,
-		EYE_SUBTYPE_UNDEF,
-		ADDITIONAL_IMAGE_HEADER_NONE,
-		1, // fill image quality score
-		IMAGE_FORMAT_MONO_PNG,
-		IRIS_IMAGE_KIND_K2,
-		IMAGE_COMPRESSION_CRITERIA_BY_QUALITY,
-		100,
-		&imageData, &imageLen, &imageWidth, &imageHeight);
-	if (fail)
-	{
-		qDebug() << "Failed to get result image!";
-		log_lib_error(fail);
-		return fail;
-	}
-
-	QString timestamp = QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss");
-	QString fileName = QString("%1.png").arg(timestamp);
-
-	QFile file(path + fileName);
-	if (!file.open(QIODevice::WriteOnly))
-	{
-		qDebug() << "Failed to write file:" << fileName;
-		return 1;
-	}
-
-	if (file.write(reinterpret_cast<const char*>(imageData), imageLen) != imageLen)
-	{
-		qDebug() << "Failed to write file:" << fileName;
-		return 1;
-	}
-
-	qDebug() << "Result image saved to file:" << fileName;
-	file.close();
-
-	imgReturn = path + fileName;
-
-	// result image: ISO spec 2011
-	fail = IIC_GetResultImage(hDevice,
-		EYE_SUBTYPE_UNDEF,
-		ADDITIONAL_IMAGE_HEADER_ISO2011,
-		1, // fill image quality score
-		IMAGE_FORMAT_MONO_JPEG2000,
-		IRIS_IMAGE_KIND_K7,
-		IMAGE_COMPRESSION_CRITERIA_BY_QUALITY,
-		100,
-		&imageData, &imageLen, &imageWidth, &imageHeight);
-	if (fail)
-	{
-		qDebug() << "Failed to get result ISO image!";
-		log_lib_error(fail);
-		return fail;
-	}
-
-	QString isoFileName = QString("%1_iso2011.bin").arg(timestamp);
-
-	QFile isoFile(path + isoFileName);
-	if (!isoFile.open(QIODevice::WriteOnly))
-	{
-		qDebug() << "Failed to write file:" << isoFileName;
-		return 1;
-	}
-
-	if (isoFile.write(reinterpret_cast<const char*>(imageData), imageLen) != imageLen)
-	{
-		qDebug() << "Failed to write file:" << isoFileName;
-		return 1;
-	}
-	isoFile.close();
-	qDebug() << "Result image saved to file:" << isoFileName;
-
-	// show image quality score
-	unsigned char irisQualityMetrics[3];
-	int metricCount = 0;
-	fail = IIC_GetResultImageQuality(hDevice, EYE_SUBTYPE_UNDEF,
-		irisQualityMetrics,
-		sizeof(irisQualityMetrics) / sizeof(irisQualityMetrics[0]),
-		&metricCount);
-	if (fail)
-	{
-		qDebug() << "Failed to get result image quality metrics!";
-		log_lib_error(fail);
-		return fail;
-	}
-
-	qDebug() << "Iris quality metrics:";
-	for (int i = 0; i < metricCount; ++i)
-	{
-		qDebug() << "\t" << translate_quality_metric_index(i) << ":" << irisQualityMetrics[i];
-	}
-
-	return fail;
-}
-
-void iris_capturing_event_callback(
-	void* callbackParam,              //callback parameter registered together with callback function.
-	int* error,                       //report error code if that happens
-	CaptureStatus* captureStatus,     //report current capture status
-	int imageCount,                   //report number of streaming images received
-	ImageFormat imageFormat,          //     format of streaming image
-	EyeSubtype eyeSubtypes[],         //     eye label for each image
-	const unsigned char* imageData[], //     image data of each one
-	int imageLen[],                   //     image length of each one
-	int imageWidth[],                 //     image width of each one
-	int imageHeight[]                 //     image height of each one
-)
-{
-	if (error || captureStatus)
-	{
-		CaptureStatus* statusPtr = (CaptureStatus*)callbackParam;
-		if (error)
+		if (iRet != IDDK_OK)
 		{
-			*statusPtr = CAPTURE_STATUS_ABORT;
+			/* Remember to deinit camera */
+			handle_error(iRet);
+			goto RETSEC;
 		}
-		if (captureStatus)
+		reset_error_level(iRet);
+		/*
+		Start a loop to check the device status.
+		(You can use the callback function capture_proc instead of this while loop).
+		*/
+		printf("\tScanning for eyes");
+		while (bRun)
 		{
-			*statusPtr = (CaptureStatus)(*captureStatus);
-		}
-	}
-
-	if (imageCount > 0)
-	{
-		for (int i = 0; i < imageCount; ++i)
-		{
-			//process streaming images (save, display...) if needed.
-			// format: imageFormat,
-			// image buffer : imageData[i],
-			// image buffer length: imageLen[i],
-			// image width: imageWidth[i],
-			// image height: imageHeight[i]
-		}
-	}
-	return;
-}
-
-int capture_with_callback(IICHandle hdev)
-{
-	CaptureStatus captureStatus = CAPTURE_STATUS_IDLE;
-	CaptureCallbackOption callback = { iris_capturing_event_callback, &captureStatus,
-		1, //preview?
-		1, //downscale
-		IMAGE_FORMAT_MONO_RAW, 100, //format & quality
-		10 }; //frame rate (frames per second)
-	int fail = IIC_StartCapturing(
-		hdev,
-		EYE_SUBTYPE_UNDEF,
-		CAPTURE_TIMEOUT_MODE_TIMEBASED,
-		3,
-		true, //auto LED control
-		true, //auto capture
-		&callback);
-	if (fail)
-	{
-		return fail;
-	}
-
-	/* wait until capture status changed to finish/aborted */
-	while (captureStatus < CAPTURE_STATUS_COMPLETE)
-	{
-		sleep_msec(300);
-	}
-
-	printf("Last capture status: %s\n", translate_capture_status(captureStatus));
-	if (captureStatus == CAPTURE_STATUS_COMPLETE)
-	{
-		return query_result_image(hdev);
-	}
-
-	return fail;
-}
-
-int IriTracker::capture_without_callback(IICHandle hdev)
-{
-	int fail = IIC_StartCapturing(hdev,
-		EYE_SUBTYPE_UNDEF,
-		CAPTURE_TIMEOUT_MODE_TIMEBASED, 3, true, true, NULL);
-	if (fail)
-	{
-		return fail;
-	}
-
-	CaptureStatus captureStatus = CAPTURE_STATUS_IDLE;
-	while (captureStatus < CAPTURE_STATUS_COMPLETE)
-	{
-		//switching this value to nonzero or 0, depending on your need
-		const int NEED_STREAMING_IMAGES = 1;
-		if (NEED_STREAMING_IMAGES)
-		{
-			int imageCount, imageLen[2], imageWidth[2], imageHeight[2];
-			ImageFormat imageFormat;
-			EyeSubtype eyeSubtypes[2];
-			const unsigned char* imageData[2];
-
-			fail = IIC_GetStreamingImages(
-				hdev,
-				1, //downscale factor
-				IMAGE_FORMAT_MONO_RAW, 100,
-				&captureStatus,
-				&imageCount, &imageFormat, eyeSubtypes,
-				imageData, imageLen, imageWidth, imageHeight);
-
-			if (!fail && (imageCount > 0))
+			if (bStreamMode)
 			{
-				for (int i = 0; i < imageCount; ++i)
+				iRet = Iddk_GetStreamImage(g_hDevice, &pImages, &nMaxEyeSubtypes, &captureStatus);
+				if (iRet == IDDK_OK)
 				{
-					//process streaming images (save, display...) if needed.
-					// format: imageFormat,
-					// image buffer : imageData[i],
-					// image buffer length: imageLen[i],
-					// image width: imageWidth[i],
-					// image height: imageHeight[i]
-
-
-					emit newImageCaptured(imageData[i], imageLen[i], imageWidth[i], imageHeight[i]);
+					//TODO/////////////////////////////////////////////////////////////////
+					//
+					// Your code to process stream image.
+					// 230523
+					//////////////////////////////////////////////////////////////////////
+					emit imageProcessed(pImages->imageData, pImages->imageDataLen, pImages->imageWidth, pImages->imageHeight);
+				}
+				//If the stream image is not allowed by device configuration
+				else if (iRet == IDDK_DEV_FUNCTION_DISABLED)
+				{
+					bStreamMode = false;
+					iRet = Iddk_GetCaptureStatus(g_hDevice, &captureStatus);
+				}
+				else if (iRet == IDDK_SE_NO_FRAME_AVAILABLE)
+				{
+					// when Iddk_GetStreamImage returns IDDK_SE_NO_FRAME_AVAILABLE, there are 2 possibilities:
+					// 1. The capturing process ended.
+					// 2. The capturing process has not started yet
+					//So try to check capturing status to know which above possiblity is:
+					iRet = Iddk_GetCaptureStatus(g_hDevice, &captureStatus);
 				}
 			}
+			else
+			{
+				iRet = Iddk_GetCaptureStatus(g_hDevice, &captureStatus);
+				wait(100);
+			}
+			/* If GetStreamImage and GetCaptureStatus cause no error, process the capture status.*/
+			if (iRet == IDDK_OK)
+			{
+				if (captureStatus == IDDK_CAPTURING)
+				{
+					if (!eyeDetected)
+					{
+						printf("\n\tEyes are detected.\n");
+						eyeDetected = true;
+					}
+				}
+				else if (captureStatus == IDDK_COMPLETE)
+				{
+					/* capture has finished */
+					bRun = false;
+				}
+				else if (captureStatus == IDDK_ABORT)
+				{
+					/* capture has been aborted */
+					printf("\n\tCapture aborted\n");
+					bRun = false;
+				}
+				else
+				{
+					printf(".");
+					/* We set up a counter to break the loop if user doesn't place the eyes in front of the camera */
+					i++;
+					if (i > 300)
+					{
+						bRun = false;
+						printf("\n\tOops! No eye detected for so long. The capture process aborted.\n");
+					}
+				}
+
+				//reset_error_level(iRet);
+			}
+			else
+			{
+				/* handle error and terminate this capture */
+				//handle_error(iRet);
+				bRun = false;
+			}
 		}
+
+		/* Try to stop capturing*/
+		iRet = Iddk_StopCapture(g_hDevice);
+		if (iRet != IDDK_OK)
+		{
+			//handle_error(iRet);
+			//goto RETSEC;
+		}
+
+		// check liveness of captured images.
+		//std::vector<IriLivenessDetector::LivenessResult> livenessResults;
+  //      float decisionValue = 0;
+  //      int ret = Iddk_CheckLivenessResultImage(g_hDevice, livenessResults);
+  //      if (ret == IRI_LN_OK || 
+  //          ret == IddkResult::IDDK_SE_RIGHT_FRAME_UNQUALIFIED || 
+  //          ret == IddkResult::IDDK_SE_LEFT_FRAME_UNQUALIFIED)
+  //      {
+		//	// check liveness OK
+  //      }
+  //      else
+  //      {
+  //          printf("\nCheck Liveness Result Image: %d ", ret);
+  //          printf("\n");
+  //      }
+		//~check liveness.
+
+
+		printf("The capture process completed\n");
+		//reset_error_level(iRet);
+		iRet = Iddk_GetResultQuality(g_hDevice, &pQualities, &nMaxEyeSubtypes);
+		if (iRet == IDDK_OK)
+		{
+			if (nMaxEyeSubtypes == 1)//monocular device model
+			{
+				printf("Quality of the current captured image:\n\t1. Total score: %d\n\t2. Usable area: %d\n\t",
+					pQualities[0].totalScore, pQualities[0].usableArea);
+			}
+			else// binocular device model (nMaxEyeSubtypes == 2)
+			{
+				printf("Quality of the current captured images:\n\t");
+				printf("1. Total score of the right eye: %d\n\t2. Usable area of the right eye: %d\n\t",
+					pQualities[RIGHT_EYE_IDX].totalScore, pQualities[RIGHT_EYE_IDX].usableArea);
+				printf("4. Total score of the left eye: %d\n\t5. Usable area of the left eye: %d\n\t",
+					pQualities[LEFT_EYE_IDX].totalScore, pQualities[LEFT_EYE_IDX].usableArea);
+			}
+		}
+		/*
+		else if (iRet == IDDK_SE_LEFT_FRAME_UNQUALIFIED)
+		{
+			// binocular device model
+			printf("Left eye image is not qualified. Quality of the current captured image:\n\t");
+			printf("1. Total score of right eye: %d\n\t2. Usable area of right eye: %d\n\t",
+				pQualities[RIGHT_EYE_IDX].totalScore, pQualities[RIGHT_EYE_IDX].usableArea);
+		}
+		else if (iRet == IDDK_SE_RIGHT_FRAME_UNQUALIFIED)
+		{
+			// binocular device model
+			printf("Right eye image is not qualified. Quality of the current captured image:\n\t");
+			printf("1. Total score of left eye: %d\n\t2. Usable area of left eye: %d\n\t",
+				pQualities[LEFT_EYE_IDX].totalScore, pQualities[LEFT_EYE_IDX].usableArea);
+		}
+		*/
 		else
 		{
-			fail = IIC_GetCapturingStatus(hdev, &captureStatus);
+			bRun = true;
+			continue;
+			//handle_error(iRet);
+			//goto RETSEC;
+		}
+		//reset_error_level(iRet);
+		if (bProcessResult && captureStatus == IDDK_COMPLETE)
+		{
+			qint64 timestamp = QDateTime::currentDateTime().toSecsSinceEpoch();
+			/* Get the result image */
+			IddkImage* result = get_result_image_custom(timestamp);
+			emit imageResult(result->imageData, result->imageDataLen, result->imageWidth, result->imageHeight);
+			//get_result_ISO_image(times);
+
+			/* Get the result template */
+			QString pathTemplate = get_result_template_custom(timestamp);
+			emit resultTemplate(pathTemplate);
+			return;
 		}
 
-		//ignore failure: many reason: IO fail, no frame available
-		if (captureStatus >= CAPTURE_STATUS_COMPLETE)
+		/* iris_recognition calls, we break the loop */
+		if (!bMultiple)
 		{
-			break;
+			goto RETSEC;
 		}
-		else
+
+		/* Let's try another capturing? */
+		/**
+		printf("\nTry another capture?\n\t1. Yes (default)\n\t2. No");
+		printf("\nEnter your choice: ");
+		option = choose_option(2);
+
+		if (option == -1) printf("1\n");
+		if (option == 2)
 		{
-			//No-frame-available, memory failure: can ignore it
-			if (!fail || (fail == BERR_NO_DATA) || (fail == BERR_NO_MEM))
-			{
-				continue;
-			}
-			else //more serious error
-			{
-				break;
-			}
+			goto RETSEC;
 		}
-		sleep_msec(100);
+		*/
+
+		bRun = true;
+
+		/* Number of capturing */
+		times++;
 	}
 
-	printf("Last capture status: %s\n", translate_capture_status(captureStatus));
-	if (captureStatus == CAPTURE_STATUS_COMPLETE)
+RETSEC:
+	/* Finally, we deinit the camera */
+	iRet = Iddk_DeinitCamera(g_hDevice);
+	if (iRet != IDDK_OK)
 	{
-		fail = query_result_image(hdev);
+		handle_error(iRet);
 	}
 
-	return fail;
-}
-
-QString IriTracker::run()
-{
-
-	int fail = 0;
-
-	/* Library initialization */
-	fail = IIC_Init();
-	if (fail)
-	{
-		log_lib_error(fail);
-		return "";
-	}
-
-	/* From here, library should be de-initialized to finish usage */
-	do
-	{
-		/* find device list */
-		char devicePaths[64][256]; /* find up to 64 devices, you can find more of them */
-		int deviceCount = 0;
-		fail = IIC_ScanDevices(COMM_CHANNEL_USB, devicePaths, 64, &deviceCount);
-		if (fail)
-		{
-			log_lib_error(fail);
-			break;
-		}
-		if (deviceCount <= 0)
-		{
-			printf("No device found!\n");
-			break;
-		}
-
-		/* open first available device */
-		if (!hdev) {
-			hdev = open_first_device(devicePaths, deviceCount);
-		}
-		if (!hdev)
-		{
-			printf("No accessible device!\n");
-			break;
-		}
-
-		/* capturing iris, callback approach */
-		/*printf("--- capture with implementation using callback ---\n");
-		fail = capture_with_callback(hdev);
-		if (fail)
-		{
-			log_lib_error(fail);
-		}*/
-
-		/* capturing iris, caller does all query */
-		printf("--- capture with implementation not using callback ---\n");
-		fail = capture_without_callback(hdev);
-		if (fail)
-		{
-		    log_lib_error(fail);
-		}
-
-		/* close device handle */
-		IIC_CloseDevice(hdev);
-		hdev = 0;
-
-	} while (0);
-
-	/* De-initialize library before exiting */
-	IIC_Deinit();
-
-	emit captureFinished();
-	return imgReturn;
+	reset_error_level(iRet);
 }

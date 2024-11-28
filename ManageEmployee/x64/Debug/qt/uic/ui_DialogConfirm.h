@@ -30,7 +30,7 @@ public:
     {
         if (DialogConfirmClass->objectName().isEmpty())
             DialogConfirmClass->setObjectName(QString::fromUtf8("DialogConfirmClass"));
-        DialogConfirmClass->resize(362, 121);
+        DialogConfirmClass->resize(383, 130);
         label = new QLabel(DialogConfirmClass);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(20, 20, 41, 41));
@@ -39,11 +39,11 @@ public:
         label->setWordWrap(false);
         content = new QLabel(DialogConfirmClass);
         content->setObjectName(QString::fromUtf8("content"));
-        content->setGeometry(QRect(80, 20, 271, 41));
+        content->setGeometry(QRect(80, 20, 291, 51));
         content->setWordWrap(true);
         btn_no = new QPushButton(DialogConfirmClass);
         btn_no->setObjectName(QString::fromUtf8("btn_no"));
-        btn_no->setGeometry(QRect(260, 80, 91, 27));
+        btn_no->setGeometry(QRect(280, 90, 91, 27));
         btn_no->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	text-align: center;\n"
 "	color: #fff;\n"
@@ -60,7 +60,7 @@ public:
         btn_no->setIconSize(QSize(12, 12));
         btn_yes = new QPushButton(DialogConfirmClass);
         btn_yes->setObjectName(QString::fromUtf8("btn_yes"));
-        btn_yes->setGeometry(QRect(160, 80, 91, 27));
+        btn_yes->setGeometry(QRect(180, 90, 91, 27));
         btn_yes->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "	text-align: center;\n"
 "	color: #fff;\n"

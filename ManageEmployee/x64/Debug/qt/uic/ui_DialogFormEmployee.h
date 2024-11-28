@@ -75,8 +75,6 @@ public:
     QLabel *label_19;
     QLabel *label_23;
     QLabel *label_22;
-    QPushButton *scan_left;
-    QPushButton *scan_right;
     QLabel *label_25;
     QLabel *label_24;
     QLabel *iri_left;
@@ -321,12 +319,6 @@ public:
         label_22->setObjectName(QString::fromUtf8("label_22"));
         label_22->setGeometry(QRect(120, 50, 49, 16));
         label_22->setStyleSheet(QString::fromUtf8("font-weight: bold;"));
-        scan_left = new QPushButton(tab_3);
-        scan_left->setObjectName(QString::fromUtf8("scan_left"));
-        scan_left->setGeometry(QRect(30, 280, 239, 25));
-        scan_right = new QPushButton(tab_3);
-        scan_right->setObjectName(QString::fromUtf8("scan_right"));
-        scan_right->setGeometry(QRect(280, 280, 239, 25));
         label_25 = new QLabel(tab_3);
         label_25->setObjectName(QString::fromUtf8("label_25"));
         label_25->setGeometry(QRect(350, 70, 105, 16));
@@ -423,8 +415,6 @@ public:
         label_19->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Note: In order to ensure the iris quality, please capture THREE times for enrolled irises", nullptr));
         label_23->setText(QCoreApplication::translate("DialogFormEmployeeClass", "(Not registerd yet)", nullptr));
         label_22->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Left iris", nullptr));
-        scan_left->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Scan", nullptr));
-        scan_right->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Scan", nullptr));
         label_25->setText(QCoreApplication::translate("DialogFormEmployeeClass", "(Not registerd yet)", nullptr));
         label_24->setText(QCoreApplication::translate("DialogFormEmployeeClass", "Right iris", nullptr));
         iri_left->setText(QString());

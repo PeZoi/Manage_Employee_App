@@ -21,5 +21,9 @@ public:
     virtual IDepartmentRepository* getDepartmentRepository() = 0;
     virtual IEmployeeRepository* getEmployeeRepository() = 0;
     virtual IAttendanceEventRepository* getAttendanceEventRepository() = 0;
+
+    virtual bool excuteInitTable(QString pathDefault) = 0;
+    virtual void bankupData() = 0;
+    virtual void restoreData() = 0;
 };
 

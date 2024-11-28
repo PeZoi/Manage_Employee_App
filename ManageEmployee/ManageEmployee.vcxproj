@@ -66,7 +66,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
       <AdditionalLibraryDirectories>D:\IriTech\Code\ManageEmployee\library\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libIriSentinel64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libIriSentinel64.lib;Iddk2000.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <AdditionalIncludeDirectories>D:\IriTech\Code\ManageEmployee\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -113,6 +113,7 @@
     <ClCompile Include="DatabaseManagerMYSQL.cpp" />
     <ClCompile Include="DatabaseManagerSQLite.cpp" />
     <ClCompile Include="DatabaseManagerSQLServer.cpp" />
+    <ClCompile Include="DatabaseSingleton.cpp" />
     <ClCompile Include="DepartmentModel.cpp" />
     <ClCompile Include="DepartmentRepositoryMYSQL.cpp" />
     <ClCompile Include="DepartmentRepositorySQLite.cpp" />
@@ -130,7 +131,13 @@
     <ClCompile Include="EmployeeRepositoryMYSQL.cpp" />
     <ClCompile Include="EmployeeRepositorySQLite.cpp" />
     <ClCompile Include="EmployeeRepositorySQLServer.cpp" />
-    <ClCompile Include="IriTracker.cpp" />
+    <ClCompile Include="Iddk2000_features.cpp" />
+    <ClCompile Include="IriTracker.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MainWindowController.cpp" />
     <ClCompile Include="ManageAttendanceEvents.cpp" />
@@ -206,6 +213,7 @@
     <ClInclude Include="EmployeeRepositoryMYSQL.h" />
     <ClInclude Include="EmployeeRepositorySQLite.h" />
     <ClInclude Include="EmployeeRepositorySQLServer.h" />
+    <ClInclude Include="DatabaseSingleton.h" />
     <ClInclude Include="IAttendanceEventRepository.h" />
     <ClInclude Include="IDatabaseManager.h" />
     <ClInclude Include="IDepartmentRepository.h" />

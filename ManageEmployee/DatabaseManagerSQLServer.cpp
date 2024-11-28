@@ -13,6 +13,8 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSettings>
+#include <QFileDialog>
+#include <QProcess>
 
 DatabaseManagerSQLServer::DatabaseManagerSQLServer()
 {
@@ -42,6 +44,12 @@ IAttendanceEventRepository* DatabaseManagerSQLServer::getAttendanceEventReposito
 	return attendanceEventRepository;
 }
 
+bool DatabaseManagerSQLServer::excuteInitTable(QString pathDefault) {
+	if (pathDefault.isEmpty()) {
+		return true;
+	}
+	return false;
+}
 
 bool DatabaseManagerSQLServer::connectToDatabase()
 {
@@ -191,3 +199,10 @@ QSqlQuery DatabaseManagerSQLServer::executeQuery(const QString& queryStr) {
 }
 
 
+void DatabaseManagerSQLServer::bankupData() {
+	
+}
+
+void DatabaseManagerSQLServer::restoreData() {
+	
+}

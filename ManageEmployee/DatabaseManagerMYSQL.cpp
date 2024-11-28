@@ -13,6 +13,8 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSettings>
+#include <QFileDialog>
+#include <QProcess>
 
 DatabaseManagerMYSQL::DatabaseManagerMYSQL()
 {
@@ -42,6 +44,32 @@ IAttendanceEventRepository* DatabaseManagerMYSQL::getAttendanceEventRepository()
 	return attendanceEventRepository;
 }
 
+bool DatabaseManagerMYSQL::excuteInitTable(QString pathDefault) {
+	QFile file(pathDefault);
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		qDebug() << "Không thể mở file SQL:" << file.errorString();
+		return false;
+	}
+
+	QTextStream in(&file);
+	QString sqlContent = in.readAll();
+	file.close();
+
+	QStringList queries = sqlContent.split(";", Qt::SkipEmptyParts);
+	QSqlQuery query(db);
+
+	for (const QString& singleQuery : queries) {
+		QString trimmedQuery = singleQuery.trimmed();
+		if (trimmedQuery.isEmpty()) continue;
+
+		if (!query.exec(trimmedQuery)) {
+			qDebug() << "Lỗi khi thực thi truy vấn:" << query.lastError().text();
+			return false;
+		}
+	}
+
+	return true;
+}
 
 bool DatabaseManagerMYSQL::connectToDatabase()
 {
@@ -66,54 +94,11 @@ bool DatabaseManagerMYSQL::connectToDatabase()
 		return false;
 	}
 
-	QString createTableDepartmentQuery =
-		"CREATE TABLE IF NOT EXISTS department ("
-		"name VARCHAR(255) PRIMARY KEY, "
-		"description TEXT"
-		");";
-
-	QString createTableEmployeeQuery =
-		"CREATE TABLE IF NOT EXISTS employee ("
-		"id VARCHAR(255) PRIMARY KEY, "
-		"first_name VARCHAR(255), "
-		"last_name VARCHAR(255), "
-		"password VARCHAR(255), "
-		"department VARCHAR(255), "
-		"date_of_birth VARCHAR(255), "
-		"start_date_of_work VARCHAR(255), "
-		"status VARCHAR(255), "
-		"is_enabled BOOLEAN NOT NULL DEFAULT 1, "
-		"avatar TEXT, "
-		"role VARCHAR(255), "
-		"email VARCHAR(255), "
-		"phone_number VARCHAR(255), "
-		"address TEXT, "
-		"is_allow_password BOOLEAN NOT NULL DEFAULT 0, "
-		"iri_right TEXT, "
-		"iri_left TEXT, "
-		"FOREIGN KEY (department) REFERENCES department(name)"
-		");";
-
-	QString createTableAttendanceEventQuery =
-		"CREATE TABLE IF NOT EXISTS attendance_event ("
-		"id INT AUTO_INCREMENT PRIMARY KEY, "
-		"type_event VARCHAR(255), "
-		"date_event VARCHAR(255), "
-		"time_event VARCHAR(255), "
-		"exception INT, "
-		"session INT, "
-		"employee_id VARCHAR(255), "
-		"FOREIGN KEY (employee_id) REFERENCES employee(id)"
-		");";
-
-	// Thực thi các truy vấn tạo bảng
-	executeCreate(createTableDepartmentQuery);
-	executeCreate(createTableEmployeeQuery);
-	executeCreate(createTableAttendanceEventQuery);
-
-	// Thêm dữ liệu mặc định vào bảng `department`
-	DepartmentModel departmentDefault = DepartmentModel("Others", "");
-	departmentRepository->add(departmentDefault);
+	QString sqlFilePath = settings.value("database/initMYSQL").toString();
+	if (!excuteInitTable(sqlFilePath)) {
+		qDebug() << "Lỗi khi thực thi các câu lệnh SQL từ file.";
+		return false;
+	}
 
 	qDebug() << "Connected to MySQL database successfully.";
 	return true;
@@ -183,3 +168,85 @@ QSqlQuery DatabaseManagerMYSQL::executeQuery(const QString& queryStr) {
 }
 
 
+void DatabaseManagerMYSQL::bankupData() {
+	QString pathIni = Constant::PATH_CONFIG;
+	QSettings settings(pathIni, QSettings::IniFormat);
+
+	QString hostName = settings.value("database/hostName").toString();
+	QString dbName = settings.value("database/dbName").toString();
+	QString userName = settings.value("database/username").toString();
+	QString password = settings.value("database/password").toString();
+
+	QString filePath = QFileDialog::getSaveFileName(nullptr, "Chọn nơi lưu file backup", "", "SQL Files (*.sql)");
+
+	if (filePath.isEmpty()) {
+		qDebug() << "Người dùng đã hủy quá trình bankup.";
+		return;
+	}
+
+	if (!filePath.endsWith(".sql")) {
+		filePath += ".sql";
+	}
+
+	QString timestamp = QDateTime::currentDateTime().toString("ddMMyyyy_HHmmss");
+	QFileInfo fileInfo(filePath);
+	QString baseName = fileInfo.completeBaseName();
+	QString dirPath = fileInfo.absolutePath();
+
+	filePath = QString("%1/%2_mysql_%3.sql").arg(dirPath).arg(baseName).arg(timestamp);
+
+	QProcess process;
+	QString command = QString("mysqldump -h %1 -u %2 -p%3 %4 > %5")
+		.arg(hostName)
+		.arg(userName)
+		.arg(password)
+		.arg(dbName)
+		.arg(filePath);
+
+	qDebug() << "Command:" << command;
+
+	process.start("cmd", QStringList() << "/c" << command);
+	process.waitForFinished();
+
+	if (process.exitCode() == 0) {
+		qDebug() << "Backup data MYSQL thành công";
+	}
+	else {
+		qDebug() << "Backup data MYSQL không thành công";
+	}
+}
+void DatabaseManagerMYSQL::restoreData() {
+	QString pathIni = Constant::PATH_CONFIG;
+	QSettings settings(pathIni, QSettings::IniFormat);
+
+	QString hostName = settings.value("database/hostName").toString();
+	QString dbName = settings.value("database/dbName").toString();
+	QString userName = settings.value("database/username").toString();
+	QString password = settings.value("database/password").toString();
+
+	QString filePath = QFileDialog::getOpenFileName(nullptr, "Chọn file backup để restore", "", "SQL Files (*.sql)");
+
+	if (filePath.isEmpty()) {
+		qDebug() << "Người dùng đã hủy quá trình restore.";
+		return;
+	}
+
+	QProcess process;
+	QString command = QString("mysql -h %1 -u %2 -p%3 %4 < %5")
+		.arg(hostName)
+		.arg(userName)
+		.arg(password)
+		.arg(dbName)
+		.arg(filePath);
+
+	process.start("cmd", QStringList() << "/c" << command);
+	process.waitForFinished();
+
+	if (process.exitCode() == 0) {
+		qDebug() << "Restore data MYSQL thành công";
+
+	}
+	else {
+		qDebug() << "Restore data MYSQL không thành công";
+	}
+}

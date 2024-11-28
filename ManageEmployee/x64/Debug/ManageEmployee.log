@@ -1,4 +1,6 @@
 ﻿   Qt/MSBuild: 3.3.0.13
    Qt: 5.15.2
-  DialogChangeDatabase.cpp
+  DatabaseManagerMYSQL.cpp
+  DatabaseManagerSQLite.cpp
+  Generating Code...
   ManageEmployee.vcxproj -> D:\IriTech\Code\ManageEmployee\x64\Debug\ManageEmployee.exe

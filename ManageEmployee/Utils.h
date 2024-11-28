@@ -11,5 +11,7 @@ public:
 	static bool isInLastWeek(const QDate& date);
 	static bool isInLastMonth(const QDate& date);
 	static bool isInCurrentYear(const QDate& date);
+
+	static bool deleteFile(const QString& filePath);
 };
 

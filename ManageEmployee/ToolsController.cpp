@@ -4,8 +4,11 @@
 #include "DatabaseManagerSQLite.h"
 #include "DatabaseManagerSQLServer.h"
 #include "Constant.h"
+#include "DialogConfirm.h"
+#include "DatabaseSingleton.h"
 #include <QDebug>
 #include <QPushButton>
+
 
 ToolsController::ToolsController(Tools* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), tools(view), db(_db)
@@ -21,18 +24,27 @@ Tools* ToolsController::getView() {
 	return tools;
 }
 
-void ToolsController::onClickBackupData(){
+void ToolsController::onClickBackupData() {
+	DialogConfirm* confirm = new DialogConfirm("This will backup database that contains all IriTracker data.\nAre you sure you want to do this?", nullptr);
+	if (confirm->exec() == QDialog::Accepted) {
+		db->bankupData();
+	}
 }
-void ToolsController::onClickRestoreData(){}
-void ToolsController::onClickChangeDB(){
+void ToolsController::onClickRestoreData() {
+	DialogConfirm* confirm = new DialogConfirm("This will use the backup database to overwrite all the existing IriTracker data.\nAre you sure you want to do this?", nullptr);
+	if (confirm->exec() == QDialog::Accepted) {
+		db->restoreData();
+	}
+}
+void ToolsController::onClickChangeDB() {
 	DialogChangeDatabase* dialogChangeDB = new DialogChangeDatabase(tools);
 
 	connect(dialogChangeDB, &DialogChangeDatabase::changeDB, this, &ToolsController::handleChangeDB);
 
 	dialogChangeDB->exec();
 }
-void ToolsController::onClickChangePassword(){}
-void ToolsController::onClickSettings(){}
+void ToolsController::onClickChangePassword() {}
+void ToolsController::onClickSettings() {}
 
 void ToolsController::handleChangeDB(QString type) {
 	if (db != nullptr) {
@@ -48,4 +60,6 @@ void ToolsController::handleChangeDB(QString type) {
 	else {
 		db = new DatabaseManagerSQLServer();
 	}
+
+	DatabaseSingleton::getInstance()->setDB(db);
 }

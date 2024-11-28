@@ -4,6 +4,7 @@
 #include "ErrorLabel.h"
 #include "DepartmentModel.h"
 #include "EmployeeModel.h"
+#include "Utils.h"
 #include <QBuffer>
 #include <QThread>
 #include <QDebug>
@@ -35,15 +36,9 @@ DialogFormEmployee::DialogFormEmployee(QWidget* parent)
 		emit uploadAvatar(this, isEditMode_employee);
 		});
 
-	connect(ui.scan_left, &QPushButton::clicked, this, [this]() {
-		processStreaming();
-		side = "LEFT";
-		});
-
-	connect(ui.scan_right, &QPushButton::clicked, this, [this]() {
-		processStreaming();
-		side = "RIGHT";
-		});
+	// Add event click label
+	ui.iri_right->installEventFilter(this);
+	ui.iri_left->installEventFilter(this);
 
 	connect(ui.is_allow_password, &QCheckBox::toggled, this, [this](bool checked) {
 		if (checked) {
@@ -64,6 +59,9 @@ DialogFormEmployee::~DialogFormEmployee()
 	iriTracker = nullptr;
 }
 void DialogFormEmployee::onClickCancel() {
+	Utils::deleteFile(iri_leftPath);
+	Utils::deleteFile(iri_rightPath);
+
 	this->deleteLater();
 }
 
@@ -126,8 +124,8 @@ void DialogFormEmployee::handleSubmit() {
 		phoneNumber,
 		address,
 		isAllowPassword,
-		"",
-		""
+		iri_rightPath,
+		iri_leftPath
 	);
 
 	emit submit(employee, isEditMode_employee, this);
@@ -198,10 +196,9 @@ void DialogFormEmployee::processStreaming() {
 	iriTracker = new IriTracker();
 
 	// Kết nối tín hiệu từ IriTracker đến updateFrame trong UI thread
-	connect(iriTracker, &IriTracker::newImageCaptured, this, &DialogFormEmployee::updateFrame);
-
-	// Kết nối tín hiệu captureFinished để dừng thread khi quá trình capture hoàn tất
-	connect(iriTracker, &IriTracker::captureFinished, captureThread, &QThread::quit);
+	connect(iriTracker, &IriTracker::imageProcessed, this, &DialogFormEmployee::updateFrame);
+	connect(iriTracker, &IriTracker::imageResult, this, &DialogFormEmployee::updateFrame);
+	connect(iriTracker, &IriTracker::resultTemplate, this, &DialogFormEmployee::handleReciveTemplate);
 
 	// Di chuyển IriTracker vào thread để xử lý capture
 	iriTracker->moveToThread(captureThread);
@@ -210,7 +207,6 @@ void DialogFormEmployee::processStreaming() {
 	connect(captureThread, &QThread::started, iriTracker, &IriTracker::run);
 
 	// Kết nối để tự động xóa IriTracker khi hoàn tất
-	connect(iriTracker, &IriTracker::captureFinished, iriTracker, &QObject::deleteLater);
 	connect(captureThread, &QThread::finished, captureThread, &QObject::deleteLater);
 
 	// Bắt đầu thread
@@ -234,25 +230,28 @@ void DialogFormEmployee::updateFrame(const unsigned char* imageData, int imageLe
 		qDebug() << "Dữ liệu hình ảnh không hợp lệ.";
 	}
 }
-void DialogFormEmployee::handleCapture(QString side) {
-	qDebug() << "Đang scan ...";
-	/*QString iri = IriTracker::run([this]() {
-		updateFrame();
-		});
 
-	if (iri.trimmed().isEmpty()) {
-		msgBox.setText("Scan fail ...");
-		msgBox.exec();
-	}
-	QPixmap iriImg;
-	iriImg.load(iri);
-	QGraphicsScene* scene = new QGraphicsScene(this);
-	scene->addPixmap(iriImg);
-
+void DialogFormEmployee::handleReciveTemplate(QString pathTemplate) {
 	if (side == "LEFT") {
-		iri_leftPath = iri;
+		iri_leftPath = pathTemplate;
 	}
 	else {
-		iri_rightPath = iri;
-	}*/
+		iri_rightPath = pathTemplate;
+	}
+}
+
+bool DialogFormEmployee::eventFilter(QObject* obj, QEvent* event) {
+	if (event->type() == QEvent::MouseButtonPress) {
+		if (obj == ui.iri_left) {
+			side = "LEFT";
+			processStreaming();
+			return true;
+		}
+		else if (obj == ui.iri_right) {
+			side = "RIGHT";
+			processStreaming();
+			return true;
+		}
+	}
+	return QWidget::eventFilter(obj, event);
 }

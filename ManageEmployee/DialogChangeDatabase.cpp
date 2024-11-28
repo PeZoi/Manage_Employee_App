@@ -1,6 +1,10 @@
 #include "DialogChangeDatabase.h"
 #include "Constant.h"
 #include "ErrorLabel.h"
+#include "EmployeeModel.h"
+#include "DatabaseSingleton.h"
+#include "DatabaseManagerMYSQL.h"
+#include "DatabaseManagerSQLServer.h"
 #include <QSettings>
 #include <QDebug>
 #include <QFile>
@@ -8,6 +12,8 @@
 #include <QFileInfo>
 #include <QFileDialog>
 #include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlError>
 
 DialogChangeDatabase::DialogChangeDatabase(QWidget* parent)
 	: QDialog(parent)
@@ -53,7 +59,6 @@ Ui::DialogChangeDatabaseClass* DialogChangeDatabase::getUi() {
 }
 
 void DialogChangeDatabase::handleChangeSQLList(QString name) {
-	qDebug() << name;
 	if (name == "SQLite") {
 		ui->stackedWidget->setCurrentIndex(0);
 	}
@@ -102,6 +107,7 @@ void DialogChangeDatabase::handleConnectDB() {
 			if (ui->radio_create->isChecked()) {
 				file.open(QIODevice::WriteOnly);
 			}
+
 			settings.setValue("database/path", path);
 		}
 		else {
@@ -123,6 +129,60 @@ void DialogChangeDatabase::handleConnectDB() {
 				error->showTemporary(ui->verticalLayout, 3000);
 				return;
 			}
+
+			//QString queryString = "SELECT COUNT(*) FROM employee WHERE role = 'ADMIN';";
+			//QSqlQuery query = db.exec(queryString);
+			//bool checkHaveAdmin = true;
+
+			//if (query.next()) {
+			//	checkHaveAdmin = query.value(0).toInt() > 0;
+			//}
+
+			//if (!checkHaveAdmin) {
+			//	IDatabaseManager* databaseManager = DatabaseSingleton::getInstance()->getDB();
+			//	databaseManager->connectToDatabase();
+			//	EmployeeModel employee = databaseManager->getEmployeeRepository()->getById("admin");
+			//	databaseManager->closeDatabase();
+
+			//	QString queryInsert = "INSERT INTO employee ("
+			//		"id, first_name, last_name, password, department, "
+			//		"date_of_birth, start_date_of_work, status, is_enabled, "
+			//		"avatar, role, email, phone_number, address, is_allow_password, "
+			//		"iri_right, iri_left) "
+			//		"VALUES (:id, :first_name, :last_name, :password, :department, "
+			//		":date_of_birth, :start_date_of_work, :status, :is_enabled, "
+			//		":avatar, :role, :email, :phone_number, :address, :is_allow_password, "
+			//		":iri_right, :iri_left);";
+
+			//	query.prepare(queryInsert);
+
+			//	// Gắn các giá trị cho placeholder
+			//	query.bindValue(":id", employee.getId());
+			//	query.bindValue(":first_name", employee.getFirstName());
+			//	query.bindValue(":last_name", employee.getLastName());
+			//	query.bindValue(":password", employee.getPassword());
+			//	query.bindValue(":department", employee.getDepartment().getName());
+			//	query.bindValue(":date_of_birth", employee.getDateOfBirth().toString("dd/MM/yyyy"));
+			//	query.bindValue(":start_date_of_work", employee.getStartDateOfWork().toString("dd/MM/yyyy"));
+			//	query.bindValue(":status", employee.getStatus());
+			//	query.bindValue(":is_enabled", employee.getIsEnabled());
+			//	query.bindValue(":avatar", employee.getAvatar());
+			//	query.bindValue(":role", employee.getRole());
+			//	query.bindValue(":email", employee.getEmail().trimmed().isEmpty() ? QVariant(QVariant::String) : employee.getEmail());
+			//	query.bindValue(":phone_number", employee.getPhoneNumber());
+			//	query.bindValue(":address", employee.getAddress());
+			//	query.bindValue(":is_allow_password", employee.getIsAllowPassword());
+			//	query.bindValue(":iri_right", employee.getIriRight());
+			//	query.bindValue(":iri_left", employee.getIriLeft());
+
+			//	// Thực thi câu lệnh
+			//	if (!query.exec()) {
+			//		qDebug() << "Lỗi thực thi truy vấn, Khi chuyển đổi ADMIN:" << query.lastError().text();
+			//		return;
+			//	}
+
+			//	db.close();
+			//}
 
 			settings.setValue("database/hostName", hostName);
 			settings.setValue("database/dbName", dbName);

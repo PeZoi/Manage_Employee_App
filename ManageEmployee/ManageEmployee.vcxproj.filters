@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>qml;cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>qrc;rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -21,50 +17,83 @@
       <UniqueIdentifier>{639EADAA-A684-42e4-A9AD-28FC9BCB8F7C}</UniqueIdentifier>
       <Extensions>ts</Extensions>
     </Filter>
-    <Filter Include="Source Files\Model">
-      <UniqueIdentifier>{2bd8d835-42e3-41e3-8190-25a8793d466f}</UniqueIdentifier>
+    <Filter Include="Translation Files\NewFilter1">
+      <UniqueIdentifier>{ed582901-c229-424e-84fe-07d28ed1e87c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Controller">
-      <UniqueIdentifier>{f31625f4-e632-4068-9d4c-ccf2a0ef7fe0}</UniqueIdentifier>
+    <Filter Include="View">
+      <UniqueIdentifier>{fb35b825-072b-4fd7-b940-51e7a5f05421}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\View">
-      <UniqueIdentifier>{d0069127-fdb3-4099-9fa2-8204b9bc0167}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Repository">
-      <UniqueIdentifier>{f3f12206-4314-427b-956e-4490037b80b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Controller">
-      <UniqueIdentifier>{12909489-579a-4c64-85f3-0b82574fd6a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\View">
+    <Filter Include="View\View Header">
       <UniqueIdentifier>{e5a38910-f727-4e05-87a4-b45db8abdf06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Model">
+    <Filter Include="View\View Cpp">
+      <UniqueIdentifier>{d0069127-fdb3-4099-9fa2-8204b9bc0167}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controller">
+      <UniqueIdentifier>{02c31e23-215d-43dd-82dc-da2f6df60b30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controller\Controller Cpp">
+      <UniqueIdentifier>{f31625f4-e632-4068-9d4c-ccf2a0ef7fe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controller\Controller Header">
+      <UniqueIdentifier>{12909489-579a-4c64-85f3-0b82574fd6a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{08f98630-8803-47ae-b14b-e8f62bb3ec32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Model Header">
       <UniqueIdentifier>{f609ebc0-37d0-4265-ad55-ae72a8d7efb1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Repository">
+    <Filter Include="Model\Model Cpp">
+      <UniqueIdentifier>{2bd8d835-42e3-41e3-8190-25a8793d466f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Repository">
+      <UniqueIdentifier>{8e557761-f206-45cb-a20f-ed58fb1a686f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Repository\Repository Header">
       <UniqueIdentifier>{6a118ac8-8b52-4a97-9ec6-2ece6417ef47}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Repository\Interface">
+    <Filter Include="Repository\Repository Header\Interface">
       <UniqueIdentifier>{5da6d939-e8d7-4bc0-b572-94ec34395f27}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Repository\MYSQL">
-      <UniqueIdentifier>{3b8934c7-b42b-40cf-9c24-89edd4a3ebb4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Repository\SQLite">
-      <UniqueIdentifier>{be2263d3-437a-4118-b2f2-f1759c748db2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Repository\MYSQL">
+    <Filter Include="Repository\Repository Header\MYSQL">
       <UniqueIdentifier>{3208380a-50e6-4a9f-8931-6054ecfa00da}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Repository\SQLite">
+    <Filter Include="Repository\Repository Header\SQLite">
       <UniqueIdentifier>{577b86cf-eb9e-43f2-9605-86d88cf546ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Repository\SQLServer">
+    <Filter Include="Repository\Repository Header\SQLServer">
       <UniqueIdentifier>{f468e1ea-b0f2-4269-827c-b259fb23deea}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Repository\SQLServer">
+    <Filter Include="Repository\Repository Cpp">
+      <UniqueIdentifier>{f3f12206-4314-427b-956e-4490037b80b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Repository\Repository Cpp\MYSQL">
+      <UniqueIdentifier>{3b8934c7-b42b-40cf-9c24-89edd4a3ebb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Repository\Repository Cpp\SQLite">
+      <UniqueIdentifier>{be2263d3-437a-4118-b2f2-f1759c748db2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Repository\Repository Cpp\SQLServer">
       <UniqueIdentifier>{87da7e0a-3192-4e88-bf4d-737b107f0472}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IriTracker">
+      <UniqueIdentifier>{fdc1a56a-af0e-4407-aaee-3cac7b89b457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IriTracker\IriTracker Header">
+      <UniqueIdentifier>{9338f2b1-b215-42cb-bda2-12aaf381d74c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IriTracker\IriTracker Cpp">
+      <UniqueIdentifier>{2192c667-e10f-43b3-b4b3-314e7dfe62f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{a1ce4f04-f972-48f1-844f-d2e4a878dcc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Utils Header">
+      <UniqueIdentifier>{2ee66dc5-16e6-4b99-8bc9-c6dc41d56679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils\Utils Cpp">
+      <UniqueIdentifier>{3e1efd9a-c7fa-41a0-9562-79ce97534391}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -76,217 +105,223 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IriTracker.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DepartmentModel.cpp">
-      <Filter>Source Files\Model</Filter>
+      <Filter>Model\Model Cpp</Filter>
     </ClCompile>
     <ClCompile Include="EmployeeModel.cpp">
-      <Filter>Source Files\Model</Filter>
+      <Filter>Model\Model Cpp</Filter>
     </ClCompile>
     <ClCompile Include="MainWindowController.cpp">
-      <Filter>Source Files\Controller</Filter>
+      <Filter>Controller\Controller Cpp</Filter>
     </ClCompile>
     <ClCompile Include="DialogFormDepartment.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="DialogFormEmployee.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="DialogFormLoginAdmin.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="MainWindow.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="MenuList.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="ManageDepartment.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="ManageEmployee.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="SignUpAdmin.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="Navbar.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="ManageDepartmentController.cpp">
-      <Filter>Source Files\Controller</Filter>
+      <Filter>Controller\Controller Cpp</Filter>
     </ClCompile>
     <ClCompile Include="ManageEmployeeController.cpp">
-      <Filter>Source Files\Controller</Filter>
+      <Filter>Controller\Controller Cpp</Filter>
     </ClCompile>
     <ClCompile Include="SignUpAdminController.cpp">
-      <Filter>Source Files\Controller</Filter>
+      <Filter>Controller\Controller Cpp</Filter>
     </ClCompile>
     <ClCompile Include="NavbarController.cpp">
-      <Filter>Source Files\Controller</Filter>
+      <Filter>Controller\Controller Cpp</Filter>
     </ClCompile>
     <ClCompile Include="DialogConfirm.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="EmployeeCheckInOut.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="EmployeeCheckInOutController.cpp">
-      <Filter>Source Files\Controller</Filter>
+      <Filter>Controller\Controller Cpp</Filter>
     </ClCompile>
     <ClCompile Include="ManageAttendanceEvents.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="ManageAttendanceEventsController.cpp">
-      <Filter>Source Files\Controller</Filter>
+      <Filter>Controller\Controller Cpp</Filter>
     </ClCompile>
     <ClCompile Include="DialogFormAttendanceEvents.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="AttendaceEventModel.cpp">
-      <Filter>Source Files\Model</Filter>
+      <Filter>Model\Model Cpp</Filter>
     </ClCompile>
     <ClCompile Include="ManageAttendanceEvents.cpp">
       <Filter>Source Files\View</Filter>
     </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DialogDeleteAttendanceEvent.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="AttendanceEventRepositorySQLite.cpp">
-      <Filter>Source Files\Repository\SQLite</Filter>
+      <Filter>Repository\Repository Cpp\SQLite</Filter>
     </ClCompile>
     <ClCompile Include="DatabaseManagerMYSQL.cpp">
-      <Filter>Source Files\Repository\MYSQL</Filter>
+      <Filter>Repository\Repository Cpp\MYSQL</Filter>
     </ClCompile>
     <ClCompile Include="DatabaseManagerSQLite.cpp">
-      <Filter>Source Files\Repository\SQLite</Filter>
+      <Filter>Repository\Repository Cpp\SQLite</Filter>
     </ClCompile>
     <ClCompile Include="DepartmentRepositorySQLite.cpp">
-      <Filter>Source Files\Repository\SQLite</Filter>
+      <Filter>Repository\Repository Cpp\SQLite</Filter>
     </ClCompile>
     <ClCompile Include="EmployeeRepositorySQLite.cpp">
-      <Filter>Source Files\Repository\SQLite</Filter>
+      <Filter>Repository\Repository Cpp\SQLite</Filter>
     </ClCompile>
     <ClCompile Include="AttendanceEventRepositoryMYSQL.cpp">
-      <Filter>Source Files\Repository\MYSQL</Filter>
+      <Filter>Repository\Repository Cpp\MYSQL</Filter>
     </ClCompile>
     <ClCompile Include="EmployeeRepositoryMYSQL.cpp">
-      <Filter>Source Files\Repository\MYSQL</Filter>
+      <Filter>Repository\Repository Cpp\MYSQL</Filter>
     </ClCompile>
     <ClCompile Include="DepartmentRepositoryMYSQL.cpp">
-      <Filter>Source Files\Repository\MYSQL</Filter>
+      <Filter>Repository\Repository Cpp\MYSQL</Filter>
     </ClCompile>
     <ClCompile Include="AttendanceEventRepositorySQLServer.cpp">
-      <Filter>Source Files\Repository\SQLServer</Filter>
+      <Filter>Repository\Repository Cpp\SQLServer</Filter>
     </ClCompile>
     <ClCompile Include="DatabaseManagerSQLServer.cpp">
-      <Filter>Source Files\Repository\SQLServer</Filter>
+      <Filter>Repository\Repository Cpp\SQLServer</Filter>
     </ClCompile>
     <ClCompile Include="DepartmentRepositorySQLServer.cpp">
-      <Filter>Source Files\Repository\SQLServer</Filter>
+      <Filter>Repository\Repository Cpp\SQLServer</Filter>
     </ClCompile>
     <ClCompile Include="EmployeeRepositorySQLServer.cpp">
-      <Filter>Source Files\Repository\SQLServer</Filter>
+      <Filter>Repository\Repository Cpp\SQLServer</Filter>
     </ClCompile>
     <ClCompile Include="Tools.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="ToolsController.cpp">
-      <Filter>Source Files\Controller</Filter>
+      <Filter>Controller\Controller Cpp</Filter>
     </ClCompile>
     <ClCompile Include="DialogChangeDatabase.cpp">
-      <Filter>Source Files\View</Filter>
+      <Filter>View\View Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IriTracker.cpp">
+      <Filter>IriTracker\IriTracker Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Iddk2000_features.cpp">
+      <Filter>IriTracker\IriTracker Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseSingleton.cpp">
+      <Filter>Repository\Repository Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Utils\Utils Cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DialogFormDepartment.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="DialogFormEmployee.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="DialogFormLoginAdmin.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="MainWindow.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="MainWindowController.h">
-      <Filter>Header Files\Controller</Filter>
+      <Filter>Controller\Controller Header</Filter>
     </QtMoc>
     <QtMoc Include="ManageDepartment.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="ManageDepartmentController.h">
-      <Filter>Header Files\Controller</Filter>
+      <Filter>Controller\Controller Header</Filter>
     </QtMoc>
     <QtMoc Include="ManageEmployee.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="ManageEmployeeController.h">
-      <Filter>Header Files\Controller</Filter>
+      <Filter>Controller\Controller Header</Filter>
     </QtMoc>
     <QtMoc Include="MenuList.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="Navbar.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="NavbarController.h">
-      <Filter>Header Files\Controller</Filter>
+      <Filter>Controller\Controller Header</Filter>
     </QtMoc>
     <QtMoc Include="SignUpAdmin.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="SignUpAdminController.h">
-      <Filter>Header Files\Controller</Filter>
-    </QtMoc>
-    <QtMoc Include="ErrorLabel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Controller\Controller Header</Filter>
     </QtMoc>
     <QtMoc Include="DialogConfirm.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="EmployeeCheckInOut.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="EmployeeCheckInOutController.h">
-      <Filter>Header Files\Controller</Filter>
-    </QtMoc>
-    <QtMoc Include="CustomFilterProxyModel.h">
-      <Filter>Header Files</Filter>
+      <Filter>Controller\Controller Header</Filter>
     </QtMoc>
     <QtMoc Include="ManageAttendanceEvents.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="ManageAttendanceEventsController.h">
-      <Filter>Header Files\Controller</Filter>
+      <Filter>Controller\Controller Header</Filter>
     </QtMoc>
     <QtMoc Include="DialogFormAttendanceEvents.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="DialogDeleteAttendanceEvent.h">
-      <Filter>Header Files\View</Filter>
-    </QtMoc>
-    <QtMoc Include="IriTracker.h">
-      <Filter>Header Files</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="Tools.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
     </QtMoc>
     <QtMoc Include="Tools.h">
       <Filter>Header Files\View</Filter>
     </QtMoc>
     <QtMoc Include="ToolsController.h">
-      <Filter>Header Files\Controller</Filter>
+      <Filter>Controller\Controller Header</Filter>
     </QtMoc>
     <QtMoc Include="DialogChangeDatabase.h">
-      <Filter>Header Files\View</Filter>
+      <Filter>View\View Header</Filter>
+    </QtMoc>
+    <QtMoc Include="IriTracker.h">
+      <Filter>IriTracker\IriTracker Header</Filter>
+    </QtMoc>
+    <QtMoc Include="CustomFilterProxyModel.h">
+      <Filter>Utils\Utils Header</Filter>
+    </QtMoc>
+    <QtMoc Include="ErrorLabel.h">
+      <Filter>Utils\Utils Header</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -347,67 +382,70 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepartmentModel.h">
-      <Filter>Header Files\Model</Filter>
+      <Filter>Model\Model Header</Filter>
     </ClInclude>
     <ClInclude Include="EmployeeModel.h">
-      <Filter>Header Files\Model</Filter>
+      <Filter>Model\Model Header</Filter>
     </ClInclude>
     <ClInclude Include="AttendaceEventModel.h">
-      <Filter>Header Files\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>Header Files</Filter>
+      <Filter>Model\Model Header</Filter>
     </ClInclude>
     <ClInclude Include="IDatabaseManager.h">
-      <Filter>Header Files\Repository\Interface</Filter>
+      <Filter>Repository\Repository Header\Interface</Filter>
     </ClInclude>
     <ClInclude Include="IDepartmentRepository.h">
-      <Filter>Header Files\Repository\Interface</Filter>
+      <Filter>Repository\Repository Header\Interface</Filter>
     </ClInclude>
     <ClInclude Include="IEmployeeRepository.h">
-      <Filter>Header Files\Repository\Interface</Filter>
+      <Filter>Repository\Repository Header\Interface</Filter>
     </ClInclude>
     <ClInclude Include="IAttendanceEventRepository.h">
-      <Filter>Header Files\Repository\Interface</Filter>
+      <Filter>Repository\Repository Header\Interface</Filter>
     </ClInclude>
     <ClInclude Include="AttendanceEventRepositoryMYSQL.h">
-      <Filter>Header Files\Repository\MYSQL</Filter>
+      <Filter>Repository\Repository Header\MYSQL</Filter>
     </ClInclude>
     <ClInclude Include="DepartmentRepositoryMYSQL.h">
-      <Filter>Header Files\Repository\MYSQL</Filter>
+      <Filter>Repository\Repository Header\MYSQL</Filter>
     </ClInclude>
     <ClInclude Include="EmployeeRepositoryMYSQL.h">
-      <Filter>Header Files\Repository\MYSQL</Filter>
+      <Filter>Repository\Repository Header\MYSQL</Filter>
     </ClInclude>
     <ClInclude Include="DatabaseManagerMYSQL.h">
-      <Filter>Header Files\Repository\MYSQL</Filter>
+      <Filter>Repository\Repository Header\MYSQL</Filter>
     </ClInclude>
     <ClInclude Include="AttendanceEventRepositorySQLite.h">
-      <Filter>Header Files\Repository\SQLite</Filter>
+      <Filter>Repository\Repository Header\SQLite</Filter>
     </ClInclude>
     <ClInclude Include="EmployeeRepositorySQLite.h">
-      <Filter>Header Files\Repository\SQLite</Filter>
+      <Filter>Repository\Repository Header\SQLite</Filter>
     </ClInclude>
     <ClInclude Include="DepartmentRepositorySQLite.h">
-      <Filter>Header Files\Repository\SQLite</Filter>
+      <Filter>Repository\Repository Header\SQLite</Filter>
     </ClInclude>
     <ClInclude Include="DatabaseManagerSQLite.h">
-      <Filter>Header Files\Repository\SQLite</Filter>
+      <Filter>Repository\Repository Header\SQLite</Filter>
     </ClInclude>
     <ClInclude Include="AttendanceEventRepositorySQLServer.h">
-      <Filter>Header Files\Repository\SQLServer</Filter>
+      <Filter>Repository\Repository Header\SQLServer</Filter>
     </ClInclude>
     <ClInclude Include="DatabaseManagerSQLServer.h">
-      <Filter>Header Files\Repository\SQLServer</Filter>
+      <Filter>Repository\Repository Header\SQLServer</Filter>
     </ClInclude>
     <ClInclude Include="DepartmentRepositorySQLServer.h">
-      <Filter>Header Files\Repository\SQLServer</Filter>
+      <Filter>Repository\Repository Header\SQLServer</Filter>
     </ClInclude>
     <ClInclude Include="EmployeeRepositorySQLServer.h">
-      <Filter>Header Files\Repository\SQLServer</Filter>
+      <Filter>Repository\Repository Header\SQLServer</Filter>
+    </ClInclude>
+    <ClInclude Include="DatabaseSingleton.h">
+      <Filter>Repository\Repository Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Utils\Utils Header</Filter>
     </ClInclude>
     <ClInclude Include="Constant.h">
-      <Filter>Header Files</Filter>
+      <Filter>Utils\Utils Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

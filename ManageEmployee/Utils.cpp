@@ -1,4 +1,6 @@
 #include "Utils.h"
+#include <QFile>
+#include <QDebug>
 
 int Utils::getSigleNumber(const QList<int>& numbers) {
     QSet<int> uniqueSet;
@@ -52,4 +54,23 @@ bool Utils::isInLastMonth(const QDate& date) {
 bool Utils::isInCurrentYear(const QDate& date) {
     QDate today = QDate::currentDate();
     return date.year() == today.year();
+}
+
+bool Utils::deleteFile(const QString& filePath) {
+    QFile file(filePath);
+
+    if (file.exists()) {
+        if (file.remove()) {
+            qDebug() << "File deleted successfully:" << filePath;
+            return true;
+        }
+        else {
+            qDebug() << "Failed to delete file:" << filePath;
+            return false;
+        }
+    }
+    else {
+        qDebug() << "File does not exist:" << filePath;
+        return false;
+    }
 }

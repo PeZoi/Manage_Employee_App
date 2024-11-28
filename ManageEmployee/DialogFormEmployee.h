@@ -1,5 +1,4 @@
 #pragma once
-
 #include "ui_DialogFormEmployee.h"
 #include "IriTracker.h"
 #include "EmployeeModel.h"
@@ -37,9 +36,8 @@ public slots:
 
 	void processStreaming();
 	void updateFrame(const unsigned char* imageData, int imageLen, int imageWidth, int imageHeight);
-	void handleCapture(QString side);
-
-
+	void handleReciveTemplate(QString pathTemplate);
+	bool eventFilter(QObject* obj, QEvent* event);
 
 private:
 	Ui::DialogFormEmployeeClass ui;

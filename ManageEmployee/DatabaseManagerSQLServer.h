@@ -20,6 +20,10 @@ public:
     IEmployeeRepository* getEmployeeRepository() override;
     IAttendanceEventRepository* getAttendanceEventRepository() override;
 
+    bool excuteInitTable(QString pathDefault) override;
+    void bankupData() override;
+    void restoreData() override;
+
 private:
     QSqlDatabase db;
     IDepartmentRepository* departmentRepository;

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_DialogFormEmployee_t {
-    QByteArrayData data[25];
-    char stringdata0[307];
+    QByteArrayData data[29];
+    char stringdata0[352];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -55,8 +55,12 @@ QT_MOC_LITERAL(19, 246, 9), // "imageData"
 QT_MOC_LITERAL(20, 256, 8), // "imageLen"
 QT_MOC_LITERAL(21, 265, 10), // "imageWidth"
 QT_MOC_LITERAL(22, 276, 11), // "imageHeight"
-QT_MOC_LITERAL(23, 288, 13), // "handleCapture"
-QT_MOC_LITERAL(24, 302, 4) // "side"
+QT_MOC_LITERAL(23, 288, 20), // "handleReciveTemplate"
+QT_MOC_LITERAL(24, 309, 12), // "pathTemplate"
+QT_MOC_LITERAL(25, 322, 11), // "eventFilter"
+QT_MOC_LITERAL(26, 334, 3), // "obj"
+QT_MOC_LITERAL(27, 338, 7), // "QEvent*"
+QT_MOC_LITERAL(28, 346, 5) // "event"
 
     },
     "DialogFormEmployee\0submit\0\0EmployeeModel\0"
@@ -66,8 +70,9 @@ QT_MOC_LITERAL(24, 302, 4) // "side"
     "handleSubmit\0setMode\0_isEditMode\0"
     "setValue\0processStreaming\0updateFrame\0"
     "const unsigned char*\0imageData\0imageLen\0"
-    "imageWidth\0imageHeight\0handleCapture\0"
-    "side"
+    "imageWidth\0imageHeight\0handleReciveTemplate\0"
+    "pathTemplate\0eventFilter\0obj\0QEvent*\0"
+    "event"
 };
 #undef QT_MOC_LITERAL
 
@@ -77,7 +82,7 @@ static const uint qt_meta_data_DialogFormEmployee[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -85,17 +90,18 @@ static const uint qt_meta_data_DialogFormEmployee[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   59,    2, 0x06 /* Public */,
-       8,    2,   66,    2, 0x06 /* Public */,
+       1,    3,   64,    2, 0x06 /* Public */,
+       8,    2,   71,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-      11,    0,   71,    2, 0x0a /* Public */,
-      12,    0,   72,    2, 0x0a /* Public */,
-      13,    1,   73,    2, 0x0a /* Public */,
-      15,    1,   76,    2, 0x0a /* Public */,
-      16,    0,   79,    2, 0x0a /* Public */,
-      17,    4,   80,    2, 0x0a /* Public */,
-      23,    1,   89,    2, 0x0a /* Public */,
+      11,    0,   76,    2, 0x0a /* Public */,
+      12,    0,   77,    2, 0x0a /* Public */,
+      13,    1,   78,    2, 0x0a /* Public */,
+      15,    1,   81,    2, 0x0a /* Public */,
+      16,    0,   84,    2, 0x0a /* Public */,
+      17,    4,   85,    2, 0x0a /* Public */,
+      23,    1,   94,    2, 0x0a /* Public */,
+      25,    2,   97,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3, QMetaType::Bool, 0x80000000 | 6,    4,    5,    7,
@@ -109,6 +115,7 @@ static const uint qt_meta_data_DialogFormEmployee[] = {
     QMetaType::Void,
     QMetaType::Void, 0x80000000 | 18, QMetaType::Int, QMetaType::Int, QMetaType::Int,   19,   20,   21,   22,
     QMetaType::Void, QMetaType::QString,   24,
+    QMetaType::Bool, QMetaType::QObjectStar, 0x80000000 | 27,   26,   28,
 
        0        // eod
 };
@@ -127,7 +134,9 @@ void DialogFormEmployee::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         case 5: _t->setValue((*reinterpret_cast< EmployeeModel(*)>(_a[1]))); break;
         case 6: _t->processStreaming(); break;
         case 7: _t->updateFrame((*reinterpret_cast< const unsigned char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
-        case 8: _t->handleCapture((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 8: _t->handleReciveTemplate((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 9: { bool _r = _t->eventFilter((*reinterpret_cast< QObject*(*)>(_a[1])),(*reinterpret_cast< QEvent*(*)>(_a[2])));
+            if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -196,13 +205,13 @@ int DialogFormEmployee::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }

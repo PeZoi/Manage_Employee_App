@@ -14,6 +14,7 @@
 #include <QSqlError>
 #include <QSqlQuery>
 #include <QSettings>
+#include <QFileDialog>
 
 DatabaseManagerSQLite::DatabaseManagerSQLite()
 {
@@ -43,6 +44,32 @@ IAttendanceEventRepository* DatabaseManagerSQLite::getAttendanceEventRepository(
 	return attendanceEventRepository;
 }
 
+bool DatabaseManagerSQLite::excuteInitTable(QString pathDefault) {
+	QFile file(pathDefault);
+	if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+		qDebug() << "Không thể mở file SQL:" << file.errorString();
+		return false;
+	}
+
+	QTextStream in(&file);
+	QString sqlContent = in.readAll();
+	file.close();
+
+	QStringList queries = sqlContent.split(";", Qt::SkipEmptyParts);
+	QSqlQuery query(db);
+
+	for (const QString& singleQuery : queries) {
+		QString trimmedQuery = singleQuery.trimmed();
+		if (trimmedQuery.isEmpty()) continue;
+
+		if (!query.exec(trimmedQuery)) {
+			qDebug() << "Lỗi khi thực thi truy vấn:" << query.lastError().text();
+			return false;
+		}
+	}
+
+	return true;
+}
 
 bool DatabaseManagerSQLite::connectToDatabase()
 {
@@ -52,6 +79,24 @@ bool DatabaseManagerSQLite::connectToDatabase()
 	QString dbName = settings.value("database/path").toString();
 	QFile dbFile(dbName);
 
+	if (!dbFile.exists()) {
+		QString dirDatabase = settings.value("database/dirDB").toString();
+		QString _dbName = "manage_employee_sqlite.db";
+
+		QString fullPath = QDir(dirDatabase).filePath(_dbName);
+		dbFile.setFileName(fullPath);
+
+		if (!dbFile.open(QIODevice::WriteOnly)) {
+			qDebug() << "Không thể tạo file mới:" << dbName;
+			exit(0);
+		}
+		else {
+			settings.setValue("database/path", fullPath);
+			qDebug() << "File đã được tạo mới:" << _dbName;
+			dbFile.close();
+		}
+	}
+
 	db = QSqlDatabase::addDatabase("QSQLITE");
 	db.setDatabaseName(dbName);
 
@@ -60,48 +105,11 @@ bool DatabaseManagerSQLite::connectToDatabase()
 		return false;
 	}
 
-	QString createTableDepartmentQuery =
-		"CREATE TABLE IF NOT EXISTS department ("
-		"name TEXT PRIMARY KEY, "
-		"description TEXT); "
-		"INSERT OR IGNORE INTO department (name, description) VALUES ('Others', '');";
-
-	QString createTableEmployeeQuery =
-		"CREATE TABLE IF NOT EXISTS employee ("
-		"id TEXT PRIMARY KEY, "
-		"first_name TEXT, "
-		"last_name TEXT, "
-		"password TEXT, "
-		"department TEXT, "
-		"date_of_birth TEXT, "
-		"start_date_of_work TEXT, "
-		"status TEXT, "
-		"is_enabled BOOLEAN NOT NULL DEFAULT 1, "
-		"avatar TEXT, "
-		"role TEXT, "
-		"email TEXT UNIQUE, "
-		"phone_number TEXT, "
-		"address TEXT, "
-		"is_allow_password BOOLEAN NOT NULL DEFAULT 0, "
-		"iri_right TEXT, "
-		"iri_left TEXT, "
-		"FOREIGN KEY (department) REFERENCES department(name));";
-
-	QString createTableAttendanceEvent =
-		"CREATE TABLE IF NOT EXISTS attendance_event ("
-		"id INTEGER PRIMARY KEY AUTOINCREMENT, "
-		"type_event TEXT, "
-		"date_event TEXT, "
-		"time_event TEXT, "
-		"exception INTEGER, "
-		"session INTEGER, "
-		"employee_id TEXT, "
-		"FOREIGN KEY(employee_id) REFERENCES employee(id));";
-
-	// Thực thi các lệnh tạo bảng
-	executeCreate(createTableDepartmentQuery);
-	executeCreate(createTableEmployeeQuery);
-	executeCreate(createTableAttendanceEvent);
+	QString sqlFilePath = settings.value("database/initSQLite").toString();
+	if (!excuteInitTable(sqlFilePath)) {
+		qDebug() << "Lỗi khi thực thi các câu lệnh SQL từ file.";
+		return false;
+	}
 
 	qDebug() << "Connected to database successfully.";
 	return true;
@@ -170,3 +178,57 @@ QSqlQuery DatabaseManagerSQLite::executeQuery(const QString& queryStr) {
 }
 
 
+void DatabaseManagerSQLite::bankupData() {
+	QString pathIni = Constant::PATH_CONFIG;
+	QSettings settings(pathIni, QSettings::IniFormat);
+
+	QString databasePath = settings.value("database/path").toString();
+
+	QString savePath = QFileDialog::getSaveFileName(nullptr, "Chọn nơi lưu file backup", "", "SQLite Database (*.db)");
+	QString timestamp = QDateTime::currentDateTime().toString("ddMMyyyy_HHmmss");
+
+	if (savePath.isEmpty()) {
+		qDebug() << "Người dùng đã hủy quá trình backup.";
+		return;
+	}
+
+	QFileInfo fileInfo(savePath);
+	QString baseName = fileInfo.completeBaseName();
+	QString dir = fileInfo.path();
+	savePath = QString("%1/%2_sqlite_%3.db").arg(dir).arg(baseName).arg(timestamp);
+
+	// Đảm bảo file kết thúc bằng đuôi .db
+	if (QFile::copy(databasePath, savePath)) {
+		qDebug() << "Backup data SQLite thành công tại:" << savePath;
+	}
+	else {
+		qDebug() << "Backup data SQLite không thành công.";
+	}
+}
+void DatabaseManagerSQLite::restoreData() {
+	QString pathIni = Constant::PATH_CONFIG;
+	QSettings settings(pathIni, QSettings::IniFormat);
+
+	QString databasePath = settings.value("database/path").toString();
+
+	QString openPath = QFileDialog::getOpenFileName(nullptr, "Chọn file backup để restore", "", "SQLite Database (*.db)");
+
+	if (openPath.isEmpty()) {
+		qDebug() << "Người dùng đã hủy quá trình restore.";
+		return;
+	}
+
+	QSqlDatabase::removeDatabase(QSqlDatabase::defaultConnection);
+
+	if (!QFile::remove(databasePath)) {
+		qDebug() << "Không thể xóa database cũ tại:" << databasePath;
+		return;
+	}
+
+	if (QFile::copy(openPath, databasePath)) {
+		qDebug() << "Backup data SQLite thành công";
+	}
+	else {
+		qDebug() << "Backup data SQLite không thành công";
+	}
+}

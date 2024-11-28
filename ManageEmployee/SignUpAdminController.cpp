@@ -51,7 +51,7 @@ void SignUpAdminController::handleSubmit() {
 	admin.setRole("ADMIN");
 	admin.setEmail(email);
 
-	if (db->getEmployeeRepository()->add(admin)) {
+	if (!db->getEmployeeRepository()->add(admin)) {
 		qDebug() << "Có lỗi khi đăng ký admin";
 		return;
 	}
