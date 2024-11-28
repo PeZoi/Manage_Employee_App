@@ -9,7 +9,7 @@
 
 class IriTracker : public QObject
 {
-	Q_OBJECT  // Đảm bảo sử dụng macro này để khai báo tín hiệu/slot
+	Q_OBJECT 
 
 signals:
 	void imageProcessed(unsigned char* imageData,
@@ -22,7 +22,7 @@ signals:
 		int imageWidth,
 		int imageHeight);
 
-	void resultTemplate(QString pathTemplate);
+	void resultTemplate(const unsigned char* buffer, int size);
 
 public:
 	IriTracker();

@@ -106,7 +106,7 @@ void IriTracker::run()
 		Start a loop to check the device status.
 		(You can use the callback function capture_proc instead of this while loop).
 		*/
-		printf("\tScanning for eyes");
+		qDebug() << "Scanning for eyes";
 		while (bRun)
 		{
 			if (bStreamMode)
@@ -148,7 +148,7 @@ void IriTracker::run()
 				{
 					if (!eyeDetected)
 					{
-						printf("\n\tEyes are detected.\n");
+						qDebug() << "Eyes are detected.";
 						eyeDetected = true;
 					}
 				}
@@ -160,7 +160,7 @@ void IriTracker::run()
 				else if (captureStatus == IDDK_ABORT)
 				{
 					/* capture has been aborted */
-					printf("\n\tCapture aborted\n");
+					qDebug() << "Capture aborted";
 					bRun = false;
 				}
 				else
@@ -171,7 +171,7 @@ void IriTracker::run()
 					if (i > 300)
 					{
 						bRun = false;
-						printf("\n\tOops! No eye detected for so long. The capture process aborted.\n");
+						qDebug() << "Oops! No eye detected for so long. The capture process aborted.";
 					}
 				}
 
@@ -211,7 +211,7 @@ void IriTracker::run()
 		//~check liveness.
 
 
-		printf("The capture process completed\n");
+		qDebug() << "The capture process completed";
 		//reset_error_level(iRet);
 		iRet = Iddk_GetResultQuality(g_hDevice, &pQualities, &nMaxEyeSubtypes);
 		if (iRet == IDDK_OK)
@@ -254,6 +254,7 @@ void IriTracker::run()
 			//goto RETSEC;
 		}
 		//reset_error_level(iRet);
+		qDebug() << "Preparing save template.";
 		if (bProcessResult && captureStatus == IDDK_COMPLETE)
 		{
 			qint64 timestamp = QDateTime::currentDateTime().toSecsSinceEpoch();
@@ -263,8 +264,8 @@ void IriTracker::run()
 			//get_result_ISO_image(times);
 
 			/* Get the result template */
-			QString pathTemplate = get_result_template_custom(timestamp);
-			emit resultTemplate(pathTemplate);
+			IddkDataBuffer templateDataBuffer = get_result_template_custom(timestamp);
+			emit resultTemplate(templateDataBuffer.data, templateDataBuffer.dataSize);
 			return;
 		}
 

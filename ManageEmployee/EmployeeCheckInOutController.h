@@ -1,7 +1,10 @@
 #pragma once
 #include <QObject>
+#include <QEvent>
+#include <QWidget>
 #include "EmployeeCheckInOut.h"
 #include "IDatabaseManager.h"
+#include "IriTracker.h"
 
 class EmployeeCheckInOutController : public QObject {
 	Q_OBJECT
@@ -24,8 +27,13 @@ public slots:
 
 	void handleSubmitForPassword();
 
+	void processStreaming();
+	void updateFrame(const unsigned char* imageData, int imageLen, int imageWidth, int imageHeight);
+
+
 private:
 	IDatabaseManager*& db;
 	EmployeeCheckInOut* view;
+	IriTracker* iriTracker;
 };
 

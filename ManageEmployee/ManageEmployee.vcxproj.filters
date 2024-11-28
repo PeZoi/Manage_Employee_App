@@ -83,9 +83,6 @@
     <Filter Include="IriTracker\IriTracker Header">
       <UniqueIdentifier>{9338f2b1-b215-42cb-bda2-12aaf381d74c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="IriTracker\IriTracker Cpp">
-      <UniqueIdentifier>{2192c667-e10f-43b3-b4b3-314e7dfe62f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{a1ce4f04-f972-48f1-844f-d2e4a878dcc4}</UniqueIdentifier>
     </Filter>
@@ -225,17 +222,20 @@
     <ClCompile Include="DialogChangeDatabase.cpp">
       <Filter>View\View Cpp</Filter>
     </ClCompile>
-    <ClCompile Include="IriTracker.cpp">
-      <Filter>IriTracker\IriTracker Cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="Iddk2000_features.cpp">
-      <Filter>IriTracker\IriTracker Cpp</Filter>
-    </ClCompile>
     <ClCompile Include="DatabaseSingleton.cpp">
       <Filter>Repository\Repository Cpp</Filter>
     </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Utils\Utils Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="IriTrackerSingleton.cpp">
+      <Filter>IriTracker</Filter>
+    </ClCompile>
+    <ClCompile Include="Iddk2000_features.cpp">
+      <Filter>IriTracker</Filter>
+    </ClCompile>
+    <ClCompile Include="IriTracker.cpp">
+      <Filter>IriTracker</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -446,6 +446,9 @@
     </ClInclude>
     <ClInclude Include="Constant.h">
       <Filter>Utils\Utils Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IriTrackerSingleton.h">
+      <Filter>IriTracker\IriTracker Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

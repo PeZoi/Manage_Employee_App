@@ -129,10 +129,10 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="use_device">
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="device">
        <property name="geometry">
         <rect>
          <x>140</x>

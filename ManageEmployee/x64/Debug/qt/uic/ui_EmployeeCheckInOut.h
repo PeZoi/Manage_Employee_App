@@ -37,7 +37,7 @@ public:
     QTreeView *companyTreeView;
     QStackedWidget *stack_checkin_out;
     QWidget *use_device;
-    QLabel *label;
+    QLabel *device;
     QWidget *use_password;
     QWidget *widget;
     QLabel *label_2;
@@ -137,10 +137,10 @@ public:
         stack_checkin_out->setGeometry(QRect(260, 130, 491, 271));
         use_device = new QWidget();
         use_device->setObjectName(QString::fromUtf8("use_device"));
-        label = new QLabel(use_device);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(140, 30, 221, 181));
-        label->setPixmap(QPixmap(QString::fromUtf8("../icon/no-device.jpg")));
+        device = new QLabel(use_device);
+        device->setObjectName(QString::fromUtf8("device"));
+        device->setGeometry(QRect(140, 30, 221, 181));
+        device->setPixmap(QPixmap(QString::fromUtf8("../icon/no-device.jpg")));
         stack_checkin_out->addWidget(use_device);
         use_password = new QWidget();
         use_password->setObjectName(QString::fromUtf8("use_password"));
@@ -349,7 +349,7 @@ public:
         retranslateUi(EmployeeCheckInOutClass);
 
         stackedWidget->setCurrentIndex(0);
-        stack_checkin_out->setCurrentIndex(1);
+        stack_checkin_out->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(EmployeeCheckInOutClass);
@@ -360,7 +360,7 @@ public:
         EmployeeCheckInOutClass->setWindowTitle(QCoreApplication::translate("EmployeeCheckInOutClass", "EmployeeCheckInOut", nullptr));
         dateLabel->setText(QCoreApplication::translate("EmployeeCheckInOutClass", "Wednesday, October 23, 2024", nullptr));
         timeLabel->setText(QCoreApplication::translate("EmployeeCheckInOutClass", "03:27:30 PM", nullptr));
-        label->setText(QString());
+        device->setText(QString());
         label_2->setText(QCoreApplication::translate("EmployeeCheckInOutClass", "Your Name", nullptr));
         label_3->setText(QCoreApplication::translate("EmployeeCheckInOutClass", "Password", nullptr));
         show_all->setText(QCoreApplication::translate("EmployeeCheckInOutClass", "Show All", nullptr));

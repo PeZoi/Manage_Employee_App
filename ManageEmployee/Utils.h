@@ -2,6 +2,7 @@
 #include <QList>
 #include <QSet>
 #include <QDate>
+#include <QByteArray>
 class Utils
 {
 public:
@@ -13,5 +14,7 @@ public:
 	static bool isInCurrentYear(const QDate& date);
 
 	static bool deleteFile(const QString& filePath);
+	static QByteArray templateConvertToByte(const unsigned char* buffer, int size);
+	static void byteConvertToBuffer(const QByteArray& byteArray, unsigned char*& buffer, int& size);
 };
 

@@ -11,7 +11,7 @@ public:
         const DepartmentModel& department, const QDate& dateOfBirth, const QDate& startDateOfWork,
         const QString& status, bool isEnabled, const QString& avatar, const QString& role,
         const QString& email, const QString& phoneNumber, const QString& address,
-        bool isAllowPassword, const QString& iriRight, const QString& iriLeft);
+        bool isAllowPassword, const QByteArray& iriRight, const QByteArray& iriLeft);
 
     // Getters
     QString getId() const;
@@ -29,8 +29,8 @@ public:
     QString getPhoneNumber() const;
     QString getAddress() const;
     bool getIsAllowPassword() const;
-    QString getIriRight() const;
-    QString getIriLeft() const;
+    QByteArray getIriRight() const;
+    QByteArray getIriLeft() const;
 
     // Setters
     void setId(const QString& id);
@@ -48,8 +48,8 @@ public:
     void setPhoneNumber(const QString& phoneNumber);
     void setAddress(const QString& address);
     void setIsAllowPassword(bool isAllowPassword);
-    void setIriRight(const QString& iriRight);
-    void setIriLeft(const QString& iriLeft);
+    void setIriRight(const QByteArray& iriRight);
+    void setIriLeft(const QByteArray& iriLeft);
 
 private:
     QString id;
@@ -67,6 +67,6 @@ private:
     QString phoneNumber;
     QString address;
     bool isAllowPassword;
-    QString iriRight;
-    QString iriLeft;
+    QByteArray iriRight;
+    QByteArray iriLeft;
 };

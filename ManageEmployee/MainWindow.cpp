@@ -35,4 +35,3 @@ MenuList* MainWindow::getMenu() {
 NavbarController* MainWindow::getNavbarController() {
     return navbarController;
 }
-

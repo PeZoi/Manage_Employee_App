@@ -74,3 +74,14 @@ bool Utils::deleteFile(const QString& filePath) {
         return false;
     }
 }
+
+QByteArray Utils::templateConvertToByte(const unsigned char* buffer, int size) {
+    QByteArray byteArray(reinterpret_cast<const char*>(buffer), size);
+    return byteArray;
+}
+
+void Utils::byteConvertToBuffer(const QByteArray& byteArray, unsigned char*& buffer, int& size) {
+    size = byteArray.size();
+    buffer = new unsigned char[size];
+    memcpy(buffer, byteArray.data(), size);
+}

@@ -5,7 +5,7 @@ EmployeeModel::EmployeeModel(const QString& id, const QString& firstName, const 
     const DepartmentModel& department, const QDate& dateOfBirth, const QDate& startDateOfWork,
     const QString& status, bool isEnabled, const QString& avatar, const QString& role,
     const QString& email, const QString& phoneNumber, const QString& address,
-    bool isAllowPassword, const QString& iriRight, const QString& iriLeft)
+    bool isAllowPassword, const QByteArray& iriRight, const QByteArray& iriLeft)
     : id(id), firstName(firstName), lastName(lastName), password(password), department(department),
     dateOfBirth(dateOfBirth), startDateOfWork(startDateOfWork), status(status), isEnabled(isEnabled),
     avatar(avatar), role(role), email(email), phoneNumber(phoneNumber), address(address),
@@ -28,8 +28,8 @@ QString EmployeeModel::getEmail() const { return email; }
 QString EmployeeModel::getPhoneNumber() const { return phoneNumber; }
 QString EmployeeModel::getAddress() const { return address; }
 bool EmployeeModel::getIsAllowPassword() const { return isAllowPassword; }
-QString EmployeeModel::getIriRight() const { return iriRight; }
-QString EmployeeModel::getIriLeft() const { return iriLeft; }
+QByteArray EmployeeModel::getIriRight() const { return iriRight; }
+QByteArray EmployeeModel::getIriLeft() const { return iriLeft; }
 
 // Setters
 void EmployeeModel::setId(const QString& id) { this->id = id; }
@@ -47,5 +47,5 @@ void EmployeeModel::setEmail(const QString& email) { this->email = email; }
 void EmployeeModel::setPhoneNumber(const QString& phoneNumber) { this->phoneNumber = phoneNumber; }
 void EmployeeModel::setAddress(const QString& address) { this->address = address; }
 void EmployeeModel::setIsAllowPassword(bool isAllowPassword) { this->isAllowPassword = isAllowPassword; }
-void EmployeeModel::setIriRight(const QString& iriRight) { this->iriRight = iriRight; }
-void EmployeeModel::setIriLeft(const QString& iriLeft) { this->iriLeft = iriLeft; }
+void EmployeeModel::setIriRight(const QByteArray& iriRight) { this->iriRight = iriRight; }
+void EmployeeModel::setIriLeft(const QByteArray& iriLeft) { this->iriLeft = iriLeft; }

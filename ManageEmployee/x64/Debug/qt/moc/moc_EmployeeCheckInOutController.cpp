@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EmployeeCheckInOutController_t {
-    QByteArrayData data[12];
-    char stringdata0[188];
+    QByteArrayData data[19];
+    char stringdata0[280];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -43,14 +43,24 @@ QT_MOC_LITERAL(7, 112, 5), // "index"
 QT_MOC_LITERAL(8, 118, 27), // "handleSelectEmployeeByCombo"
 QT_MOC_LITERAL(9, 146, 4), // "name"
 QT_MOC_LITERAL(10, 151, 12), // "loadEmployee"
-QT_MOC_LITERAL(11, 164, 23) // "handleSubmitForPassword"
+QT_MOC_LITERAL(11, 164, 23), // "handleSubmitForPassword"
+QT_MOC_LITERAL(12, 188, 16), // "processStreaming"
+QT_MOC_LITERAL(13, 205, 11), // "updateFrame"
+QT_MOC_LITERAL(14, 217, 20), // "const unsigned char*"
+QT_MOC_LITERAL(15, 238, 9), // "imageData"
+QT_MOC_LITERAL(16, 248, 8), // "imageLen"
+QT_MOC_LITERAL(17, 257, 10), // "imageWidth"
+QT_MOC_LITERAL(18, 268, 11) // "imageHeight"
 
     },
     "EmployeeCheckInOutController\0"
     "setupRealTimeClock\0\0updateDateTime\0"
     "onClickShowAll\0handleSelectEmployee\0"
     "QModelIndex\0index\0handleSelectEmployeeByCombo\0"
-    "name\0loadEmployee\0handleSubmitForPassword"
+    "name\0loadEmployee\0handleSubmitForPassword\0"
+    "processStreaming\0updateFrame\0"
+    "const unsigned char*\0imageData\0imageLen\0"
+    "imageWidth\0imageHeight"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,7 +70,7 @@ static const uint qt_meta_data_EmployeeCheckInOutController[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,13 +78,15 @@ static const uint qt_meta_data_EmployeeCheckInOutController[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   49,    2, 0x0a /* Public */,
-       3,    0,   50,    2, 0x0a /* Public */,
-       4,    0,   51,    2, 0x0a /* Public */,
-       5,    1,   52,    2, 0x0a /* Public */,
-       8,    1,   55,    2, 0x0a /* Public */,
-      10,    0,   58,    2, 0x0a /* Public */,
-      11,    0,   59,    2, 0x0a /* Public */,
+       1,    0,   59,    2, 0x0a /* Public */,
+       3,    0,   60,    2, 0x0a /* Public */,
+       4,    0,   61,    2, 0x0a /* Public */,
+       5,    1,   62,    2, 0x0a /* Public */,
+       8,    1,   65,    2, 0x0a /* Public */,
+      10,    0,   68,    2, 0x0a /* Public */,
+      11,    0,   69,    2, 0x0a /* Public */,
+      12,    0,   70,    2, 0x0a /* Public */,
+      13,    4,   71,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -84,6 +96,8 @@ static const uint qt_meta_data_EmployeeCheckInOutController[] = {
     QMetaType::Void, QMetaType::QString,    9,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 14, QMetaType::Int, QMetaType::Int, QMetaType::Int,   15,   16,   17,   18,
 
        0        // eod
 };
@@ -101,6 +115,8 @@ void EmployeeCheckInOutController::qt_static_metacall(QObject *_o, QMetaObject::
         case 4: _t->handleSelectEmployeeByCombo((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 5: _t->loadEmployee(); break;
         case 6: _t->handleSubmitForPassword(); break;
+        case 7: _t->processStreaming(); break;
+        case 8: _t->updateFrame((*reinterpret_cast< const unsigned char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
         default: ;
         }
     }
@@ -135,13 +151,13 @@ int EmployeeCheckInOutController::qt_metacall(QMetaObject::Call _c, int _id, voi
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 9)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 7;
+        _id -= 9;
     }
     return _id;
 }

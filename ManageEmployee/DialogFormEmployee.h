@@ -16,8 +16,8 @@ public:
 	bool isEditMode_employee = false;
 	QString idSelected = "";
 	QString avatarPath = "";
-	QString iri_rightPath = "";
-	QString iri_leftPath = "";
+	QByteArray iri_rightPath = "";
+	QByteArray iri_leftPath = "";
 
 	QThread* captureThread = nullptr;
 	IriTracker* iriTracker = nullptr;
@@ -36,7 +36,7 @@ public slots:
 
 	void processStreaming();
 	void updateFrame(const unsigned char* imageData, int imageLen, int imageWidth, int imageHeight);
-	void handleReciveTemplate(QString pathTemplate);
+	void handleReciveTemplate(const unsigned char* buffer, int size);
 	bool eventFilter(QObject* obj, QEvent* event);
 
 private:

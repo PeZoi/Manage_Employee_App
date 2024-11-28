@@ -57,7 +57,7 @@ bool EmployeeRepositoryMYSQL::update(EmployeeModel employee) {
 		"address = :address, "
 		"is_allow_password = :is_allow_password, "
 		"iri_right = :iri_right, "
-		"iri_left = :iri_left, "
+		"iri_left = :iri_left "
 		"WHERE id = :id;";
 
 	QMap<QString, QVariant> params;
@@ -120,8 +120,8 @@ QList<EmployeeModel> EmployeeRepositoryMYSQL::getAll() {
 		employee.setPhoneNumber(result.value("phone_number").toString());
 		employee.setAddress(result.value("address").toString());
 		employee.setIsAllowPassword(result.value("is_allow_password").toBool());
-		employee.setIriRight(result.value("iri_right").toString());
-		employee.setIriLeft(result.value("iri_left").toString());
+		employee.setIriRight(result.value("iri_right").toByteArray());
+		employee.setIriLeft(result.value("iri_left").toByteArray());
 
 		list.append(employee);
 	}
@@ -164,8 +164,8 @@ EmployeeModel EmployeeRepositoryMYSQL::getById(QString id) {
 		employee.setPhoneNumber(result.value("phone_number").toString());
 		employee.setAddress(result.value("address").toString());
 		employee.setIsAllowPassword(result.value("is_allow_password").toBool());
-		employee.setIriRight(result.value("iri_right").toString());
-		employee.setIriLeft(result.value("iri_left").toString());
+		employee.setIriRight(result.value("iri_right").toByteArray());
+		employee.setIriLeft(result.value("iri_left").toByteArray());
 		return employee;
 	}
 	else {

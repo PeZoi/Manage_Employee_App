@@ -3,16 +3,22 @@
 #include "Utils.h"
 #include "IDatabaseManager.h"
 #include "EmployeeModel.h"
+#include "IriTrackerSingleton.h"
 #include <QStandardItemModel>
 #include <QTimer>
 #include <QDate>
 #include <QTime>
 #include <QSortFilterProxyModel>
 #include <QDebug>
+#include <QWidget>
+
+bool checkConnectSignal_IN_OUT = false;
 
 EmployeeCheckInOutController::EmployeeCheckInOutController(EmployeeCheckInOut* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), view(view), db(_db)
 {
+	iriTracker = nullptr;
+
 	view->getUi()->stack_checkin_out->setCurrentIndex(0);
 	view->getUi()->password->setEchoMode(QLineEdit::Password);
 
@@ -28,10 +34,11 @@ EmployeeCheckInOutController::EmployeeCheckInOutController(EmployeeCheckInOut* v
 		this->getView()->getUi()->stack_checkin_out->setCurrentIndex(0);
 		});
 
-	
+
 	connect(view->getUi()->submit_checkin_out, &QPushButton::clicked, this, &EmployeeCheckInOutController::handleSubmitForPassword);
 	connect(view->getUi()->show_all, &QPushButton::clicked, this, &EmployeeCheckInOutController::onClickShowAll);
 
+	connect(view, &EmployeeCheckInOut::onClickDevice, this, &EmployeeCheckInOutController::processStreaming);
 }
 
 EmployeeCheckInOut* EmployeeCheckInOutController::getView() {
@@ -314,3 +321,46 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 
 	db->closeDatabase();
 }
+
+
+void EmployeeCheckInOutController::processStreaming() {
+	// Kiểm tra nếu tracker đã được khởi tạo
+	if (iriTracker == nullptr) {
+		iriTracker = IriTrackerSingleton::getIriTracker();
+	}
+
+	// Kiểm tra và kết nối tín hiệu nếu chưa kết nối
+	if (!checkConnectSignal_IN_OUT) {
+		connect(iriTracker, &IriTracker::imageProcessed, this, &EmployeeCheckInOutController::updateFrame);
+		checkConnectSignal_IN_OUT = true;
+	}
+
+	QThread* streamThread = IriTrackerSingleton::getStreamThread();
+
+	// Dừng luồng hiện tại nếu nó đang chạy
+	if (streamThread->isRunning()) {
+		streamThread->quit();
+		streamThread->wait();
+	}
+
+	// Di chuyển tracker sang thread và kết nối run()
+	iriTracker->moveToThread(streamThread);
+	connect(streamThread, &QThread::started, iriTracker, &IriTracker::run);
+
+	// Bắt đầu luồng
+	streamThread->start();
+}
+
+void EmployeeCheckInOutController::updateFrame(const unsigned char* imageData, int imageLen, int imageWidth, int imageHeight) {
+	if (imageData && imageWidth > 0 && imageHeight > 0) {
+		// Tạo QImage từ dữ liệu raw
+		QImage image(imageData, imageWidth, imageHeight, QImage::Format_Grayscale8);
+		QPixmap pixmap = QPixmap::fromImage(image);
+
+			view->getUi()->device->setPixmap(pixmap.scaled(view->getUi()->device->size(), Qt::KeepAspectRatio));
+	}
+	else {
+		qDebug() << "Dữ liệu hình ảnh không hợp lệ.";
+	}
+}
+

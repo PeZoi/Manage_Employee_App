@@ -5,10 +5,14 @@
 #include "DepartmentModel.h"
 #include "EmployeeModel.h"
 #include "Utils.h"
+#include "IriTrackerSingleton.h"
+#include <QMetaMethod>
 #include <QBuffer>
 #include <QThread>
 #include <QDebug>
+#include <QByteArray>
 
+bool checkConnectSignal = false;
 
 DialogFormEmployee::DialogFormEmployee(QWidget* parent)
 	: QDialog(parent)
@@ -59,8 +63,8 @@ DialogFormEmployee::~DialogFormEmployee()
 	iriTracker = nullptr;
 }
 void DialogFormEmployee::onClickCancel() {
-	Utils::deleteFile(iri_leftPath);
-	Utils::deleteFile(iri_rightPath);
+	/*Utils::deleteFile(iri_leftPath);
+	Utils::deleteFile(iri_rightPath);*/
 
 	this->deleteLater();
 }
@@ -191,33 +195,39 @@ Ui::DialogFormEmployeeClass DialogFormEmployee::getUi() {
 }
 
 void DialogFormEmployee::processStreaming() {
-	// Tạo thread mới cho quá trình capture
-	captureThread = new QThread();
-	iriTracker = new IriTracker();
+	// Kiểm tra nếu tracker đã được khởi tạo
+	if (iriTracker == nullptr) {
+		iriTracker = IriTrackerSingleton::getIriTracker();
+	}
 
-	// Kết nối tín hiệu từ IriTracker đến updateFrame trong UI thread
-	connect(iriTracker, &IriTracker::imageProcessed, this, &DialogFormEmployee::updateFrame);
-	connect(iriTracker, &IriTracker::imageResult, this, &DialogFormEmployee::updateFrame);
-	connect(iriTracker, &IriTracker::resultTemplate, this, &DialogFormEmployee::handleReciveTemplate);
+	// Kiểm tra và kết nối tín hiệu nếu chưa kết nối
+	if (!checkConnectSignal) {
+		connect(iriTracker, &IriTracker::imageProcessed, this, &DialogFormEmployee::updateFrame);
+		connect(iriTracker, &IriTracker::imageResult, this, &DialogFormEmployee::updateFrame);
+		connect(iriTracker, &IriTracker::resultTemplate, this, &DialogFormEmployee::handleReciveTemplate);
+		checkConnectSignal = true;
+	}
 
-	// Di chuyển IriTracker vào thread để xử lý capture
-	iriTracker->moveToThread(captureThread);
+	QThread* streamThread = IriTrackerSingleton::getStreamThread();
 
-	// Kết nối captureThread đã được bắt đầu để gọi run trong IriTracker
-	connect(captureThread, &QThread::started, iriTracker, &IriTracker::run);
+	// Dừng luồng hiện tại nếu nó đang chạy
+	if (streamThread->isRunning()) {
+		streamThread->quit();
+		streamThread->wait();
+	}
 
-	// Kết nối để tự động xóa IriTracker khi hoàn tất
-	connect(captureThread, &QThread::finished, captureThread, &QObject::deleteLater);
+	// Di chuyển tracker sang thread và kết nối run()
+	iriTracker->moveToThread(streamThread);
+	connect(streamThread, &QThread::started, iriTracker, &IriTracker::run);
 
-	// Bắt đầu thread
-	captureThread->start();
+	// Bắt đầu luồng
+	streamThread->start();
 }
 void DialogFormEmployee::updateFrame(const unsigned char* imageData, int imageLen, int imageWidth, int imageHeight) {
 	if (imageData && imageWidth > 0 && imageHeight > 0) {
 		// Tạo QImage từ dữ liệu raw
 		QImage image(imageData, imageWidth, imageHeight, QImage::Format_Grayscale8);
 		QPixmap pixmap = QPixmap::fromImage(image);
-		//ui.testLabel->setPixmap(pixmap.scaled(ui.testLabel->size(), Qt::KeepAspectRatio));
 
 		if (side == "LEFT") {
 			ui.iri_left->setPixmap(pixmap.scaled(ui.iri_left->size(), Qt::KeepAspectRatio));
@@ -231,12 +241,13 @@ void DialogFormEmployee::updateFrame(const unsigned char* imageData, int imageLe
 	}
 }
 
-void DialogFormEmployee::handleReciveTemplate(QString pathTemplate) {
+void DialogFormEmployee::handleReciveTemplate(const unsigned char* buffer, int size) {
+	QByteArray templateBlob = Utils::templateConvertToByte(buffer, size);
 	if (side == "LEFT") {
-		iri_leftPath = pathTemplate;
+		iri_leftPath = templateBlob;
 	}
 	else {
-		iri_rightPath = pathTemplate;
+		iri_rightPath = templateBlob;
 	}
 }
 

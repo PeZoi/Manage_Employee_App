@@ -138,6 +138,7 @@
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
+    <ClCompile Include="IriTrackerSingleton.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MainWindowController.cpp" />
     <ClCompile Include="ManageAttendanceEvents.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="IEmployeeRepository.h" />
     <QtMoc Include="Tools.h" />
     <QtMoc Include="ToolsController.h" />
+    <ClInclude Include="IriTrackerSingleton.h" />
     <ClInclude Include="Utils.h" />
     <QtMoc Include="ManageAttendanceEventsController.h" />
     <QtMoc Include="ManageAttendanceEvents.h" />
