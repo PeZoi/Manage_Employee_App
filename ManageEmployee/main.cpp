@@ -19,13 +19,14 @@
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
+	a.setWindowIcon(QIcon("D:/IriTech/Code/ManageEmployee/icon/IriTech.ico"));
 
 	IriTracker::get_divice();
 
 	QString pathIni = Constant::PATH_CONFIG;
 	QFile configFile(pathIni);
 	QSettings settings(pathIni, QSettings::IniFormat);
-	
+
 	IDatabaseManager* db;
 
 	// Xử lý hiện để chọn sql
@@ -49,15 +50,15 @@ int main(int argc, char* argv[])
 
 	db->connectToDatabase();
 	if (!db->getEmployeeRepository()->checkExistAdmin()) {
-	    signUpController->getSignUpView()->show();
+		signUpController->getSignUpView()->show();
 	}
 	else {
-	    mainWindowController->getMainWindowView()->show();
+		mainWindowController->getMainWindowView()->show();
 	}
 	int result = a.exec();
 	db->closeDatabase();
 
-	 //Giải phóng bộ nhớ
+	//Giải phóng bộ nhớ
 	delete mainWindowController;
 	delete mainWindowUI;
 

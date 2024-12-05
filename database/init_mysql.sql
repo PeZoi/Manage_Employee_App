@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS department (
     name VARCHAR(255) PRIMARY KEY,
-    description TEXT
+    description TEXT,
+    is_deleted BOOLEAN NOT NULL DEFAULT 0
 );
 
 INSERT IGNORE INTO department (name, description)
@@ -22,8 +23,9 @@ CREATE TABLE IF NOT EXISTS employee (
     phone_number VARCHAR(255),
     address TEXT,
     is_allow_password BOOLEAN NOT NULL DEFAULT 0,
-    iri_right TEXT,
-    iri_left TEXT,
+    iri_right LONGBLOB,
+    iri_left LONGBLOB,
+    is_deleted BOOLEAN NOT NULL DEFAULT 0,
     FOREIGN KEY (department) REFERENCES department(name)
 );
 

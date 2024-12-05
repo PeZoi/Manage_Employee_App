@@ -1,10 +1,4 @@
-﻿   Qt/MSBuild: 3.3.0.13
+﻿   Qt/MSBuild: 3.3.1.0
    Qt: 5.15.2
   DialogFormEmployee.cpp
-  EmployeeCheckInOutController.cpp
-  ManageAttendanceEventsController.cpp
-  Utils.cpp
-D:\IriTech\Code\ManageEmployee\ManageEmployee\Utils.cpp(22,9): warning C4101: 'currentWeekNumber': unreferenced local variable
-D:\IriTech\Code\ManageEmployee\ManageEmployee\Utils.cpp(38,9): warning C4101: 'currentWeekNumber': unreferenced local variable
-  Generating Code...
   ManageEmployee.vcxproj -> D:\IriTech\Code\ManageEmployee\x64\Debug\ManageEmployee.exe

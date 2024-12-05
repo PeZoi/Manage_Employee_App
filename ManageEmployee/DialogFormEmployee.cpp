@@ -213,12 +213,13 @@ void DialogFormEmployee::processStreaming() {
 	// Dừng luồng hiện tại nếu nó đang chạy
 	if (streamThread->isRunning()) {
 		streamThread->quit();
-		streamThread->wait();
 	}
 
 	// Di chuyển tracker sang thread và kết nối run()
 	iriTracker->moveToThread(streamThread);
-	connect(streamThread, &QThread::started, iriTracker, &IriTracker::run);
+	connect(streamThread, &QThread::started, [=]() {
+		iriTracker->run(false, true, true);
+		});
 
 	// Bắt đầu luồng
 	streamThread->start();

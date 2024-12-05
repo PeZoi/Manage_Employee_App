@@ -9,8 +9,8 @@ DepartmentRepositorySQLite::DepartmentRepositorySQLite(IDatabaseManager* _db) {
 }
 
 bool DepartmentRepositorySQLite::add(DepartmentModel department) {
-	QString query = "INSERT INTO department (name, description) "
-		"VALUES (:name, :description);";
+	QString query = "INSERT INTO department (name, description, is_deleted) "
+		"VALUES (:name, :description, 0);";
 
 	QMap<QString, QVariant> params;
 	params[":name"] = department.getName();
@@ -31,15 +31,17 @@ bool DepartmentRepositorySQLite::update(DepartmentModel department) {
 }
 
 bool DepartmentRepositorySQLite::_delete(QString name) {
-	QString query = "DELETE FROM department WHERE name = :name";
+	QString queryDeleteDepartment = "UPDATE department SET is_deleted = 1 WHERE name = :name";
+	QString queryUpdateEmployee = "UPDATE employee SET department = 'Others' WHERE department = :name";
 	QMap<QString, QVariant> params;
 	params[":name"] = name;
 
-	return db->executeCreate(query, params);
+	db->executeCreate(queryUpdateEmployee, params);
+	return db->executeCreate(queryDeleteDepartment, params);
 }
 
 QList<DepartmentModel> DepartmentRepositorySQLite::getAll() {
-	QString query = "SELECT * FROM department";
+	QString query = "SELECT * FROM department WHERE is_deleted = 0;";
 	QSqlQuery result = db->executeQuery(query);
 
 	if (!result.isActive()) {
@@ -61,7 +63,7 @@ QList<DepartmentModel> DepartmentRepositorySQLite::getAll() {
 
 QList<DepartmentModel> DepartmentRepositorySQLite::getAllIgnoreOthers() {
 	
-	QString query = "SELECT * FROM department WHERE name != 'Others';";
+	QString query = "SELECT * FROM department WHERE name != 'Others' AND is_deleted = 0;";
 	QSqlQuery result = db->executeQuery(query);
 
 	if (!result.isActive()) {

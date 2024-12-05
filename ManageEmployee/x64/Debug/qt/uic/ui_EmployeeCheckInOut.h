@@ -324,7 +324,7 @@ public:
         noEmployee->setObjectName(QString::fromUtf8("noEmployee"));
         noEmployeeLabel_3 = new QLabel(noEmployee);
         noEmployeeLabel_3->setObjectName(QString::fromUtf8("noEmployeeLabel_3"));
-        noEmployeeLabel_3->setGeometry(QRect(150, 210, 411, 61));
+        noEmployeeLabel_3->setGeometry(QRect(190, 220, 411, 61));
         QFont font2;
         font2.setPointSize(9);
         font2.setBold(true);
@@ -335,11 +335,11 @@ public:
 "}"));
         noEmployeeLabel_1 = new QLabel(noEmployee);
         noEmployeeLabel_1->setObjectName(QString::fromUtf8("noEmployeeLabel_1"));
-        noEmployeeLabel_1->setGeometry(QRect(230, 50, 211, 131));
-        noEmployeeLabel_1->setPixmap(QPixmap(QString::fromUtf8("C:/Users/MY PC/Documents/Zalo Received Files/icons/no-employee.png")));
+        noEmployeeLabel_1->setGeometry(QRect(230, 60, 211, 131));
+        noEmployeeLabel_1->setPixmap(QPixmap(QString::fromUtf8("../icon/no-employee.png")));
         noEmployeeLabel_2 = new QLabel(noEmployee);
         noEmployeeLabel_2->setObjectName(QString::fromUtf8("noEmployeeLabel_2"));
-        noEmployeeLabel_2->setGeometry(QRect(200, 170, 291, 61));
+        noEmployeeLabel_2->setGeometry(QRect(240, 180, 291, 61));
         noEmployeeLabel_2->setFont(font2);
         noEmployeeLabel_2->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "	color: red;\n"

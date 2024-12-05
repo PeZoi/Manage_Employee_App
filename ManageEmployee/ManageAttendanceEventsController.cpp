@@ -136,8 +136,6 @@ void ManageAttendanceEventsController::onClickDelete() {
 	}
 
 
-
-	employeeSelected = "";
 	view->getUi()->edit->setDisabled(true);
 	view->getUi()->delete_2->setDisabled(true);
 	db->closeDatabase();

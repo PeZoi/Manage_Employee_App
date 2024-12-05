@@ -1,27 +1,148 @@
 #include "IriTracker.h"
+#include "IriLivenessBase.h"
+#include "Iddk2000_features.h"
+#include "DatabaseSingleton.h"
 #include <QString>
 #include <QIODevice>
 #include <QFile>
 #include <QDateTime>
 #include <QDebug>
 #include <utility>
-#include "Iddk2000_features.h"
-#include "IriLivenessBase.h"
 
 IriTracker::IriTracker()
 {
+}
+
+bool process_matching_result_custom(float distance, char* enrollID)
+{
+	//Success case
+	if (distance <= 1.0f)//Match
+	{
+		if (enrollID)
+			printf("\nMatched with '%s'!!!\n", enrollID);
+		else {
+			qDebug() << "Matched";
+			return true;
+		}
+	}
+	else if (distance > 1.1f)// Non-match
+	{
+		//qDebug() << "No match found";
+	}
+	else//greyzone
+	{
+		// Grey Zone: we are not sure about the result due to bad image quality, users should make a capture again ...
+		qDebug() << "The quality of this image may be not good enough.\r\nPlease re-capture another image and try again!";
+	}
+	return false;
+}
+
+void clear_capture_custom()
+{
+	IddkResult iRet = IDDK_OK;
+	// default to clear both captured eyes for binocular device
+	iRet = Iddk_ClearCapture(g_hDevice, IDDK_UNKNOWN_EYE);
+	if (iRet == IDDK_OK)
+	{
+		//printf("Clear capture successfully\n");
+	}
+	else
+	{
+		printf("Clear capture failed \n");
+		handle_error(iRet);
+	}
+}
+
+bool check_image_quality_custom(bool forEnrollment, bool& isGrayZone, int& numAcceptableEyes)
+{
+	bool bRet = false;
+	IddkIrisQuality* pQualities = NULL;
+	int nQualityCount = 0;
+	numAcceptableEyes = 0;
+	int nBadTotalScore = forEnrollment ? 50 : 30;
+	int nBadUsableArea = forEnrollment ? 50 : 30;
+	int nGoodTotalScore = 70;
+	int nGoodUsableArea = 70;
+
+	IddkResult iRet = Iddk_GetResultQuality(g_hDevice, &pQualities, &nQualityCount);
+
+	if (iRet == IDDK_OK || iRet == IDDK_SE_LEFT_FRAME_UNQUALIFIED || iRet == IDDK_SE_RIGHT_FRAME_UNQUALIFIED)
+	{
+		if (forEnrollment)
+		{
+			// at least one eye's quality is in grayzone
+			isGrayZone = ((pQualities[RIGHT_EYE_IDX].totalScore > nBadTotalScore && pQualities[RIGHT_EYE_IDX].usableArea > nBadUsableArea
+				&& (pQualities[RIGHT_EYE_IDX].totalScore <= nGoodTotalScore || pQualities[RIGHT_EYE_IDX].usableArea <= nGoodUsableArea))
+				|| (pQualities[LEFT_EYE_IDX].totalScore > nBadTotalScore && pQualities[LEFT_EYE_IDX].usableArea > nBadUsableArea
+					&& (pQualities[LEFT_EYE_IDX].totalScore <= nGoodTotalScore || pQualities[LEFT_EYE_IDX].usableArea <= nGoodUsableArea)));
+		}
+		else
+		{
+			//For verification there is no grayzone, just one threshold (30) 
+			isGrayZone = false;
+		}
+
+		// number of eyes with acceptable quality (not bad)
+		if (pQualities[RIGHT_EYE_IDX].totalScore > nBadTotalScore && pQualities[RIGHT_EYE_IDX].usableArea > nBadUsableArea)
+			numAcceptableEyes++;
+
+		if (pQualities[LEFT_EYE_IDX].totalScore > nBadTotalScore && pQualities[LEFT_EYE_IDX].usableArea > nBadUsableArea)
+			numAcceptableEyes++;
+
+		if (numAcceptableEyes == 0)
+		{
+			//Clear all captured iris images in the camera device
+			Iddk_ClearCapture(g_hDevice, IDDK_UNKNOWN_EYE);
+			printf("\nNo captured iris image has acceptable quality for the %s. Please try to capture your iris(es) again!\n", forEnrollment ? "enrollment" : "matching");
+			bRet = false;
+			goto RETSEC;
+		}
+
+		if (g_isBinocular)
+		{
+			if (iRet != IDDK_SE_RIGHT_FRAME_UNQUALIFIED && (pQualities[RIGHT_EYE_IDX].totalScore <= nBadTotalScore || pQualities[RIGHT_EYE_IDX].usableArea <= nBadUsableArea))
+			{
+				// clear right eye
+				if (Iddk_ClearCapture(g_hDevice, IDDK_RIGHT_EYE))
+				{
+					bRet = false;
+					goto RETSEC;
+				}
+				printf("\nThe right iris image has bad quality. It was cleared!\n");
+			}
+			if (iRet != IDDK_SE_LEFT_FRAME_UNQUALIFIED && (pQualities[LEFT_EYE_IDX].totalScore <= nBadTotalScore || pQualities[LEFT_EYE_IDX].usableArea <= nBadUsableArea))
+			{
+				// clear left eye
+				if (Iddk_ClearCapture(g_hDevice, IDDK_LEFT_EYE))
+				{
+					bRet = false;
+					goto RETSEC;
+				}
+				printf("\nThe left iris image has bad quality. It was cleared!\n");
+			}
+		}
+	}
+	else
+	{
+		handle_error(iRet);
+		goto RETSEC;
+	}
+	bRet = true;
+RETSEC:
+	reset_error_level(iRet);
+	return bRet;
 }
 
 void IriTracker::get_divice() {
 	get_device_handle_custom();
 }
 
-void IriTracker::run()
+void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 {
 	/*Params default*/
-	bool bDefaultParams = false;
+	/*bool bDefaultParams = false;
 	bool bMultiple = true;
-	bool bProcessResult = true;
+	bool bProcessResult = true;*/
 
 	/* For streaming images */
 	IddkImage* pImages = NULL;
@@ -66,11 +187,10 @@ void IriTracker::run()
 		eyeDetected = false;
 		times++;
 
-		/* Ask user to fill in all parameters again */
-//		if (!bDefaultParams)
-//		{
-//			prepare_param_for_capturing(captureMode, qualityMode, eyeSubtype, autoLeds, iCount);
-//		}
+		if (!bDefaultParams)
+		{
+			prepare_param_for_capturing(captureMode, qualityMode, eyeSubtype, autoLeds, iCount);
+		}
 
 		/* Now, we capture user's eyes */
 		iRet = Iddk_StartCapture(g_hDevice, captureMode, iCount, qualityMode, IDDK_AUTO_CAPTURE, eyeSubtype, autoLeds, NULL, NULL);
@@ -275,19 +395,6 @@ void IriTracker::run()
 			goto RETSEC;
 		}
 
-		/* Let's try another capturing? */
-		/**
-		printf("\nTry another capture?\n\t1. Yes (default)\n\t2. No");
-		printf("\nEnter your choice: ");
-		option = choose_option(2);
-
-		if (option == -1) printf("1\n");
-		if (option == 2)
-		{
-			goto RETSEC;
-		}
-		*/
-
 		bRun = true;
 
 		/* Number of capturing */
@@ -303,4 +410,117 @@ RETSEC:
 	}
 
 	reset_error_level(iRet);
+}
+
+void IriTracker::scan_iri()
+{
+	// SCAN
+	{
+		IddkResult iRet = IDDK_OK;
+		IddkCaptureStatus captureStatus;
+		iRet = Iddk_GetCaptureStatus(g_hDevice, &captureStatus);
+		if (iRet == IDDK_OK)
+		{
+			reset_error_level(iRet);
+			if (captureStatus != IDDK_COMPLETE)
+			{
+				printf("\nThere is no captured iris image in the device, you need to capture your iris(es) first. Capturing process starts ... \n");
+				run(true, false, false);
+			}
+		}
+	}
+
+	checkTemplates(); // CHECKING
+}
+
+
+bool IriTracker::checkTemplates() {
+	DatabaseSingleton::getInstance()->getDB()->connectToDatabase();
+	QList<QPair<QString, QPair<QByteArray, QByteArray>>> employeeIriesList = DatabaseSingleton::getInstance()->getDB()->getEmployeeRepository()->getAllIri();
+	DatabaseSingleton::getInstance()->getDB()->closeDatabase();
+
+
+	for (QPair<QString, QPair<QByteArray, QByteArray>> employeeIries : employeeIriesList) {
+		float compareDis = 1000.0f;
+		float minDis = 3.0f;
+		int nComparisonResults = 0;
+		IddkComparisonResult* pComparisonResults = NULL;
+		IddkResult iRet = IDDK_OK;
+		int option = 0;
+		IddkCaptureStatus captureStatus = IDDK_IDLE;
+		char enrollID[255];
+		int i = 0;
+		IddkDataBuffer pEnrollTemplate;
+		char templateFile[256];
+		char temp[256];
+		char minEnrollID[32];
+		/* Compare1N */
+		char sMaxDistance[100];
+		// default maxDistance = 0: return all distances
+		float fMaxDistance = 0;
+		nComparisonResults = 0;
+		pComparisonResults = NULL;
+
+		/* Remember that before doing any identification or verification,
+		we should check the quality of the current captured image */
+		bool isGrayZone = false;
+		int numAcceptableEyes = 0;
+		if (!check_image_quality_custom(false, isGrayZone, numAcceptableEyes))
+		{
+			continue;
+		}
+
+		for (int i = 0; i < 2; i++) {
+			QByteArray iri;
+			/* Init */
+			if (i == 0) {
+				iri = employeeIries.second.first; // IRI LEFT
+			}
+			else {
+				iri = employeeIries.second.second; // IRI RIGHT
+			}
+			pEnrollTemplate.dataSize = iri.size();
+			if (pEnrollTemplate.dataSize > 0) {
+				pEnrollTemplate.data = new unsigned char[pEnrollTemplate.dataSize];
+				memcpy(pEnrollTemplate.data, iri.constData(), pEnrollTemplate.dataSize);
+			}
+			else {
+				delete[] pEnrollTemplate.data;
+				pEnrollTemplate.data = nullptr;
+				pEnrollTemplate.dataSize = 0;
+			}
+
+
+			iRet = Iddk_Compare11WithTemplate(g_hDevice, &pEnrollTemplate, &compareDis);
+			if (iRet == IDDK_OK)
+			{
+				if (!process_matching_result_custom(compareDis, NULL)) {
+					continue;
+				}
+				qDebug() << "Done. Compare Distance = " << compareDis;
+
+				emit isCheckCompareSuccess(employeeIries.first);
+				clear_capture_custom();
+
+				return true;
+			}
+			else if (iRet == IDDK_GAL_EMPTY)
+			{
+				qDebug() << "No match found. The gallery is empty !";
+			}
+			else if (iRet == IDDK_SE_NO_QUALIFIED_FRAME)
+			{
+				qDebug() << "Failed. No qualified image";
+			}
+			else
+			{
+				qDebug() << "Failed";
+				handle_error(iRet);
+			}
+			reset_error_level(iRet);
+		}
+	}
+	qDebug() << "No match found";
+	clear_capture_custom();
+	return false;
 }

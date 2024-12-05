@@ -3,6 +3,7 @@
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
+#include <QPair>
 
 
 
@@ -15,11 +16,11 @@ bool EmployeeRepositoryMYSQL::add(EmployeeModel employee) {
 		"id, first_name, last_name, password, department, "
 		"date_of_birth, start_date_of_work, status, is_enabled, "
 		"avatar, role, email, phone_number, address, is_allow_password, "
-		"iri_right, iri_left) "
+		"iri_right, iri_left, is_deleted) "
 		"VALUES (:id, :first_name, :last_name, :password, :department, "
 		":date_of_birth, :start_date_of_work, :status, :is_enabled, "
 		":avatar, :role, :email, :phone_number, :address, :is_allow_password, "
-		":iri_right, :iri_left);";
+		":iri_right, :iri_left, 0);";
 
 	QMap<QString, QVariant> params;
 	params[":id"] = employee.getId();
@@ -81,7 +82,9 @@ bool EmployeeRepositoryMYSQL::update(EmployeeModel employee) {
 }
 
 bool EmployeeRepositoryMYSQL::_delete(QString id) {
-	QString query = "DELETE FROM employee WHERE id = :id";
+	QString query = "UPDATE employee SET "
+		"is_deleted = 1 "
+		"WHERE id = :id;";
 	QMap<QString, QVariant> params;
 	params[":id"] = id;
 
@@ -89,7 +92,7 @@ bool EmployeeRepositoryMYSQL::_delete(QString id) {
 }
 
 QList<EmployeeModel> EmployeeRepositoryMYSQL::getAll() {
-	QString query = "SELECT * FROM employee WHERE role = 'STAFF'";
+	QString query = "SELECT * FROM employee WHERE role = 'STAFF' AND is_deleted = 0";
 	QSqlQuery result = db->executeQuery(query);
 
 	if (!result.isActive()) {
@@ -127,6 +130,31 @@ QList<EmployeeModel> EmployeeRepositoryMYSQL::getAll() {
 	}
 	return list;
 
+}
+
+QList<QPair<QString, QPair<QByteArray, QByteArray>>> EmployeeRepositoryMYSQL::getAllIri() {
+	QList<QPair<QString, QPair<QByteArray, QByteArray>>> list;
+
+	QString query = "SELECT id, iri_right, iri_left " 
+		"FROM employee "
+		"WHERE role = 'STAFF' AND is_deleted = 0 "
+		"AND(iri_right IS NOT NULL OR iri_left IS NOT NULL); ";
+	QSqlQuery result = db->executeQuery(query);
+
+	if (!result.isActive()) {
+		qDebug() << "Query failed:" << result.lastError().text();
+		return QList<QPair<QString, QPair<QByteArray, QByteArray>>>();
+	}
+
+	while (result.next()) {
+		QString id = result.value("id").toString();
+		QByteArray iriRight = result.value("iri_right").toByteArray();
+		QByteArray iriLeft = result.value("iri_left").toByteArray();
+
+		list.append(qMakePair(id, qMakePair(iriRight, iriLeft)));
+	}
+
+	return list;
 }
 
 EmployeeModel EmployeeRepositoryMYSQL::getById(QString id) {
@@ -217,7 +245,7 @@ bool EmployeeRepositoryMYSQL::signInAdmin(QString pass) {
 }
 
 bool EmployeeRepositoryMYSQL::signInStaff(QString id, QString pass) {
-	QString query = "SELECT COUNT(*) FROM employee WHERE id = :id AND password = :pass";
+	QString query = "SELECT COUNT(*) FROM employee WHERE id = :id AND password = :pass AND is_deleted = 0";
 	QMap<QString, QVariant> params;
 	params[":id"] = id;
 	params[":pass"] = pass;
@@ -240,7 +268,7 @@ bool EmployeeRepositoryMYSQL::signInStaff(QString id, QString pass) {
 }
 
 QList<EmployeeModel> EmployeeRepositoryMYSQL::getByDepartment(QString department) {
-	QString query = "SELECT id, first_name, last_name, is_enabled FROM employee WHERE department = :department and role = 'STAFF'";
+	QString query = "SELECT id, first_name, last_name, is_enabled FROM employee WHERE department = :department and role = 'STAFF' AND is_deleted = 0";
 	QMap<QString, QVariant> params;
 	params[":department"] = department;
 

@@ -20,6 +20,7 @@ public:
 	bool checkStatusIn(QString id) override;
 	bool updateStatus(QString status, QString id) override;
 	bool checkExistAdmin() override;
+	QList<QPair<QString, QPair<QByteArray, QByteArray>>> getAllIri() override;
 
 private:
 	IDatabaseManager* db;

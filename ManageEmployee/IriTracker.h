@@ -23,10 +23,12 @@ signals:
 		int imageHeight);
 
 	void resultTemplate(const unsigned char* buffer, int size);
+	void isCheckCompareSuccess(QString employeeId);
 
 public:
 	IriTracker();
-	void run();
+	void run(bool bDefaultParams, bool bMultiple, bool bProcessResult);
 	static void get_divice();
-
+	void scan_iri();
+	bool checkTemplates();
 };

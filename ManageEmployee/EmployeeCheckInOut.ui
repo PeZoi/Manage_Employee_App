@@ -669,8 +669,8 @@ font: 18px;</string>
     <widget class="QLabel" name="noEmployeeLabel_3">
      <property name="geometry">
       <rect>
-       <x>150</x>
-       <y>210</y>
+       <x>190</x>
+       <y>220</y>
        <width>411</width>
        <height>61</height>
       </rect>
@@ -695,7 +695,7 @@ font: 18px;</string>
      <property name="geometry">
       <rect>
        <x>230</x>
-       <y>50</y>
+       <y>60</y>
        <width>211</width>
        <height>131</height>
       </rect>
@@ -704,14 +704,14 @@ font: 18px;</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>C:/Users/MY PC/Documents/Zalo Received Files/icons/no-employee.png</pixmap>
+      <pixmap>../icon/no-employee.png</pixmap>
      </property>
     </widget>
     <widget class="QLabel" name="noEmployeeLabel_2">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>170</y>
+       <x>240</x>
+       <y>180</y>
        <width>291</width>
        <height>61</height>
       </rect>

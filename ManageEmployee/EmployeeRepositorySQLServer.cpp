@@ -13,11 +13,11 @@ bool EmployeeRepositorySQLServer::add(EmployeeModel employee) {
 		"id, first_name, last_name, password, department, "
 		"date_of_birth, start_date_of_work, status, is_enabled, "
 		"avatar, role, email, phone_number, address, is_allow_password, "
-		"iri_right, iri_left) "
+		"iri_right, iri_left, is_deleted) "
 		"VALUES (:id, :first_name, :last_name, :password, :department, "
 		":date_of_birth, :start_date_of_work, :status, :is_enabled, "
 		":avatar, :role, :email, :phone_number, :address, :is_allow_password, "
-		":iri_right, :iri_left);";
+		":iri_right, :iri_left, 0);";
 
 	QMap<QString, QVariant> params;
 	params[":id"] = employee.getId();
@@ -78,7 +78,9 @@ bool EmployeeRepositorySQLServer::update(EmployeeModel employee) {
 }
 
 bool EmployeeRepositorySQLServer::_delete(QString id) {
-	QString query = "DELETE FROM employee WHERE id = :id";
+	QString query = "UPDATE employee SET "
+		"is_deleted = 1 "
+		"WHERE id = :id;";
 	QMap<QString, QVariant> params;
 	params[":id"] = id;
 
@@ -86,7 +88,7 @@ bool EmployeeRepositorySQLServer::_delete(QString id) {
 }
 
 QList<EmployeeModel> EmployeeRepositorySQLServer::getAll() {
-	QString query = "SELECT * FROM employee WHERE role = 'STAFF'";
+	QString query = "SELECT * FROM employee WHERE role = 'STAFF' AND is_deleted = 0";
 	QSqlQuery result = db->executeQuery(query);
 
 	if (!result.isActive()) {
@@ -124,6 +126,12 @@ QList<EmployeeModel> EmployeeRepositorySQLServer::getAll() {
 	}
 	return list;
 
+}
+
+QList<QPair<QString, QPair<QByteArray, QByteArray>>> EmployeeRepositorySQLServer::getAllIri() {
+	QList<QPair<QString, QPair<QByteArray, QByteArray>>> list;
+
+	return list;
 }
 
 EmployeeModel EmployeeRepositorySQLServer::getById(QString id) {

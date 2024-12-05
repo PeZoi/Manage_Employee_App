@@ -3194,6 +3194,7 @@ void handle_error(IddkResult error)
 		sprintf(errorMsg, "IDDK_UNKNOWN_ERROR\n");
 	}
 	printf("\nError: %s\n", errorMsg);
+	qDebug() << "Error: " << errorMsg;
 	
 	/* Communication error!!!! Many reasons for these.
 	Next function call may be failed too 

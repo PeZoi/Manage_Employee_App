@@ -29,7 +29,8 @@ public slots:
 
 	void processStreaming();
 	void updateFrame(const unsigned char* imageData, int imageLen, int imageWidth, int imageHeight);
-
+	void handleCheckInOutByIries(QString employeeId);
+	void handleAttendanceEventForEmployee(QString id);
 
 private:
 	IDatabaseManager*& db;

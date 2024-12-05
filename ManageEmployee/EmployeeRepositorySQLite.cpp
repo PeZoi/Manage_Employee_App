@@ -15,11 +15,11 @@ bool EmployeeRepositorySQLite::add(EmployeeModel employee) {
 		"id, first_name, last_name, password, department, "
 		"date_of_birth, start_date_of_work, status, is_enabled, "
 		"avatar, role, email, phone_number, address, is_allow_password, "
-		"iri_right, iri_left) "
+		"iri_right, iri_left, is_deleted) "
 		"VALUES (:id, :first_name, :last_name, :password, :department, "
 		":date_of_birth, :start_date_of_work, :status, :is_enabled, "
 		":avatar, :role, :email, :phone_number, :address, :is_allow_password, "
-		":iri_right, :iri_left);";
+		":iri_right, :iri_left, 0);";
 
 	QMap<QString, QVariant> params;
 	params[":id"] = employee.getId();
@@ -81,7 +81,9 @@ bool EmployeeRepositorySQLite::update(EmployeeModel employee) {
 }
 
 bool EmployeeRepositorySQLite::_delete(QString id) {
-	QString query = "DELETE FROM employee WHERE id = :id";
+	QString query = "UPDATE employee SET "
+		"is_deleted = 1 "
+		"WHERE id = :id;";
 	QMap<QString, QVariant> params;
 	params[":id"] = id;
 
@@ -89,7 +91,7 @@ bool EmployeeRepositorySQLite::_delete(QString id) {
 }
 
 QList<EmployeeModel> EmployeeRepositorySQLite::getAll() {
-	QString query = "SELECT * FROM employee WHERE role = 'STAFF'";
+	QString query = "SELECT * FROM employee WHERE role = 'STAFF' AND is_deleted = 0";
 	QSqlQuery result = db->executeQuery(query);
 
 	if (!result.isActive()) {
@@ -127,6 +129,31 @@ QList<EmployeeModel> EmployeeRepositorySQLite::getAll() {
 	}
 	return list;
 
+}
+
+QList<QPair<QString, QPair<QByteArray, QByteArray>>> EmployeeRepositorySQLite::getAllIri() {
+	QList<QPair<QString, QPair<QByteArray, QByteArray>>> list;
+
+	QString query = "SELECT id, iri_right, iri_left "
+		"FROM employee "
+		"WHERE role = 'STAFF' AND is_deleted = 0 "
+		"AND(iri_right IS NOT NULL OR iri_left IS NOT NULL); ";
+	QSqlQuery result = db->executeQuery(query);
+
+	if (!result.isActive()) {
+		qDebug() << "Query failed:" << result.lastError().text();
+		return QList<QPair<QString, QPair<QByteArray, QByteArray>>>();
+	}
+
+	while (result.next()) {
+		QString id = result.value("id").toString();
+		QByteArray iriRight = result.value("iri_right").toByteArray();
+		QByteArray iriLeft = result.value("iri_left").toByteArray();
+
+		list.append(qMakePair(id, qMakePair(iriRight, iriLeft)));
+	}
+
+	return list;
 }
 
 EmployeeModel EmployeeRepositorySQLite::getById(QString id) {
@@ -217,7 +244,7 @@ bool EmployeeRepositorySQLite::signInAdmin(QString pass) {
 }
 
 bool EmployeeRepositorySQLite::signInStaff(QString id, QString pass) {
-	QString query = "SELECT COUNT(*) FROM employee WHERE id = :id AND password = :pass";
+	QString query = "SELECT COUNT(*) FROM employee WHERE id = :id AND password = :pass AND is_deleted = 0";
 	QMap<QString, QVariant> params;
 	params[":id"] = id;
 	params[":pass"] = pass;
@@ -240,7 +267,7 @@ bool EmployeeRepositorySQLite::signInStaff(QString id, QString pass) {
 }
 
 QList<EmployeeModel> EmployeeRepositorySQLite::getByDepartment(QString department) {
-	QString query = "SELECT id, first_name, last_name, is_enabled FROM employee WHERE department = :department and role = 'STAFF'";
+	QString query = "SELECT id, first_name, last_name, is_enabled FROM employee WHERE department = :department AND role = 'STAFF' AND is_deleted = 0";
 	QMap<QString, QVariant> params;
 	params[":department"] = department;
 

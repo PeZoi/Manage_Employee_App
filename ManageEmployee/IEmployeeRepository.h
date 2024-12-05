@@ -18,4 +18,5 @@ public:
 	virtual bool checkStatusIn(QString id) = 0;
 	virtual bool updateStatus(QString status, QString id) = 0;
 	virtual bool checkExistAdmin() = 0;
+	virtual QList<QPair<QString, QPair<QByteArray, QByteArray>>> getAllIri() = 0;
 };

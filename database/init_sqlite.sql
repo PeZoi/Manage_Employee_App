@@ -1,7 +1,9 @@
 CREATE TABLE IF NOT EXISTS department (
-name TEXT PRIMARY KEY, 
-description TEXT); 
-INSERT OR IGNORE INTO department (name, description) VALUES ('Others', '');
+	name TEXT PRIMARY KEY, 
+	description TEXT,
+	is_deleted BOOLEAN NOT NULL DEFAULT 0
+);
+INSERT OR IGNORE INTO department (name, DESCRIPTION, is_deleted) VALUES ('Others', '', 0);
 
 CREATE TABLE IF NOT EXISTS employee (
 id TEXT PRIMARY KEY, 
@@ -19,8 +21,9 @@ email TEXT UNIQUE,
 phone_number TEXT, 
 address TEXT, 
 is_allow_password BOOLEAN NOT NULL DEFAULT 0, 
-iri_right TEXT, 
-iri_left TEXT, 
+iri_right LONGBLOB, 
+iri_left LONGBLOB, 
+is_deleted BOOLEAN NOT NULL DEFAULT 0,
 FOREIGN KEY (department) REFERENCES department(name));
 
 CREATE TABLE IF NOT EXISTS attendance_event (

@@ -184,6 +184,7 @@ void EmployeeCheckInOutController::handleSelectEmployee(const QModelIndex& index
 	db->closeDatabase();
 }
 
+
 void EmployeeCheckInOutController::handleSelectEmployeeByCombo(const QString& name) {
 	db->connectToDatabase();
 
@@ -204,27 +205,8 @@ void EmployeeCheckInOutController::handleSelectEmployeeByCombo(const QString& na
 	db->closeDatabase();
 }
 
-
-void EmployeeCheckInOutController::handleSubmitForPassword() {
-	db->connectToDatabase();
-	QString displayNameSelected = view->getUi()->name_list->currentText();
-	QString password = view->getUi()->password->text().trimmed();
-
-	if (password.isEmpty()) {
-		qDebug() << "Mật khẩu không được để trống";
-		return;
-	}
-
-	QRegularExpression re("\\(([^)]+)\\)");
-	QRegularExpressionMatch match = re.match(displayNameSelected);
-	QString id = match.captured(1);
-
+void EmployeeCheckInOutController::handleAttendanceEventForEmployee(QString id) {
 	EmployeeModel employee = db->getEmployeeRepository()->getById(id);
-
-	if (!db->getEmployeeRepository()->signInStaff(id, password)) {
-		qDebug() << "Đăng nhập thất bại";
-		return;
-	}
 
 	AttendanceEventModel attendanceEvent;
 	attendanceEvent.setException(0);
@@ -238,7 +220,7 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 		attendanceEvent.setTypeEvent("IN");
 	}
 	else {
-		QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getByEmployeeId(employeeSelected);
+		QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getByEmployeeId(id);
 		QList<int> sessionList;
 		for (int i = 0; i < events.size(); i++) {
 			sessionList.append(events.at(i).getSession());
@@ -278,7 +260,7 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 		}
 		QDateTime dateTimeCheckin = QDateTime::fromString(events.at(i).getDateEvent() + " " + events.at(i).getTime(), "dd/MM/yyyy HH:mm:ss");
 		QDateTime dateTimeCheckout = QDateTime::fromString(events.at(i + 1).getDateEvent() + " " + events.at(i + 1).getTime(), "dd/MM/yyyy HH:mm:ss");
-		
+
 		qint64 seconds = dateTimeCheckin.secsTo(dateTimeCheckout);
 		double hours = seconds / 3600.0;
 
@@ -318,6 +300,37 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 		});
 
 	timer->start(3000);
+}
+
+void EmployeeCheckInOutController::handleSubmitForPassword() {
+	db->connectToDatabase();
+	QString displayNameSelected = view->getUi()->name_list->currentText();
+	QString password = view->getUi()->password->text().trimmed();
+
+	if (password.isEmpty()) {
+		qDebug() << "Mật khẩu không được để trống";
+		return;
+	}
+
+	QRegularExpression re("\\(([^)]+)\\)");
+	QRegularExpressionMatch match = re.match(displayNameSelected);
+	QString id = match.captured(1);
+
+	if (!db->getEmployeeRepository()->signInStaff(id, password)) {
+		qDebug() << "Đăng nhập thất bại";
+		return;
+	}
+
+	handleAttendanceEventForEmployee(id);
+
+	db->closeDatabase();
+}
+
+void EmployeeCheckInOutController::handleCheckInOutByIries(QString employeeId) {
+	qDebug() << "============= QUÉT THÀNH CÔNG: " << employeeId;
+	db->connectToDatabase();
+	
+	handleAttendanceEventForEmployee(employeeId);
 
 	db->closeDatabase();
 }
@@ -332,20 +345,20 @@ void EmployeeCheckInOutController::processStreaming() {
 	// Kiểm tra và kết nối tín hiệu nếu chưa kết nối
 	if (!checkConnectSignal_IN_OUT) {
 		connect(iriTracker, &IriTracker::imageProcessed, this, &EmployeeCheckInOutController::updateFrame);
+		connect(iriTracker, &IriTracker::isCheckCompareSuccess, this, &EmployeeCheckInOutController::handleCheckInOutByIries);
 		checkConnectSignal_IN_OUT = true;
 	}
 
-	QThread* streamThread = IriTrackerSingleton::getStreamThread();
+	QThread* streamThread = IriTrackerSingleton::getStreamThreadCheckInOut();
 
 	// Dừng luồng hiện tại nếu nó đang chạy
 	if (streamThread->isRunning()) {
 		streamThread->quit();
-		streamThread->wait();
 	}
 
 	// Di chuyển tracker sang thread và kết nối run()
 	iriTracker->moveToThread(streamThread);
-	connect(streamThread, &QThread::started, iriTracker, &IriTracker::run);
+	connect(streamThread, &QThread::started, iriTracker, &IriTracker::scan_iri);
 
 	// Bắt đầu luồng
 	streamThread->start();
