@@ -2,6 +2,7 @@
 #include "IDatabaseManager.h"
 #include "DialogFormLoginAdmin.h"
 #include "ErrorLabel.h"
+#include "IriTrackerSingleton.h"
 #include <QSettings>
 
 NavbarController::NavbarController(Navbar* view, IDatabaseManager*& _db, QObject* parent)
@@ -50,6 +51,7 @@ void NavbarController::onLoginSuccess() {
 }
 
 void NavbarController::onLogoutSuccess() {
+	IriTrackerSingleton::isRunningStreamThreadCheckInOut = true;
 	emit logoutSuccessful();
 	navbarView->getUi()->login->show();
 	navbarView->getUi()->logout->hide();
@@ -73,6 +75,10 @@ void NavbarController::handleSignInAdmin(QString pass, DialogFormLoginAdmin* dia
 	db->connectToDatabase();
 	if (db->getEmployeeRepository()->signInAdmin(pass)) {
 		dialog->accept();
+		if (IriTrackerSingleton::getInstance()->getStreamThreadCheckInOut()->isRunning()) {
+			IriTrackerSingleton::isRunningStreamThreadCheckInOut = false;
+			IriTrackerSingleton::getInstance()->getStreamThreadCheckInOut()->quit();
+		}
 		onLoginSuccess();
 	}
 	else {

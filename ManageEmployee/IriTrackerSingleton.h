@@ -9,6 +9,8 @@ private:
 	static QThread* streamThreadCheckInOut;
 	static QThread* getDeviceThread;
 
+    
+
 	IriTrackerSingleton() = default;
 
 public:
@@ -60,4 +62,7 @@ public:
     static void setGetDeviceThread(QThread* thread) {
         getDeviceThread = thread;
     }
+
+    static bool isRunningStreamThreadCheckInOut;
+    static bool isRunningGetDeviceThread;
 };

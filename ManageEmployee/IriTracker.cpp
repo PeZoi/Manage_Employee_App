@@ -2,6 +2,7 @@
 #include "IriLivenessBase.h"
 #include "Iddk2000_features.h"
 #include "DatabaseSingleton.h"
+#include "IriTrackerSingleton.h"
 #include <QString>
 #include <QIODevice>
 #include <QFile>
@@ -179,7 +180,7 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 	}
 
 	/* OK, we capture many times until user exits */
-	while (true)
+	while (bDefaultParams ? IriTrackerSingleton::isRunningStreamThreadCheckInOut : true)
 	{
 		/* Init variables in inner loop */
 		i = 0;
@@ -386,6 +387,7 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 			/* Get the result template */
 			IddkDataBuffer templateDataBuffer = get_result_template_custom(timestamp);
 			emit resultTemplate(templateDataBuffer.data, templateDataBuffer.dataSize);
+			clear_capture_custom();
 			return;
 		}
 
@@ -414,23 +416,26 @@ RETSEC:
 
 void IriTracker::scan_iri()
 {
-	// SCAN
+	while (IriTrackerSingleton::isRunningStreamThreadCheckInOut)
 	{
-		IddkResult iRet = IDDK_OK;
-		IddkCaptureStatus captureStatus;
-		iRet = Iddk_GetCaptureStatus(g_hDevice, &captureStatus);
-		if (iRet == IDDK_OK)
+		// SCAN
 		{
-			reset_error_level(iRet);
-			if (captureStatus != IDDK_COMPLETE)
+			IddkResult iRet = IDDK_OK;
+			IddkCaptureStatus captureStatus;
+			iRet = Iddk_GetCaptureStatus(g_hDevice, &captureStatus);
+			if (iRet == IDDK_OK)
 			{
-				printf("\nThere is no captured iris image in the device, you need to capture your iris(es) first. Capturing process starts ... \n");
-				run(true, false, false);
+				reset_error_level(iRet);
+				if (captureStatus != IDDK_COMPLETE)
+				{
+					printf("\nThere is no captured iris image in the device, you need to capture your iris(es) first. Capturing process starts ... \n");
+					run(true, false, false);
+				}
 			}
 		}
-	}
 
-	checkTemplates(); // CHECKING
+		checkTemplates(); // CHECKING
+	}
 }
 
 
@@ -478,7 +483,7 @@ bool IriTracker::checkTemplates() {
 			}
 			else {
 				iri = employeeIries.second.second; // IRI RIGHT
-			}
+			}	
 			pEnrollTemplate.dataSize = iri.size();
 			if (pEnrollTemplate.dataSize > 0) {
 				pEnrollTemplate.data = new unsigned char[pEnrollTemplate.dataSize];

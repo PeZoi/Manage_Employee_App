@@ -332,6 +332,7 @@ void EmployeeCheckInOutController::handleCheckInOutByIries(QString employeeId) {
 	
 	handleAttendanceEventForEmployee(employeeId);
 
+
 	db->closeDatabase();
 }
 

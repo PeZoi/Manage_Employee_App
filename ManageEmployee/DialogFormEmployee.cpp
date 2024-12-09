@@ -243,6 +243,10 @@ void DialogFormEmployee::updateFrame(const unsigned char* imageData, int imageLe
 }
 
 void DialogFormEmployee::handleReciveTemplate(const unsigned char* buffer, int size) {
+	
+	if (IriTrackerSingleton::getStreamThread()->isRunning()) {
+		IriTrackerSingleton::getStreamThread()->quit();
+	}
 	QByteArray templateBlob = Utils::templateConvertToByte(buffer, size);
 	if (side == "LEFT") {
 		iri_leftPath = templateBlob;
