@@ -1,9 +1,4 @@
-﻿   Qt/MSBuild: 3.3.1.0
+﻿   Qt/MSBuild: 3.3.1.1
    Qt: 5.15.2
-  IriTracker.cpp
-D:\IriTech\Code\ManageEmployee\ManageEmployee\IriTracker.cpp(463,8): warning C4101: 'sMaxDistance': unreferenced local variable
-D:\IriTech\Code\ManageEmployee\ManageEmployee\IriTracker.cpp(456,8): warning C4101: 'enrollID': unreferenced local variable
-D:\IriTech\Code\ManageEmployee\ManageEmployee\IriTracker.cpp(461,8): warning C4101: 'minEnrollID': unreferenced local variable
-D:\IriTech\Code\ManageEmployee\ManageEmployee\IriTracker.cpp(459,8): warning C4101: 'templateFile': unreferenced local variable
-D:\IriTech\Code\ManageEmployee\ManageEmployee\IriTracker.cpp(460,8): warning C4101: 'temp': unreferenced local variable
+  DialogChangePassword.cpp
   ManageEmployee.vcxproj -> D:\IriTech\Code\ManageEmployee\x64\Debug\ManageEmployee.exe

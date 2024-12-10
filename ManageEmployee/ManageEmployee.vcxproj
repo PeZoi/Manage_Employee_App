@@ -119,6 +119,7 @@
     <ClCompile Include="DepartmentRepositorySQLite.cpp" />
     <ClCompile Include="DepartmentRepositorySQLServer.cpp" />
     <ClCompile Include="DialogChangeDatabase.cpp" />
+    <ClCompile Include="DialogChangePassword.cpp" />
     <ClCompile Include="DialogConfirm.cpp" />
     <ClCompile Include="DialogDeleteAttendanceEvent.cpp" />
     <ClCompile Include="DialogFormAttendanceEvents.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Utils.cpp" />
     <QtRcc Include="ManageEmployee.qrc" />
     <QtUic Include="DialogChangeDatabase.ui" />
+    <QtUic Include="DialogChangePassword.ui" />
     <QtUic Include="DialogConfirm.ui" />
     <QtUic Include="DialogDeleteAttendanceEvent.ui" />
     <QtUic Include="DialogFormAttendanceEvents.ui" />
@@ -211,6 +213,7 @@
     <ClInclude Include="DepartmentRepositorySQLite.h" />
     <ClInclude Include="DepartmentRepositorySQLServer.h" />
     <QtMoc Include="DialogChangeDatabase.h" />
+    <QtMoc Include="DialogChangePassword.h" />
     <ClInclude Include="EmployeeRepositoryMYSQL.h" />
     <ClInclude Include="EmployeeRepositorySQLite.h" />
     <ClInclude Include="EmployeeRepositorySQLServer.h" />

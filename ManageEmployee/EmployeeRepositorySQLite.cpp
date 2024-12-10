@@ -331,3 +331,12 @@ bool EmployeeRepositorySQLite::checkExistAdmin() {
 
 	return false; // Nếu không có tài khoản ADMIN hoặc truy vấn thất bại
 }
+
+bool EmployeeRepositorySQLite::changePasswordAdmin(QString newPassword) {
+	QString query = "UPDATE employee SET password = :password WHERE id = 'admin'";
+
+	QMap<QString, QVariant> params;
+	params[":password"] = newPassword;
+
+	return db->executeCreate(query, params);
+}

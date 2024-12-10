@@ -2,6 +2,7 @@
 #include "ErrorLabel.h"
 #include <QLinearGradient>
 #include <QPalette>
+#include <QShortcut>
 
 DialogFormLoginAdmin::DialogFormLoginAdmin(QWidget *parent)
 	: QDialog(parent)
@@ -19,6 +20,8 @@ DialogFormLoginAdmin::DialogFormLoginAdmin(QWidget *parent)
 
 	ui.password->setEchoMode(QLineEdit::Password);
 
+	QShortcut* shortcut = new QShortcut(QKeySequence(Qt::Key_Return), this);
+	connect(shortcut, &QShortcut::activated, ui.login_2, &QPushButton::click);
 	connect(ui.login_2, SIGNAL(clicked()), this, SLOT(handleLoginAdmin()));
 	connect(ui.cancelButton, &QPushButton::clicked, this, [this]() {this->accept(); });
 }

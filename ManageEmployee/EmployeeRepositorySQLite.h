@@ -21,6 +21,7 @@ public:
 	bool updateStatus(QString status, QString id) override;
 	bool checkExistAdmin() override;
 	QList<QPair<QString, QPair<QByteArray, QByteArray>>> getAllIri() override;
+	bool changePasswordAdmin(QString newPassword) override;
 
 private:
 	IDatabaseManager* db;

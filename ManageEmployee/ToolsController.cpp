@@ -6,6 +6,7 @@
 #include "Constant.h"
 #include "DialogConfirm.h"
 #include "DatabaseSingleton.h"
+#include "DialogChangePassword.h"
 #include <QDebug>
 #include <QPushButton>
 
@@ -43,7 +44,11 @@ void ToolsController::onClickChangeDB() {
 
 	dialogChangeDB->exec();
 }
-void ToolsController::onClickChangePassword() {}
+void ToolsController::onClickChangePassword() {
+	DialogChangePassword* dialogChangePassword = new DialogChangePassword(tools);
+
+	dialogChangePassword->exec();
+}
 void ToolsController::onClickSettings() {}
 
 void ToolsController::handleChangeDB(QString type) {
