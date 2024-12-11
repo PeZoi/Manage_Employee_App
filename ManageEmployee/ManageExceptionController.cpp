@@ -3,6 +3,7 @@
 #include "ExceptionModel.h"
 #include "ErrorLabel.h"
 #include "DialogConfirm.h"
+#include "DialogAssignmentException.h"
 #include <QDebug>
 
 ManageExceptionController::ManageExceptionController(ManageException* view, QObject* parent)
@@ -13,17 +14,24 @@ ManageExceptionController::ManageExceptionController(ManageException* view, QObj
 	connect(mexView->getUi()->add, SIGNAL(clicked()), this, SLOT(onClickAdd()));
 	connect(mexView->getUi()->edit, SIGNAL(clicked()), this, SLOT(onClickEdit()));
 	connect(mexView->getUi()->delete_2, SIGNAL(clicked()), this, SLOT(onClickDelete()));
+	connect(mexView->getUi()->assignment, SIGNAL(clicked()), this, SLOT(onClickAssignment()));
 
 	connect(mexView->getUi()->table, &QTableView::clicked, this, &ManageExceptionController::handleRowClicked);
 	connect(mexView->getUi()->table, &QTableView::doubleClicked, this, [this](const QModelIndex& index) {
 		handleRowClicked(index);
 		onClickEdit();
 		});
+
 }
 
 ManageExceptionController::~ManageExceptionController()
 {}
 
+void ManageExceptionController::onClickAssignment() {
+	DialogAssignmentException* dialog = new DialogAssignmentException(mexView);
+
+	dialog->exec();
+}
 
 void ManageExceptionController::onClickAdd() {
 	DialogFormException* dialog = new DialogFormException(mexView);

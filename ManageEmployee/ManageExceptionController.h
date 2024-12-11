@@ -14,6 +14,7 @@ public slots:
 	void onClickAdd();
 	void onClickEdit();
 	void onClickDelete();
+	void onClickAssignment();
 
 	void submitException(const ExceptionModel& exception, bool isEditMode, DialogFormException* exceptionView);
 

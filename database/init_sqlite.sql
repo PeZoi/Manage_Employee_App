@@ -36,29 +36,30 @@ session INTEGER,
 employee_id TEXT, 
 FOREIGN KEY(employee_id) REFERENCES employee(id));
 
+BEGIN;
+
 CREATE TABLE IF NOT EXISTS exception (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-	`name` VARCHAR(255),
-	paidHours VARCHAR(255),
-	paidCoefficient DOUBLE,
-	workCoefficient DOUBLE,
-	isCaculate BOOLEAN NOT NULL DEFAULT 0
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255),
+    paidHours VARCHAR(255),
+    paidCoefficient DOUBLE,
+    workCoefficient DOUBLE,
+    isCaculate BOOLEAN NOT NULL DEFAULT 0
 );
 
-INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
-SELECT * FROM (SELECT 'Sickly' AS name, '08:00' AS paidHours, 1.0 AS paidCoefficient, 1.0 AS workCoefficient) AS tmp
-WHERE NOT EXISTS (
-    SELECT 1 FROM exception WHERE name = 'Sickly'
-);
+IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Sickly') THEN
+    INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+    VALUES ('Sickly', '08:00', 1.0, 1.0);
+END IF;
 
-INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
-SELECT * FROM (SELECT 'Vacation' AS name, '08:00' AS paidHours, 1.0 AS paidCoefficient, 1.0 AS workCoefficient) AS tmp
-WHERE NOT EXISTS (
-    SELECT 1 FROM exception WHERE name = 'Vacation'
-);
+IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Vacation') THEN
+    INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+    VALUES ('Vacation', '08:00', 1.0, 1.0);
+END IF;
 
-INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
-SELECT * FROM (SELECT 'Holiday' AS name, '08:00' AS paidHours, 1.0 AS paidCoefficient, 1.0 AS workCoefficient) AS tmp
-WHERE NOT EXISTS (
-    SELECT 1 FROM exception WHERE name = 'Holiday'
-);
+IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Holiday') THEN
+    INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+    VALUES ('Holiday', '08:00', 1.0, 1.0);
+END IF;
+
+COMMIT;

@@ -243,6 +243,9 @@
     <ClCompile Include="ExceptionRepositorySQLite.cpp">
       <Filter>Repository\Repository Cpp\SQLite</Filter>
     </ClCompile>
+    <ClCompile Include="DialogAssignmentException.cpp">
+      <Filter>View\View Cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DialogFormDepartment.h">
@@ -341,6 +344,9 @@
     <QtMoc Include="DialogFormException.h">
       <Filter>View\View Header</Filter>
     </QtMoc>
+    <QtMoc Include="DialogAssignmentException.h">
+      <Filter>View\View Header</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SignUpAdmin.ui">
@@ -407,6 +413,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="DialogFormException.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DialogAssignmentException.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

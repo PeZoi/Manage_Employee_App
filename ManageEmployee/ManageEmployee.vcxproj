@@ -115,6 +115,7 @@
     <ClCompile Include="DepartmentModel.cpp" />
     <ClCompile Include="DepartmentRepositoryMYSQL.cpp" />
     <ClCompile Include="DepartmentRepositorySQLite.cpp" />
+    <ClCompile Include="DialogAssignmentException.cpp" />
     <ClCompile Include="DialogChangeDatabase.cpp" />
     <ClCompile Include="DialogChangePassword.cpp" />
     <ClCompile Include="DialogConfirm.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="ToolsController.cpp" />
     <ClCompile Include="Utils.cpp" />
     <QtRcc Include="ManageEmployee.qrc" />
+    <QtUic Include="DialogAssignmentException.ui" />
     <QtUic Include="DialogChangeDatabase.ui" />
     <QtUic Include="DialogChangePassword.ui" />
     <QtUic Include="DialogConfirm.ui" />
@@ -216,6 +218,7 @@
     <QtMoc Include="DialogChangeDatabase.h" />
     <QtMoc Include="DialogChangePassword.h" />
     <QtMoc Include="DialogFormException.h" />
+    <QtMoc Include="DialogAssignmentException.h" />
     <ClInclude Include="EmployeeRepositoryMYSQL.h" />
     <ClInclude Include="EmployeeRepositorySQLite.h" />
     <ClInclude Include="DatabaseSingleton.h" />
