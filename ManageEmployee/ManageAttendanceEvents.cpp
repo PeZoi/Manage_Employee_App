@@ -14,6 +14,9 @@ ManageAttendanceEvents::ManageAttendanceEvents(QWidget *parent)
 	palette.setBrush(QPalette::Window, gradient);
 	this->setPalette(palette);
 	this->setAutoFillBackground(true);
+
+	ui->table->setSelectionBehavior(QAbstractItemView::SelectRows);
+	ui->table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 }
 
 ManageAttendanceEvents::~ManageAttendanceEvents()

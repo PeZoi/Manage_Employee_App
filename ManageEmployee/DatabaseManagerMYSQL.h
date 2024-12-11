@@ -4,6 +4,7 @@
 #include "IDepartmentRepository.h"
 #include "IEmployeeRepository.h"
 #include "IAttendanceEventRepository.h"
+#include "IExceptionRepository.h"
 class DatabaseManagerMYSQL : public IDatabaseManager
 {
 public:
@@ -20,6 +21,7 @@ public:
     IDepartmentRepository* getDepartmentRepository() override;
     IEmployeeRepository* getEmployeeRepository() override;
     IAttendanceEventRepository* getAttendanceEventRepository() override;
+    IExceptionRepository* getExceptionRepository() override;
 
     bool excuteInitTable(QString pathDefault) override;
     void bankupData() override;
@@ -30,5 +32,6 @@ private:
     IDepartmentRepository* departmentRepository;
     IEmployeeRepository* employeeRepository;
     IAttendanceEventRepository* attendanceEventRepository;
+    IExceptionRepository* exceptionRepository;
 };
 

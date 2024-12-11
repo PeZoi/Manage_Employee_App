@@ -39,3 +39,33 @@ CREATE TABLE IF NOT EXISTS attendance_event (
     employee_id VARCHAR(255),
     FOREIGN KEY (employee_id) REFERENCES employee(id)
 );
+
+
+BEGIN;
+
+CREATE TABLE IF NOT EXISTS exception (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    `name` VARCHAR(255),
+    paidHours VARCHAR(255),
+    paidCoefficient DOUBLE,
+    workCoefficient DOUBLE,
+    isCaculate BOOLEAN NOT NULL DEFAULT 0
+);
+
+IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Sickly') THEN
+    INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+    VALUES ('Sickly', '08:00', 1.0, 1.0);
+END IF;
+
+IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Vacation') THEN
+    INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+    VALUES ('Vacation', '08:00', 1.0, 1.0);
+END IF;
+
+IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Holiday') THEN
+    INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+    VALUES ('Holiday', '08:00', 1.0, 1.0);
+END IF;
+
+COMMIT;
+

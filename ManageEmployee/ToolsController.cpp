@@ -62,9 +62,6 @@ void ToolsController::handleChangeDB(QString type) {
 	else if (type == Constant::MYSQL) {
 		db = new DatabaseManagerMYSQL();
 	}
-	else {
-		db = new DatabaseManagerSQLServer();
-	}
 
 	DatabaseSingleton::getInstance()->setDB(db);
 }

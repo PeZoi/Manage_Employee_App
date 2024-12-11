@@ -1,7 +1,6 @@
 #include "DialogFormDepartment.h"
 #include "DepartmentModel.h"
 #include "ErrorLabel.h"
-#include <QStatusBar>
 
 DialogFormDepartment::DialogFormDepartment(QWidget* parent)
 	: QDialog(parent), ui(new Ui::DialogFormDepartmentClass)

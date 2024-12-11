@@ -2,6 +2,7 @@
 #include "DepartmentRepositoryMYSQL.h"
 #include "EmployeeRepositoryMYSQL.h"
 #include "AttendanceEventRepositoryMYSQL.h"
+#include "ExceptionRepositoryMYSQL.h"
 #include "IDepartmentRepository.h"
 #include "IEmployeeRepository.h"
 #include "IAttendanceEventRepository.h"
@@ -21,12 +22,14 @@ DatabaseManagerMYSQL::DatabaseManagerMYSQL()
 	departmentRepository = new DepartmentRepositoryMYSQL(this);
 	employeeRepository = new EmployeeRepositoryMYSQL(this);
 	attendanceEventRepository = new AttendanceEventRepositoryMYSQL(this);
+	exceptionRepository = new ExceptionRepositoryMYSQL(this);
 }
 
 DatabaseManagerMYSQL::~DatabaseManagerMYSQL() {
 	delete departmentRepository;
 	delete employeeRepository;
 	delete attendanceEventRepository;
+	delete exceptionRepository;
 }
 
 IDepartmentRepository* DatabaseManagerMYSQL::getDepartmentRepository()
@@ -42,6 +45,11 @@ IEmployeeRepository* DatabaseManagerMYSQL::getEmployeeRepository()
 IAttendanceEventRepository* DatabaseManagerMYSQL::getAttendanceEventRepository()
 {
 	return attendanceEventRepository;
+}
+
+IExceptionRepository* DatabaseManagerMYSQL::getExceptionRepository()
+{
+	return exceptionRepository;
 }
 
 bool DatabaseManagerMYSQL::excuteInitTable(QString pathDefault) {

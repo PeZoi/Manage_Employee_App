@@ -36,9 +36,6 @@ int main(int argc, char* argv[])
 	else if (settings.value("database/type").toString() == Constant::SQLITE) {
 		db = new DatabaseManagerSQLite();
 	}
-	else {
-		db = new DatabaseManagerSQLServer();
-	}
 
 	DatabaseSingleton::getInstance()->setDB(db);
 

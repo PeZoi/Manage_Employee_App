@@ -35,3 +35,30 @@ exception INTEGER,
 session INTEGER, 
 employee_id TEXT, 
 FOREIGN KEY(employee_id) REFERENCES employee(id));
+
+CREATE TABLE IF NOT EXISTS exception (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	`name` VARCHAR(255),
+	paidHours VARCHAR(255),
+	paidCoefficient DOUBLE,
+	workCoefficient DOUBLE,
+	isCaculate BOOLEAN NOT NULL DEFAULT 0
+);
+
+INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+SELECT * FROM (SELECT 'Sickly' AS name, '08:00' AS paidHours, 1.0 AS paidCoefficient, 1.0 AS workCoefficient) AS tmp
+WHERE NOT EXISTS (
+    SELECT 1 FROM exception WHERE name = 'Sickly'
+);
+
+INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+SELECT * FROM (SELECT 'Vacation' AS name, '08:00' AS paidHours, 1.0 AS paidCoefficient, 1.0 AS workCoefficient) AS tmp
+WHERE NOT EXISTS (
+    SELECT 1 FROM exception WHERE name = 'Vacation'
+);
+
+INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+SELECT * FROM (SELECT 'Holiday' AS name, '08:00' AS paidHours, 1.0 AS paidCoefficient, 1.0 AS workCoefficient) AS tmp
+WHERE NOT EXISTS (
+    SELECT 1 FROM exception WHERE name = 'Holiday'
+);

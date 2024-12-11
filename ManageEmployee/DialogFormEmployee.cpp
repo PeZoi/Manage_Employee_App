@@ -63,9 +63,6 @@ DialogFormEmployee::~DialogFormEmployee()
 	iriTracker = nullptr;
 }
 void DialogFormEmployee::onClickCancel() {
-	/*Utils::deleteFile(iri_leftPath);
-	Utils::deleteFile(iri_rightPath);*/
-
 	this->deleteLater();
 }
 

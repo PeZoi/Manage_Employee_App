@@ -2,6 +2,7 @@
 #include "IDatabaseManager.h"
 #include "IDepartmentRepository.h"
 #include "IEmployeeRepository.h"
+#include "IExceptionRepository.h"
 #include "IAttendanceEventRepository.h"
 class DatabaseManagerSQLite : public IDatabaseManager
 {
@@ -19,6 +20,7 @@ public:
     IDepartmentRepository* getDepartmentRepository() override;
     IEmployeeRepository* getEmployeeRepository() override;
     IAttendanceEventRepository* getAttendanceEventRepository() override;
+    IExceptionRepository* getExceptionRepository() override;
 
     bool excuteInitTable(QString pathDefault) override;
     void bankupData() override;
@@ -29,5 +31,6 @@ private:
     IDepartmentRepository* departmentRepository;
     IEmployeeRepository* employeeRepository;
     IAttendanceEventRepository* attendanceEventRepository;
+    IExceptionRepository* exceptionRepository;
 };
 

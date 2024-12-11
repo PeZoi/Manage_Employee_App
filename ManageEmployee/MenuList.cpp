@@ -9,6 +9,7 @@ MenuList::MenuList(QWidget *parent)
 	connect(ui.employee_2, &QToolButton::clicked, this, [this]() {emit onClickEmployee(); });
     connect(ui.event_2, &QToolButton::clicked, this, [this]() {emit onClickAttendanceEvents(); });
     connect(ui.tools_2, &QToolButton::clicked, this, [this]() {emit onClickTools(); });
+    connect(ui.exception_2, &QToolButton::clicked, this, [this]() {emit onClickException(); });
 
     ui.department_2->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
     ui.employee_2->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);

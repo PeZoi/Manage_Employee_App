@@ -23,6 +23,10 @@ MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager*& 
 	ManageAttendanceEvents* mae = new ManageAttendanceEvents(nullptr);
 	maeController = new ManageAttendanceEventsController(mae, db, this);
 
+	// Khởi tạo manage exception controller
+	ManageException* mex = new ManageException(nullptr);
+	mexController = new ManageExceptionController(mex, this);
+
 	// Khởi tạo tools controller
 	Tools* tools = new Tools(nullptr);
 	toolsController = new ToolsController(tools, db, this);
@@ -30,6 +34,7 @@ MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager*& 
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
+	handleHiddenManageException();
 	handleHiddenTools();
 	handleHiddenMenu();
 
@@ -50,6 +55,9 @@ MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager*& 
 	connect(mainWindowView->getMenu(), &MenuList::onClickAttendanceEvents, this, &MainWindowController::handleShowManageEnvents);
 	connect(mainWindowView->getMenu(), &MenuList::onClickAttendanceEvents, mainWindowView->getNavbarController(), &NavbarController::handleShowBack);
 
+	connect(mainWindowView->getMenu(), &MenuList::onClickException, this, &MainWindowController::handleShowManageException);
+	connect(mainWindowView->getMenu(), &MenuList::onClickException, mainWindowView->getNavbarController(), &NavbarController::handleShowBack);
+
 	connect(mainWindowView->getMenu(), &MenuList::onClickTools, this, &MainWindowController::handleShowTools);
 	connect(mainWindowView->getMenu(), &MenuList::onClickTools, mainWindowView->getNavbarController(), &NavbarController::handleShowBack);
 
@@ -64,9 +72,8 @@ void MainWindowController::handleLogout() {
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
 	handleHiddenTools();
+	handleHiddenManageException();
 	handleHiddenMenu();
-
-
 
 	QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getAll();
 	if (employeeList.isEmpty()) {
@@ -87,6 +94,7 @@ void MainWindowController::handleLogin() {
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
+	handleHiddenManageException();
 	handleHiddenCheckInOut();
 	handleHiddenTools();
 
@@ -97,6 +105,7 @@ void MainWindowController::handleBack() {
 	handleHiddenManageDepartment();
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
+	handleHiddenManageException();
 	handleHiddenTools();
 
 	handleShowMenu();
@@ -180,6 +189,24 @@ void MainWindowController::handleShowManageEnvents() {
 	maeController->handleRenderTable();
 	maeController->loadEmployee();
 }
+
+void MainWindowController::handleHiddenManageException() {
+	mainWindowView->getUi()->content->layout()->removeWidget(mexController->getMexView());
+	mexController->getMexView()->hide();
+};
+void MainWindowController::handleShowManageException() {
+	handleHiddenMenu();
+
+	mainWindowView->getUi()->content->layout()->addWidget(mexController->getMexView());
+	mexController->getMexView()->show();
+
+	mexController->getMexView()->getUi()->edit->setDisabled(true);
+	mexController->getMexView()->getUi()->delete_2->setDisabled(true);
+
+	mexController->exceptionSelected = ExceptionModel();
+
+	mexController->handleRenderTable();
+};
 
 void MainWindowController::handleHiddenTools() {
 	mainWindowView->getUi()->content->layout()->removeWidget(toolsController->getView());

@@ -3,6 +3,7 @@
 #include "ManageDepartmentController.h"
 #include "ManageEmployeeController.h"
 #include "ManageAttendanceEventsController.h"
+#include "ManageExceptionController.h"
 #include "ToolsController.h"
 #include "MainWindow.h"
 class MainWindowController : public QObject {
@@ -31,6 +32,9 @@ public slots:
     void handleHiddenManageEvents();
     void handleShowManageEnvents();
 
+    void handleHiddenManageException();
+    void handleShowManageException();
+
     void handleHiddenTools();
     void handleShowTools();
 
@@ -42,6 +46,7 @@ private:
     ManageEmployeeController* meController;
     EmployeeCheckInOutController* ecioController;
     ManageAttendanceEventsController* maeController;
+    ManageExceptionController* mexController;
     ToolsController* toolsController;
 
     IDatabaseManager*& db;
