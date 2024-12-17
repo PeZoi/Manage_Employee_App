@@ -6,6 +6,7 @@
 #include "IriTrackerSingleton.h"
 #include "DialogNotification.h"
 #include "Constant.h"
+#include "AudioUtils.h"
 #include <QStandardItemModel>
 #include <QTimer>
 #include <QDate>
@@ -243,11 +244,14 @@ void EmployeeCheckInOutController::handleAttendanceEventForEmployee(QString id) 
 	}
 
 	qDebug() << "Điểm danh thành công";
+	
 
 	if (employee.getStatus() == "OUT") {
+		AudioUtils::getInstance()->getAudioWelcome()->play();
 		db->getEmployeeRepository()->updateStatus("IN", id);
 	}
 	else {
+		AudioUtils::getInstance()->getAudioGoodbye()->play();
 		db->getEmployeeRepository()->updateStatus("OUT", id);
 	}
 

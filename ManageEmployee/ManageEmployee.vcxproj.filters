@@ -267,6 +267,9 @@
     <ClCompile Include="DialogNotification.cpp">
       <Filter>View\View Cpp</Filter>
     </ClCompile>
+    <ClCompile Include="AudioUtils.cpp">
+      <Filter>Utils\Utils Cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DialogFormDepartment.h">
@@ -542,6 +545,9 @@
     </ClInclude>
     <ClInclude Include="BulletinRepositorySQLite.h">
       <Filter>Repository\Repository Header\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioUtils.h">
+      <Filter>Utils\Utils Header</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

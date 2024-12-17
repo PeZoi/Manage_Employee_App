@@ -10,6 +10,7 @@
 #include "IriTracker.h"
 #include "DatabaseSingleton.h"
 #include "IriTrackerSingleton.h"
+#include "AudioUtils.h"
 #include <QtWidgets/QApplication>
 #include <QSqlDatabase>
 #include <QStandardPaths>
@@ -33,6 +34,7 @@ int main(int argc, char* argv[])
 	a.setWindowIcon(QIcon("D:/IriTech/Code/ManageEmployee/icon/IriTech.ico"));
 
 	getDevice();
+	AudioUtils::getInstance()->initAudio();
 
 	QString pathIni = Constant::PATH_CONFIG;
 	QFile configFile(pathIni);

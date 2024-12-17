@@ -15,5 +15,16 @@ public:
 	static constexpr const char* B_TYPE_ALL = "All";
 	static constexpr const char* B_TYPE_DEPARTMENT = "Deparment";
 	static constexpr const char* B_TYPE_EMPLOYEE = "Selection";
+
+	// AUDIO
+	static constexpr const char* AUDIO_WELCOME_EN = "D:/IriTech/Code/ManageEmployee/audio/welcome.wav";
+	static constexpr const char* AUDIO_WELCOME_VI = "D:/IriTech/Code/ManageEmployee/audio/welcome_vi.wav";
+	static constexpr const char* AUDIO_GOODBYE_EN = "D:/IriTech/Code/ManageEmployee/audio/goodbye.wav";
+	static constexpr const char* AUDIO_GOODBYE_VI = "D:/IriTech/Code/ManageEmployee/audio/goodbye_vi.wav";
+
+	// LANGUAGE
+	static constexpr const char* EN = "en";
+	static constexpr const char* VI = "vi";
+
 };
 #endif

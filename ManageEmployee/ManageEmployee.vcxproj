@@ -37,7 +37,7 @@
   </ImportGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
     <QtInstall>5.15.2</QtInstall>
-    <QtModules>core;gui;widgets;sql</QtModules>
+    <QtModules>core;gui;widgets;sql;multimedia</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
@@ -109,6 +109,7 @@
     <ClCompile Include="AttendaceEventModel.cpp" />
     <ClCompile Include="AttendanceEventRepositoryMYSQL.cpp" />
     <ClCompile Include="AttendanceEventRepositorySQLite.cpp" />
+    <ClCompile Include="AudioUtils.cpp" />
     <ClCompile Include="BulletinModel.cpp" />
     <ClCompile Include="BulletinRepositoryMYSQL.cpp" />
     <ClCompile Include="BulletinRepositorySQLite.cpp" />
@@ -220,6 +221,7 @@
     <QtMoc Include="DialogDeleteAttendanceEvent.h" />
     <ClInclude Include="AttendanceEventRepositoryMYSQL.h" />
     <ClInclude Include="AttendanceEventRepositorySQLite.h" />
+    <ClInclude Include="AudioUtils.h" />
     <ClInclude Include="BulletinModel.h" />
     <ClInclude Include="BulletinRepositoryMYSQL.h" />
     <ClInclude Include="BulletinRepositorySQLite.h" />

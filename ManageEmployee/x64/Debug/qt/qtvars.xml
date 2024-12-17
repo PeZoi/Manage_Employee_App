@@ -1,11 +1,11 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-<Qt_DEFINES_>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_WIDGETS_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_CORE_LIB</Qt_DEFINES_>
-<Qt_INCLUDEPATH_>D:\SoftWare\Qt\5.15.2\msvc2019_64\include;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtWidgets;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtGui;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtANGLE;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtSql;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtCore;D:\SoftWare\Qt\5.15.2\msvc2019_64\mkspecs\win32-msvc</Qt_INCLUDEPATH_>
+<Qt_DEFINES_>_WINDOWS;UNICODE;_UNICODE;WIN32;_ENABLE_EXTENDED_ALIGNED_STORAGE;WIN64;QT_WIDGETS_LIB;QT_MULTIMEDIA_LIB;QT_GUI_LIB;QT_SQL_LIB;QT_NETWORK_LIB;QT_CORE_LIB</Qt_DEFINES_>
+<Qt_INCLUDEPATH_>D:\SoftWare\Qt\5.15.2\msvc2019_64\include;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtWidgets;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtMultimedia;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtGui;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtANGLE;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtSql;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtNetwork;D:\SoftWare\Qt\5.15.2\msvc2019_64\include\QtCore;D:\SoftWare\Qt\5.15.2\msvc2019_64\mkspecs\win32-msvc</Qt_INCLUDEPATH_>
 <Qt_STDCPP_></Qt_STDCPP_>
 <Qt_RUNTIME_>MultiThreadedDebugDLL</Qt_RUNTIME_>
 <Qt_CL_OPTIONS_>-Zc:rvalueCast -Zc:inline -Zc:strictStrings -Zc:throwingNew -Zc:referenceBinding -Zc:__cplusplus</Qt_CL_OPTIONS_>
-<Qt_LIBS_>D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Widgetsd.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Guid.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Sqld.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Cored.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\qtmaind.lib;shell32.lib</Qt_LIBS_>
+<Qt_LIBS_>D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Widgetsd.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Multimediad.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Guid.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Sqld.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Networkd.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\Qt5Cored.lib;D:\SoftWare\Qt\5.15.2\msvc2019_64\lib\qtmaind.lib;shell32.lib</Qt_LIBS_>
 <Qt_LINK_OPTIONS_>"/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"</Qt_LINK_OPTIONS_>
 <QMake_QT_SYSROOT_></QMake_QT_SYSROOT_>
 <QMake_QT_INSTALL_PREFIX_>D:/SoftWare/Qt/5.15.2/msvc2019_64</QMake_QT_INSTALL_PREFIX_>
@@ -32,7 +32,7 @@
 <QMake_QMAKE_XSPEC_>win32-msvc</QMake_QMAKE_XSPEC_>
 <QMake_QMAKE_VERSION_>3.1</QMake_QMAKE_VERSION_>
 <QMake_QT_VERSION_>5.15.2</QMake_QT_VERSION_>
-<QtBkup_QtHash>jVFBbsMwDPuKXtBgA3rswZE0V5tje7KMoSiK/v8XVYIMAXaZD7pYJEXSdyHOJna7nE9v59M7YFGG2AV+hCJbg/adYJa8DfGHZG6XqWr5ZLRJjJftUUxKjlp6nTBhWaokdhQ7ELm1ogeqgWRMnbgGu45KBaLtREg7mUTdQFFht2iEtY5KpZBjD5GbhUxBCbR7AwuP8nd4klmD3gDTs9Q1/XAtR5adCK71D9tjf00H0cvj7D+Ha/x1N+bhj8rveeK5x8cL</QtBkup_QtHash>
+<QtBkup_QtHash>jVHLTgQxDPuVfMGOQNrjHjJNKIG+SFOhFVrx/39BZjRoJC70kEtjO7b7JcTFxO636+XpenmGUJUhDoFPocjWoX8kyCOZZCZBWKXsQ/wihfttaVrfONgixnl/FJNaotbRlpBCzU0SO4odGLj3qieqg5SQBnFDe52VQqL9BKaDTKJuoKqwuzUKrc1KJSxxYORuWAiVQIeXkXmWf8CTrIp6h5C+a9vST9dyZjmI4Fr/sD32+3ISvTwu/olhi7/t5jz8Ufk9T7yO+PgB</QtBkup_QtHash>
     <QtVersion>5.15.2</QtVersion>
     <QtVersionMajor>5</QtVersionMajor>
     <QtVersionMinor>15</QtVersionMinor>
