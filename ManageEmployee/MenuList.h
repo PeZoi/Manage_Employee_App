@@ -18,6 +18,7 @@ signals:
 	void onClickEmployee();
 	void onClickAttendanceEvents();
 	void onClickException();
+	void onClickBulletin();
 	void onClickTools();
 
 private:

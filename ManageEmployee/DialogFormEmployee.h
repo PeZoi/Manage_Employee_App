@@ -39,6 +39,8 @@ public slots:
 	void handleReciveTemplate(const unsigned char* buffer, int size);
 	bool eventFilter(QObject* obj, QEvent* event);
 
+	void switchImage(bool isFoundDevice);
+
 private:
 	Ui::DialogFormEmployeeClass ui;
 	QMessageBox msgBox;

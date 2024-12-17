@@ -10,5 +10,10 @@ public:
 	static constexpr const char* MYSQL = "MYSQL";
 	static constexpr const char* SQLITE = "SQLITE";
 	static constexpr const char* SQLServer = "SQLServer";
+	
+	// TYPE BULLETIN
+	static constexpr const char* B_TYPE_ALL = "All";
+	static constexpr const char* B_TYPE_DEPARTMENT = "Deparment";
+	static constexpr const char* B_TYPE_EMPLOYEE = "Selection";
 };
 #endif

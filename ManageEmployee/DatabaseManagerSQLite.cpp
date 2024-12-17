@@ -4,6 +4,7 @@
 #include "EmployeeRepositorySQLite.h"
 #include "ExceptionRepositorySQLite.h"
 #include "AttendanceEventRepositorySQLite.h"
+#include "BulletinRepositorySQLite.h"
 #include "IDepartmentRepository.h"
 #include "IEmployeeRepository.h"
 #include "IAttendanceEventRepository.h"
@@ -23,6 +24,7 @@ DatabaseManagerSQLite::DatabaseManagerSQLite()
 	employeeRepository = new EmployeeRepositorySQLite(this);
 	attendanceEventRepository = new AttendanceEventRepositorySQLite(this);
 	exceptionRepository = new ExceptionRepositorySQLite(this);
+	bulletinRepository = new BulletinRepositorySQLite(this);
 }
 
 DatabaseManagerSQLite::~DatabaseManagerSQLite() {
@@ -50,6 +52,11 @@ IAttendanceEventRepository* DatabaseManagerSQLite::getAttendanceEventRepository(
 IExceptionRepository* DatabaseManagerSQLite::getExceptionRepository()
 {
 	return exceptionRepository;
+}
+
+IBulletinRepository* DatabaseManagerSQLite::getBulletinRepository()
+{
+	return bulletinRepository;
 }
 
 bool DatabaseManagerSQLite::excuteInitTable(QString pathDefault) {

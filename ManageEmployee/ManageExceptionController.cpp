@@ -1,6 +1,5 @@
 #include "ManageExceptionController.h"
 #include "DatabaseSingleton.h"
-#include "ExceptionModel.h"
 #include "ErrorLabel.h"
 #include "DialogConfirm.h"
 #include "DialogAssignmentException.h"

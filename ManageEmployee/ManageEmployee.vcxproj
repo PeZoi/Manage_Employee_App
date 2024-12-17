@@ -109,6 +109,9 @@
     <ClCompile Include="AttendaceEventModel.cpp" />
     <ClCompile Include="AttendanceEventRepositoryMYSQL.cpp" />
     <ClCompile Include="AttendanceEventRepositorySQLite.cpp" />
+    <ClCompile Include="BulletinModel.cpp" />
+    <ClCompile Include="BulletinRepositoryMYSQL.cpp" />
+    <ClCompile Include="BulletinRepositorySQLite.cpp" />
     <ClCompile Include="DatabaseManagerMYSQL.cpp" />
     <ClCompile Include="DatabaseManagerSQLite.cpp" />
     <ClCompile Include="DatabaseSingleton.cpp" />
@@ -121,6 +124,7 @@
     <ClCompile Include="DialogConfirm.cpp" />
     <ClCompile Include="DialogDeleteAttendanceEvent.cpp" />
     <ClCompile Include="DialogFormAttendanceEvents.cpp" />
+    <ClCompile Include="DialogFormBulletin.cpp" />
     <ClCompile Include="DialogFormDepartment.cpp" />
     <ClCompile Include="DialogFormEmployee.cpp" />
     <ClCompile Include="DialogFormException.cpp" />
@@ -145,6 +149,8 @@
     <ClCompile Include="MainWindowController.cpp" />
     <ClCompile Include="ManageAttendanceEvents.cpp" />
     <ClCompile Include="ManageAttendanceEventsController.cpp" />
+    <ClCompile Include="ManageBulletin.cpp" />
+    <ClCompile Include="ManageBulletinController.cpp" />
     <ClCompile Include="ManageDepartment.cpp" />
     <ClCompile Include="ManageDepartmentController.cpp" />
     <ClCompile Include="ManageEmployee.cpp" />
@@ -166,6 +172,7 @@
     <QtUic Include="DialogConfirm.ui" />
     <QtUic Include="DialogDeleteAttendanceEvent.ui" />
     <QtUic Include="DialogFormAttendanceEvents.ui" />
+    <QtUic Include="DialogFormBulletin.ui" />
     <QtUic Include="DialogFormDepartment.ui" />
     <QtUic Include="DialogFormEmployee.ui" />
     <QtUic Include="DialogFormException.ui" />
@@ -174,6 +181,7 @@
     <QtUic Include="MainWindow.ui" />
     <ClCompile Include="main.cpp" />
     <QtUic Include="ManageAttendanceEvents.ui" />
+    <QtUic Include="ManageBulletin.ui" />
     <QtUic Include="ManageDepartment.ui" />
     <QtUic Include="ManageEmployee.ui" />
     <QtUic Include="ManageException.ui" />
@@ -210,6 +218,9 @@
     <QtMoc Include="DialogDeleteAttendanceEvent.h" />
     <ClInclude Include="AttendanceEventRepositoryMYSQL.h" />
     <ClInclude Include="AttendanceEventRepositorySQLite.h" />
+    <ClInclude Include="BulletinModel.h" />
+    <ClInclude Include="BulletinRepositoryMYSQL.h" />
+    <ClInclude Include="BulletinRepositorySQLite.h" />
     <ClInclude Include="Constant.h" />
     <ClInclude Include="DatabaseManagerMYSQL.h" />
     <ClInclude Include="DatabaseManagerSQLite.h" />
@@ -219,6 +230,7 @@
     <QtMoc Include="DialogChangePassword.h" />
     <QtMoc Include="DialogFormException.h" />
     <QtMoc Include="DialogAssignmentException.h" />
+    <QtMoc Include="DialogFormBulletin.h" />
     <ClInclude Include="EmployeeRepositoryMYSQL.h" />
     <ClInclude Include="EmployeeRepositorySQLite.h" />
     <ClInclude Include="DatabaseSingleton.h" />
@@ -226,6 +238,7 @@
     <ClInclude Include="ExceptionRepositoryMYSQL.h" />
     <ClInclude Include="ExceptionRepositorySQLite.h" />
     <ClInclude Include="IAttendanceEventRepository.h" />
+    <ClInclude Include="IBulletinRepository.h" />
     <ClInclude Include="IDatabaseManager.h" />
     <ClInclude Include="IDepartmentRepository.h" />
     <ClInclude Include="IEmployeeRepository.h" />
@@ -235,6 +248,8 @@
     <ClInclude Include="IriTrackerSingleton.h" />
     <QtMoc Include="ManageException.h" />
     <QtMoc Include="ManageExceptionController.h" />
+    <QtMoc Include="ManageBulletin.h" />
+    <QtMoc Include="ManageBulletinController.h" />
     <ClInclude Include="Utils.h" />
     <QtMoc Include="ManageAttendanceEventsController.h" />
     <QtMoc Include="ManageAttendanceEvents.h" />

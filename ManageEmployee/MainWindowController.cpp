@@ -27,6 +27,10 @@ MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager*& 
 	ManageException* mex = new ManageException(nullptr);
 	mexController = new ManageExceptionController(mex, this);
 
+	// Khởi tạo manage bulletin controller
+	ManageBulletin* mb = new ManageBulletin(nullptr);
+	mbController = new ManageBulletinController(mb, this);
+
 	// Khởi tạo tools controller
 	Tools* tools = new Tools(nullptr);
 	toolsController = new ToolsController(tools, db, this);
@@ -35,6 +39,7 @@ MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager*& 
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
 	handleHiddenManageException();
+	handleHiddenManageBulletin();
 	handleHiddenTools();
 	handleHiddenMenu();
 
@@ -58,6 +63,9 @@ MainWindowController::MainWindowController(MainWindow* view, IDatabaseManager*& 
 	connect(mainWindowView->getMenu(), &MenuList::onClickException, this, &MainWindowController::handleShowManageException);
 	connect(mainWindowView->getMenu(), &MenuList::onClickException, mainWindowView->getNavbarController(), &NavbarController::handleShowBack);
 
+	connect(mainWindowView->getMenu(), &MenuList::onClickBulletin, this, &MainWindowController::handleShowManageBulletin);
+	connect(mainWindowView->getMenu(), &MenuList::onClickBulletin, mainWindowView->getNavbarController(), &NavbarController::handleShowBack);
+
 	connect(mainWindowView->getMenu(), &MenuList::onClickTools, this, &MainWindowController::handleShowTools);
 	connect(mainWindowView->getMenu(), &MenuList::onClickTools, mainWindowView->getNavbarController(), &NavbarController::handleShowBack);
 
@@ -73,6 +81,7 @@ void MainWindowController::handleLogout() {
 	handleHiddenManageEvents();
 	handleHiddenTools();
 	handleHiddenManageException();
+	handleHiddenManageBulletin();
 	handleHiddenMenu();
 
 	QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getAll();
@@ -96,6 +105,7 @@ void MainWindowController::handleLogin() {
 	handleHiddenManageEvents();
 	handleHiddenManageException();
 	handleHiddenCheckInOut();
+	handleHiddenManageBulletin();
 	handleHiddenTools();
 
 	handleShowMenu();
@@ -106,6 +116,7 @@ void MainWindowController::handleBack() {
 	handleHiddenManageEmployee();
 	handleHiddenManageEvents();
 	handleHiddenManageException();
+	handleHiddenManageBulletin();
 	handleHiddenTools();
 
 	handleShowMenu();
@@ -206,6 +217,24 @@ void MainWindowController::handleShowManageException() {
 	mexController->exceptionSelected = ExceptionModel();
 
 	mexController->handleRenderTable();
+};
+
+void MainWindowController::handleHiddenManageBulletin() {
+	mainWindowView->getUi()->content->layout()->removeWidget(mbController->getMbView());
+	mbController->getMbView()->hide();
+};
+void MainWindowController::handleShowManageBulletin() {
+	handleHiddenMenu();
+
+	mainWindowView->getUi()->content->layout()->addWidget(mbController->getMbView());
+	mbController->getMbView()->show();
+
+	mbController->getMbView()->getUi()->edit->setDisabled(true);
+	mbController->getMbView()->getUi()->delete_2->setDisabled(true);
+
+	mbController->bulletinSelected = BulletinModel();
+
+	mbController->handleRenderTable();
 };
 
 void MainWindowController::handleHiddenTools() {

@@ -25,10 +25,12 @@ signals:
 	void resultTemplate(const unsigned char* buffer, int size);
 	void isCheckCompareSuccess(QString employeeId);
 
+	void foundDevice(bool check);
+
 public:
 	IriTracker();
 	void run(bool bDefaultParams, bool bMultiple, bool bProcessResult);
-	static void get_divice();
+	void get_device();
 	void scan_iri();
 	bool checkTemplates();
 };

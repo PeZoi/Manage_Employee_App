@@ -69,3 +69,23 @@ END IF;
 
 COMMIT;
 
+
+CREATE TABLE IF NOT EXISTS bulletin (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    start_date VARCHAR(255) NOT NULL,
+    end_date VARCHAR(255) NOT NULL,
+    is_active BOOLEAN DEFAULT FALSE,
+    is_priority BOOLEAN DEFAULT FALSE,
+    type VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS bulletin_detail (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    bulletin_id INT NOT NULL,
+    department_id varchar(255) DEFAULT NULL,
+    employee_id varchar(255) DEFAULT NULL,
+    FOREIGN KEY (bulletin_id) REFERENCES bulletin(id)
+);
+

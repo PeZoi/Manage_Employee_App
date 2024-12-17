@@ -246,6 +246,24 @@
     <ClCompile Include="DialogAssignmentException.cpp">
       <Filter>View\View Cpp</Filter>
     </ClCompile>
+    <ClCompile Include="ManageBulletin.cpp">
+      <Filter>View\View Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="ManageBulletinController.cpp">
+      <Filter>Controller\Controller Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletinModel.cpp">
+      <Filter>Model\Model Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogFormBulletin.cpp">
+      <Filter>View\View Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletinRepositoryMYSQL.cpp">
+      <Filter>Repository\Repository Cpp\MYSQL</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletinRepositorySQLite.cpp">
+      <Filter>Repository\Repository Cpp\SQLite</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DialogFormDepartment.h">
@@ -347,6 +365,15 @@
     <QtMoc Include="DialogAssignmentException.h">
       <Filter>View\View Header</Filter>
     </QtMoc>
+    <QtMoc Include="ManageBulletin.h">
+      <Filter>View\View Header</Filter>
+    </QtMoc>
+    <QtMoc Include="ManageBulletinController.h">
+      <Filter>Controller\Controller Header</Filter>
+    </QtMoc>
+    <QtMoc Include="DialogFormBulletin.h">
+      <Filter>View\View Header</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SignUpAdmin.ui">
@@ -418,6 +445,12 @@
     <QtUic Include="DialogAssignmentException.ui">
       <Filter>Form Files</Filter>
     </QtUic>
+    <QtUic Include="ManageBulletin.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DialogFormBulletin.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DepartmentModel.h">
@@ -487,6 +520,18 @@
       <Filter>Repository\Repository Header\MYSQL</Filter>
     </ClInclude>
     <ClInclude Include="ExceptionRepositorySQLite.h">
+      <Filter>Repository\Repository Header\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletinModel.h">
+      <Filter>Model\Model Header</Filter>
+    </ClInclude>
+    <ClInclude Include="IBulletinRepository.h">
+      <Filter>Repository\Repository Header\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletinRepositoryMYSQL.h">
+      <Filter>Repository\Repository Header\MYSQL</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletinRepositorySQLite.h">
       <Filter>Repository\Repository Header\SQLite</Filter>
     </ClInclude>
   </ItemGroup>

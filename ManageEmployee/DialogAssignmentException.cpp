@@ -4,6 +4,7 @@
 #include "EmployeeModel.h"
 #include <QDate>
 #include <QTableWidgetItem>
+#include <QAbstractItemView>
 #include <QLayout>
 #include <QVBoxLayout>
 #include <QCheckBox>
@@ -23,6 +24,9 @@ DialogAssignmentException::DialogAssignmentException(QWidget* parent)
 	palette.setBrush(QPalette::Window, gradient);
 	this->setPalette(palette);
 	this->setAutoFillBackground(true);
+
+	ui->table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	ui->table->setSelectionBehavior(QAbstractItemView::SelectRows);
 
 	ui->from->setDisplayFormat("dd/MM/yyyy");
 	ui->to->setDisplayFormat("dd/MM/yyyy");

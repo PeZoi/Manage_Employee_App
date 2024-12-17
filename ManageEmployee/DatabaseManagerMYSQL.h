@@ -1,10 +1,6 @@
 #pragma once
 
 #include "IDatabaseManager.h"
-#include "IDepartmentRepository.h"
-#include "IEmployeeRepository.h"
-#include "IAttendanceEventRepository.h"
-#include "IExceptionRepository.h"
 class DatabaseManagerMYSQL : public IDatabaseManager
 {
 public:
@@ -22,6 +18,7 @@ public:
     IEmployeeRepository* getEmployeeRepository() override;
     IAttendanceEventRepository* getAttendanceEventRepository() override;
     IExceptionRepository* getExceptionRepository() override;
+    IBulletinRepository* getBulletinRepository() override;
 
     bool excuteInitTable(QString pathDefault) override;
     void bankupData() override;
@@ -33,5 +30,6 @@ private:
     IEmployeeRepository* employeeRepository;
     IAttendanceEventRepository* attendanceEventRepository;
     IExceptionRepository* exceptionRepository;
+    IBulletinRepository* bulletinRepository;
 };
 

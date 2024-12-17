@@ -5,11 +5,10 @@ class IriTrackerSingleton {
 private:
 	static IriTrackerSingleton* instance;
 	static IriTracker* iriTracker;
+    static IriTracker* iriTrackerGetDevice;
 	static QThread* streamThread;
 	static QThread* streamThreadCheckInOut;
 	static QThread* getDeviceThread;
-
-    
 
 	IriTrackerSingleton() = default;
 
@@ -39,6 +38,14 @@ public:
         iriTracker = tracker;
     }
 
+    static IriTracker* getIriTrackerGetDevice() {
+        return iriTrackerGetDevice;
+    }
+
+    static void setIriTrackerGetDevice(IriTracker* tracker) {
+        iriTrackerGetDevice = tracker;
+    }
+
     static QThread* getStreamThread() {
         return streamThread;
     }
@@ -65,4 +72,5 @@ public:
 
     static bool isRunningStreamThreadCheckInOut;
     static bool isRunningGetDeviceThread;
+    static bool isFoundDevice;
 };

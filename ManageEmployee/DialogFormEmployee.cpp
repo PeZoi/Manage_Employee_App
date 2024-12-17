@@ -13,11 +13,17 @@
 #include <QByteArray>
 
 bool checkConnectSignal = false;
+bool flagFoundDevice = false;
+bool isRunningFirst = true;
+bool isRunningIriLeft = false;
+bool isRunningIriRight = false;
 
 DialogFormEmployee::DialogFormEmployee(QWidget* parent)
 	: QDialog(parent)
 {
 	ui.setupUi(this);
+
+	iriTracker = new IriTracker();
 
 	QLinearGradient gradient(0, 0, 0, this->height());
 	gradient.setColorAt(0.0, Qt::white);
@@ -54,6 +60,8 @@ DialogFormEmployee::DialogFormEmployee(QWidget* parent)
 			ui.confirm_password->setDisabled(true);
 		}
 		});
+
+	connect(IriTrackerSingleton::getIriTrackerGetDevice(), &IriTracker::foundDevice, this, &DialogFormEmployee::switchImage, Qt::QueuedConnection);
 }
 
 DialogFormEmployee::~DialogFormEmployee()
@@ -63,6 +71,9 @@ DialogFormEmployee::~DialogFormEmployee()
 	iriTracker = nullptr;
 }
 void DialogFormEmployee::onClickCancel() {
+	if (IriTrackerSingleton::getStreamThread()->isRunning()) {
+		IriTrackerSingleton::getStreamThread()->quit();
+	}
 	this->deleteLater();
 }
 
@@ -192,11 +203,6 @@ Ui::DialogFormEmployeeClass DialogFormEmployee::getUi() {
 }
 
 void DialogFormEmployee::processStreaming() {
-	// Kiểm tra nếu tracker đã được khởi tạo
-	if (iriTracker == nullptr) {
-		iriTracker = IriTrackerSingleton::getIriTracker();
-	}
-
 	// Kiểm tra và kết nối tín hiệu nếu chưa kết nối
 	if (!checkConnectSignal) {
 		connect(iriTracker, &IriTracker::imageProcessed, this, &DialogFormEmployee::updateFrame);
@@ -205,21 +211,19 @@ void DialogFormEmployee::processStreaming() {
 		checkConnectSignal = true;
 	}
 
-	QThread* streamThread = IriTrackerSingleton::getStreamThread();
-
 	// Dừng luồng hiện tại nếu nó đang chạy
-	if (streamThread->isRunning()) {
-		streamThread->quit();
+	if (IriTrackerSingleton::getStreamThread()->isRunning()) {
+		IriTrackerSingleton::getStreamThread()->quit();
 	}
 
 	// Di chuyển tracker sang thread và kết nối run()
-	iriTracker->moveToThread(streamThread);
-	connect(streamThread, &QThread::started, [=]() {
+	iriTracker->moveToThread(IriTrackerSingleton::getStreamThread());
+	connect(IriTrackerSingleton::getStreamThread(), &QThread::started, [=]() {
 		iriTracker->run(false, true, true);
 		});
 
 	// Bắt đầu luồng
-	streamThread->start();
+	IriTrackerSingleton::getStreamThread()->start();
 }
 void DialogFormEmployee::updateFrame(const unsigned char* imageData, int imageLen, int imageWidth, int imageHeight) {
 	if (imageData && imageWidth > 0 && imageHeight > 0) {
@@ -240,7 +244,7 @@ void DialogFormEmployee::updateFrame(const unsigned char* imageData, int imageLe
 }
 
 void DialogFormEmployee::handleReciveTemplate(const unsigned char* buffer, int size) {
-	
+
 	if (IriTrackerSingleton::getStreamThread()->isRunning()) {
 		IriTrackerSingleton::getStreamThread()->quit();
 	}
@@ -256,15 +260,37 @@ void DialogFormEmployee::handleReciveTemplate(const unsigned char* buffer, int s
 bool DialogFormEmployee::eventFilter(QObject* obj, QEvent* event) {
 	if (event->type() == QEvent::MouseButtonPress) {
 		if (obj == ui.iri_left) {
+
 			side = "LEFT";
+			isRunningIriLeft = true;
+			isRunningIriRight = false;
 			processStreaming();
 			return true;
 		}
 		else if (obj == ui.iri_right) {
 			side = "RIGHT";
+			isRunningIriLeft = false;
+			isRunningIriRight = true;
 			processStreaming();
 			return true;
 		}
 	}
 	return QWidget::eventFilter(obj, event);
+}
+
+void DialogFormEmployee::switchImage(bool isFoundDevice) {
+	if (isRunningFirst || isFoundDevice != flagFoundDevice) {
+		if (isFoundDevice) {
+			ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+			ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		}
+		else {
+			ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+			ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+		}
+
+		flagFoundDevice = isFoundDevice;
+		isRunningFirst = false;
+	}
+
 }

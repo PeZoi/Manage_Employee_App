@@ -13,11 +13,12 @@
 #include <QWidget>
 
 bool checkConnectSignal_IN_OUT = false;
+bool _flagFoundDevice = false;
 
 EmployeeCheckInOutController::EmployeeCheckInOutController(EmployeeCheckInOut* view, IDatabaseManager*& _db, QObject* parent)
 	: QObject(parent), view(view), db(_db)
 {
-	iriTracker = nullptr;
+	iriTracker = new IriTracker();
 
 	view->getUi()->stack_checkin_out->setCurrentIndex(0);
 	view->getUi()->password->setEchoMode(QLineEdit::Password);
@@ -38,7 +39,9 @@ EmployeeCheckInOutController::EmployeeCheckInOutController(EmployeeCheckInOut* v
 	connect(view->getUi()->submit_checkin_out, &QPushButton::clicked, this, &EmployeeCheckInOutController::handleSubmitForPassword);
 	connect(view->getUi()->show_all, &QPushButton::clicked, this, &EmployeeCheckInOutController::onClickShowAll);
 
-	connect(view, &EmployeeCheckInOut::onClickDevice, this, &EmployeeCheckInOutController::processStreaming);
+	//connect(view, &EmployeeCheckInOut::onClickDevice, this, &EmployeeCheckInOutController::processStreaming);
+	connect(IriTrackerSingleton::getIriTrackerGetDevice(), &IriTracker::foundDevice, this, &EmployeeCheckInOutController::switchImage, Qt::QueuedConnection);
+	processStreaming();
 }
 
 EmployeeCheckInOut* EmployeeCheckInOutController::getView() {
@@ -329,7 +332,7 @@ void EmployeeCheckInOutController::handleSubmitForPassword() {
 void EmployeeCheckInOutController::handleCheckInOutByIries(QString employeeId) {
 	qDebug() << "============= QUÉT THÀNH CÔNG: " << employeeId;
 	db->connectToDatabase();
-	
+
 	handleAttendanceEventForEmployee(employeeId);
 
 
@@ -338,31 +341,25 @@ void EmployeeCheckInOutController::handleCheckInOutByIries(QString employeeId) {
 
 
 void EmployeeCheckInOutController::processStreaming() {
-	// Kiểm tra nếu tracker đã được khởi tạo
-	if (iriTracker == nullptr) {
-		iriTracker = IriTrackerSingleton::getIriTracker();
-	}
-
 	// Kiểm tra và kết nối tín hiệu nếu chưa kết nối
 	if (!checkConnectSignal_IN_OUT) {
 		connect(iriTracker, &IriTracker::imageProcessed, this, &EmployeeCheckInOutController::updateFrame);
 		connect(iriTracker, &IriTracker::isCheckCompareSuccess, this, &EmployeeCheckInOutController::handleCheckInOutByIries);
+
 		checkConnectSignal_IN_OUT = true;
 	}
 
-	QThread* streamThread = IriTrackerSingleton::getStreamThreadCheckInOut();
-
 	// Dừng luồng hiện tại nếu nó đang chạy
-	if (streamThread->isRunning()) {
-		streamThread->quit();
+	if (IriTrackerSingleton::getStreamThreadCheckInOut()->isRunning()) {
+		IriTrackerSingleton::getStreamThreadCheckInOut()->quit();
 	}
 
 	// Di chuyển tracker sang thread và kết nối run()
-	iriTracker->moveToThread(streamThread);
-	connect(streamThread, &QThread::started, iriTracker, &IriTracker::scan_iri);
+	iriTracker->moveToThread(IriTrackerSingleton::getStreamThreadCheckInOut());
+	connect(IriTrackerSingleton::getStreamThreadCheckInOut(), &QThread::started, iriTracker, &IriTracker::scan_iri);
 
 	// Bắt đầu luồng
-	streamThread->start();
+	IriTrackerSingleton::getStreamThreadCheckInOut()->start();
 }
 
 void EmployeeCheckInOutController::updateFrame(const unsigned char* imageData, int imageLen, int imageWidth, int imageHeight) {
@@ -371,10 +368,24 @@ void EmployeeCheckInOutController::updateFrame(const unsigned char* imageData, i
 		QImage image(imageData, imageWidth, imageHeight, QImage::Format_Grayscale8);
 		QPixmap pixmap = QPixmap::fromImage(image);
 
-			view->getUi()->device->setPixmap(pixmap.scaled(view->getUi()->device->size(), Qt::KeepAspectRatio));
+		view->getUi()->device->setPixmap(pixmap.scaled(view->getUi()->device->size(), Qt::KeepAspectRatio));
 	}
 	else {
 		qDebug() << "Dữ liệu hình ảnh không hợp lệ.";
 	}
 }
 
+void EmployeeCheckInOutController::switchImage(bool isFoundDevice) {
+	if (isFoundDevice != _flagFoundDevice) {
+	if (isFoundDevice) {
+		if (!_flagFoundDevice) {
+			view->getUi()->device->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+			_flagFoundDevice = true;
+		}
+	}
+	else {
+		view->getUi()->device->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+		_flagFoundDevice = false;
+	}
+	}
+}

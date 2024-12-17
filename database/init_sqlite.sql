@@ -63,3 +63,22 @@ IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Holiday') THEN
 END IF;
 
 COMMIT;
+
+CREATE TABLE IF NOT EXISTS Bulletin (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL,
+    start_date VARCHAR(255) NOT NULL,
+    end_date VARCHAR(255) NOT NULL,
+    is_active BOOLEAN DEFAULT FALSE,
+    is_priority BOOLEAN DEFAULT FALSE,
+    type VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Bulletin_Detail (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    bulletin_id INT NOT NULL,
+    department_id INT,
+    employee_id INT,
+    FOREIGN KEY (bulletin_id) REFERENCES Bulletin(id)
+);

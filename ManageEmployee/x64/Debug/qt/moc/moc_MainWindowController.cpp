@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindowController_t {
-    QByteArrayData data[21];
-    char stringdata0[409];
+    QByteArrayData data[23];
+    char stringdata0[461];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -49,10 +49,12 @@ QT_MOC_LITERAL(13, 242, 24), // "handleHiddenManageEvents"
 QT_MOC_LITERAL(14, 267, 23), // "handleShowManageEnvents"
 QT_MOC_LITERAL(15, 291, 27), // "handleHiddenManageException"
 QT_MOC_LITERAL(16, 319, 25), // "handleShowManageException"
-QT_MOC_LITERAL(17, 345, 17), // "handleHiddenTools"
-QT_MOC_LITERAL(18, 363, 15), // "handleShowTools"
-QT_MOC_LITERAL(19, 379, 17), // "getMainWindowView"
-QT_MOC_LITERAL(20, 397, 11) // "MainWindow*"
+QT_MOC_LITERAL(17, 345, 26), // "handleHiddenManageBulletin"
+QT_MOC_LITERAL(18, 372, 24), // "handleShowManageBulletin"
+QT_MOC_LITERAL(19, 397, 17), // "handleHiddenTools"
+QT_MOC_LITERAL(20, 415, 15), // "handleShowTools"
+QT_MOC_LITERAL(21, 431, 17), // "getMainWindowView"
+QT_MOC_LITERAL(22, 449, 11) // "MainWindow*"
 
     },
     "MainWindowController\0handleLogout\0\0"
@@ -65,7 +67,9 @@ QT_MOC_LITERAL(20, 397, 11) // "MainWindow*"
     "handleHiddenManageEvents\0"
     "handleShowManageEnvents\0"
     "handleHiddenManageException\0"
-    "handleShowManageException\0handleHiddenTools\0"
+    "handleShowManageException\0"
+    "handleHiddenManageBulletin\0"
+    "handleShowManageBulletin\0handleHiddenTools\0"
     "handleShowTools\0getMainWindowView\0"
     "MainWindow*"
 };
@@ -77,7 +81,7 @@ static const uint qt_meta_data_MainWindowController[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      18,   14, // methods
+      20,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -85,24 +89,26 @@ static const uint qt_meta_data_MainWindowController[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  104,    2, 0x0a /* Public */,
-       3,    0,  105,    2, 0x0a /* Public */,
-       4,    0,  106,    2, 0x0a /* Public */,
-       5,    0,  107,    2, 0x0a /* Public */,
-       6,    0,  108,    2, 0x0a /* Public */,
-       7,    0,  109,    2, 0x0a /* Public */,
-       8,    0,  110,    2, 0x0a /* Public */,
-       9,    0,  111,    2, 0x0a /* Public */,
-      10,    0,  112,    2, 0x0a /* Public */,
-      11,    0,  113,    2, 0x0a /* Public */,
-      12,    0,  114,    2, 0x0a /* Public */,
-      13,    0,  115,    2, 0x0a /* Public */,
-      14,    0,  116,    2, 0x0a /* Public */,
-      15,    0,  117,    2, 0x0a /* Public */,
-      16,    0,  118,    2, 0x0a /* Public */,
-      17,    0,  119,    2, 0x0a /* Public */,
-      18,    0,  120,    2, 0x0a /* Public */,
-      19,    0,  121,    2, 0x0a /* Public */,
+       1,    0,  114,    2, 0x0a /* Public */,
+       3,    0,  115,    2, 0x0a /* Public */,
+       4,    0,  116,    2, 0x0a /* Public */,
+       5,    0,  117,    2, 0x0a /* Public */,
+       6,    0,  118,    2, 0x0a /* Public */,
+       7,    0,  119,    2, 0x0a /* Public */,
+       8,    0,  120,    2, 0x0a /* Public */,
+       9,    0,  121,    2, 0x0a /* Public */,
+      10,    0,  122,    2, 0x0a /* Public */,
+      11,    0,  123,    2, 0x0a /* Public */,
+      12,    0,  124,    2, 0x0a /* Public */,
+      13,    0,  125,    2, 0x0a /* Public */,
+      14,    0,  126,    2, 0x0a /* Public */,
+      15,    0,  127,    2, 0x0a /* Public */,
+      16,    0,  128,    2, 0x0a /* Public */,
+      17,    0,  129,    2, 0x0a /* Public */,
+      18,    0,  130,    2, 0x0a /* Public */,
+      19,    0,  131,    2, 0x0a /* Public */,
+      20,    0,  132,    2, 0x0a /* Public */,
+      21,    0,  133,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -122,7 +128,9 @@ static const uint qt_meta_data_MainWindowController[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    0x80000000 | 20,
+    QMetaType::Void,
+    QMetaType::Void,
+    0x80000000 | 22,
 
        0        // eod
 };
@@ -148,9 +156,11 @@ void MainWindowController::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         case 12: _t->handleShowManageEnvents(); break;
         case 13: _t->handleHiddenManageException(); break;
         case 14: _t->handleShowManageException(); break;
-        case 15: _t->handleHiddenTools(); break;
-        case 16: _t->handleShowTools(); break;
-        case 17: { MainWindow* _r = _t->getMainWindowView();
+        case 15: _t->handleHiddenManageBulletin(); break;
+        case 16: _t->handleShowManageBulletin(); break;
+        case 17: _t->handleHiddenTools(); break;
+        case 18: _t->handleShowTools(); break;
+        case 19: { MainWindow* _r = _t->getMainWindowView();
             if (_a[0]) *reinterpret_cast< MainWindow**>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
@@ -186,13 +196,13 @@ int MainWindowController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 18)
+        if (_id < 20)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 18;
+        _id -= 20;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 18)
+        if (_id < 20)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 18;
+        _id -= 20;
     }
     return _id;
 }

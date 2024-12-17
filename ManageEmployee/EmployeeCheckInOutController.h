@@ -32,6 +32,8 @@ public slots:
 	void handleCheckInOutByIries(QString employeeId);
 	void handleAttendanceEventForEmployee(QString id);
 
+	void switchImage(bool isFoundDevice);
+
 private:
 	IDatabaseManager*& db;
 	EmployeeCheckInOut* view;

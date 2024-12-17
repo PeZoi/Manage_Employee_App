@@ -7,6 +7,7 @@
 #include "IEmployeeRepository.h"
 #include "IAttendanceEventRepository.h"
 #include "IExceptionRepository.h"
+#include "IBulletinRepository.h"
 
 class IDatabaseManager {
 public:
@@ -23,6 +24,7 @@ public:
     virtual IEmployeeRepository* getEmployeeRepository() = 0;
     virtual IAttendanceEventRepository* getAttendanceEventRepository() = 0;
     virtual IExceptionRepository* getExceptionRepository() = 0;
+    virtual IBulletinRepository* getBulletinRepository() = 0;
 
     virtual bool excuteInitTable(QString pathDefault) = 0;
     virtual void bankupData() = 0;

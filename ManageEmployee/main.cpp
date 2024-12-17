@@ -9,19 +9,30 @@
 #include "Constant.h"
 #include "IriTracker.h"
 #include "DatabaseSingleton.h"
+#include "IriTrackerSingleton.h"
 #include <QtWidgets/QApplication>
 #include <QSqlDatabase>
 #include <QStandardPaths>
 #include <QDir>
 #include <QSqlError>
 #include <QImageReader>
+#include <QThread>
+#include <QObject>
+
+void getDevice() {
+	IriTracker* iriTracker = IriTrackerSingleton::getIriTrackerGetDevice();
+	QThread* threadGetDevice = IriTrackerSingleton::getGetDeviceThread();
+	iriTracker->moveToThread(threadGetDevice);
+	QObject::connect(threadGetDevice, &QThread::started, iriTracker, &IriTracker::get_device);
+	threadGetDevice->start();
+}
 
 int main(int argc, char* argv[])
 {
 	QApplication a(argc, argv);
 	a.setWindowIcon(QIcon("D:/IriTech/Code/ManageEmployee/icon/IriTech.ico"));
 
-	//IriTracker::get_divice();
+	getDevice();
 
 	QString pathIni = Constant::PATH_CONFIG;
 	QFile configFile(pathIni);

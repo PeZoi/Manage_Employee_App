@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_EmployeeCheckInOutController_t {
-    QByteArrayData data[23];
-    char stringdata0[351];
+    QByteArrayData data[25];
+    char stringdata0[377];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -54,7 +54,9 @@ QT_MOC_LITERAL(18, 268, 11), // "imageHeight"
 QT_MOC_LITERAL(19, 280, 23), // "handleCheckInOutByIries"
 QT_MOC_LITERAL(20, 304, 10), // "employeeId"
 QT_MOC_LITERAL(21, 315, 32), // "handleAttendanceEventForEmployee"
-QT_MOC_LITERAL(22, 348, 2) // "id"
+QT_MOC_LITERAL(22, 348, 2), // "id"
+QT_MOC_LITERAL(23, 351, 11), // "switchImage"
+QT_MOC_LITERAL(24, 363, 13) // "isFoundDevice"
 
     },
     "EmployeeCheckInOutController\0"
@@ -66,7 +68,7 @@ QT_MOC_LITERAL(22, 348, 2) // "id"
     "const unsigned char*\0imageData\0imageLen\0"
     "imageWidth\0imageHeight\0handleCheckInOutByIries\0"
     "employeeId\0handleAttendanceEventForEmployee\0"
-    "id"
+    "id\0switchImage\0isFoundDevice"
 };
 #undef QT_MOC_LITERAL
 
@@ -76,7 +78,7 @@ static const uint qt_meta_data_EmployeeCheckInOutController[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -84,17 +86,18 @@ static const uint qt_meta_data_EmployeeCheckInOutController[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   69,    2, 0x0a /* Public */,
-       3,    0,   70,    2, 0x0a /* Public */,
-       4,    0,   71,    2, 0x0a /* Public */,
-       5,    1,   72,    2, 0x0a /* Public */,
-       8,    1,   75,    2, 0x0a /* Public */,
-      10,    0,   78,    2, 0x0a /* Public */,
-      11,    0,   79,    2, 0x0a /* Public */,
-      12,    0,   80,    2, 0x0a /* Public */,
-      13,    4,   81,    2, 0x0a /* Public */,
-      19,    1,   90,    2, 0x0a /* Public */,
-      21,    1,   93,    2, 0x0a /* Public */,
+       1,    0,   74,    2, 0x0a /* Public */,
+       3,    0,   75,    2, 0x0a /* Public */,
+       4,    0,   76,    2, 0x0a /* Public */,
+       5,    1,   77,    2, 0x0a /* Public */,
+       8,    1,   80,    2, 0x0a /* Public */,
+      10,    0,   83,    2, 0x0a /* Public */,
+      11,    0,   84,    2, 0x0a /* Public */,
+      12,    0,   85,    2, 0x0a /* Public */,
+      13,    4,   86,    2, 0x0a /* Public */,
+      19,    1,   95,    2, 0x0a /* Public */,
+      21,    1,   98,    2, 0x0a /* Public */,
+      23,    1,  101,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -108,6 +111,7 @@ static const uint qt_meta_data_EmployeeCheckInOutController[] = {
     QMetaType::Void, 0x80000000 | 14, QMetaType::Int, QMetaType::Int, QMetaType::Int,   15,   16,   17,   18,
     QMetaType::Void, QMetaType::QString,   20,
     QMetaType::Void, QMetaType::QString,   22,
+    QMetaType::Void, QMetaType::Bool,   24,
 
        0        // eod
 };
@@ -129,6 +133,7 @@ void EmployeeCheckInOutController::qt_static_metacall(QObject *_o, QMetaObject::
         case 8: _t->updateFrame((*reinterpret_cast< const unsigned char*(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4]))); break;
         case 9: _t->handleCheckInOutByIries((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 10: _t->handleAttendanceEventForEmployee((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 11: _t->switchImage((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -163,13 +168,13 @@ int EmployeeCheckInOutController::qt_metacall(QMetaObject::Call _c, int _id, voi
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 11)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }

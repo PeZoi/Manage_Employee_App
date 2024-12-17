@@ -10,6 +10,8 @@
 #include <QDebug>
 #include <utility>
 
+bool flagCheckFirstOpenDevice = false;
+
 IriTracker::IriTracker()
 {
 }
@@ -134,8 +136,110 @@ RETSEC:
 	return bRet;
 }
 
-void IriTracker::get_divice() {
-	get_device_handle_custom();
+void IriTracker::get_device() {
+	int i = 0;
+	int option = -1;
+	IddkConfig config;
+	IddkResult iRet = IDDK_OK;
+	unsigned int baudrate = 115200;
+	const char** ppDeviceDescs = NULL;
+	int nDeviceCnt = 0;
+	char buffer[256];
+
+	/* We should get the current configuration before setting new one */
+	iRet = Iddk_GetSdkConfig(&config);
+	if (iRet != IDDK_OK)
+	{
+		/* Oops ! Something wrong happens */
+		goto RETSEC;
+	}
+
+	/* Now we check the configuration of the currently attached device to change the SDK configuration accordingly */
+	config.commStd = IDDK_COMM_USB;
+	//g_isUsbDevice = true;
+
+	// Reset device
+	config.resetOnOpenDevice = 1;
+
+	/* Set new SDK configuration */
+	iRet = Iddk_SetSdkConfig(&config);
+	if (iRet != IDDK_OK)
+	{
+		printf("\nFailed to set new configuration !\n");
+		qDebug() << "Failed to set new configuration";
+		//return;
+		goto RETSEC;
+	}
+
+	/* Now, we can open the device and retrieve the handle */
+	/* If USB, we should scan devices first */
+	while (true) {
+		//qDebug() << "Scan device...";
+
+		iRet = Iddk_ScanDevices(&ppDeviceDescs, &nDeviceCnt);
+		if (iRet != IDDK_OK)
+		{
+			if (iRet == IDDK_DEVICE_NOT_FOUND)
+			{
+				//qDebug() << " ==> No IriTech devices found.";
+			}
+			else if (iRet == IDDK_DEVICE_IO_FAILED) {
+				qDebug() << " ==> Connect fail to device.";
+			}
+			goto RETSEC;
+		}
+
+		for (i = 0; i < nDeviceCnt; i++)
+		{
+			printf("\t%d. %s\n", i + 1, ppDeviceDescs[i]);
+		}
+
+		/* Open the first found device */
+		if (!flagCheckFirstOpenDevice) {
+			iRet = Iddk_OpenDevice(ppDeviceDescs[0], &g_hDevice);
+		}
+		if (iRet == IDDK_OK)
+		{
+			//qDebug() << "==> Device found!.";
+			// check type of device is monocular or binocular
+			IddkDeviceInfo deviceInfo;
+			if (IDDK_OK == Iddk_GetDeviceInfo(g_hDevice, &deviceInfo))
+			{
+				g_isBinocular = deviceInfo.isBinocular;
+			}
+			emit foundDevice(true);
+			flagCheckFirstOpenDevice = true;
+			IriTrackerSingleton::isFoundDevice = true;
+			continue;
+		}
+		else if (iRet == IDDK_DEVICE_ALREADY_OPEN && flagCheckFirstOpenDevice == false)
+		{
+			Iddk_CloseDevice(g_hDevice);
+			goto RETSEC;
+		}
+		else {
+			goto RETSEC;
+		}
+
+	RETSEC:
+		if (iRet != IDDK_OK)
+		{
+			handle_error(iRet);
+		}
+
+		reset_error_level(iRet);
+		if (flagCheckFirstOpenDevice) {
+			emit foundDevice(false);
+		}
+		flagCheckFirstOpenDevice = false;
+		IriTrackerSingleton::isFoundDevice = false;
+		g_hDevice = NULL;
+		ppDeviceDescs = NULL;
+		nDeviceCnt = 0;
+
+	}
+
+	QThread::msleep(1000);
 }
 
 void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
@@ -416,25 +520,29 @@ RETSEC:
 
 void IriTracker::scan_iri()
 {
-	while (IriTrackerSingleton::isRunningStreamThreadCheckInOut)
+	while (true)
 	{
+		if (!IriTrackerSingleton::isFoundDevice) {
+			continue;
+		}
 		// SCAN
 		{
 			IddkResult iRet = IDDK_OK;
 			IddkCaptureStatus captureStatus;
 			iRet = Iddk_GetCaptureStatus(g_hDevice, &captureStatus);
+
 			if (iRet == IDDK_OK)
 			{
 				reset_error_level(iRet);
 				if (captureStatus != IDDK_COMPLETE)
 				{
-					printf("\nThere is no captured iris image in the device, you need to capture your iris(es) first. Capturing process starts ... \n");
 					run(true, false, false);
+					checkTemplates(); // CHECKING
 				}
 			}
 		}
 
-		checkTemplates(); // CHECKING
+
 	}
 }
 
@@ -483,7 +591,7 @@ bool IriTracker::checkTemplates() {
 			}
 			else {
 				iri = employeeIries.second.second; // IRI RIGHT
-			}	
+			}
 			pEnrollTemplate.dataSize = iri.size();
 			if (pEnrollTemplate.dataSize > 0) {
 				pEnrollTemplate.data = new unsigned char[pEnrollTemplate.dataSize];
