@@ -264,6 +264,9 @@
     <ClCompile Include="BulletinRepositorySQLite.cpp">
       <Filter>Repository\Repository Cpp\SQLite</Filter>
     </ClCompile>
+    <ClCompile Include="DialogNotification.cpp">
+      <Filter>View\View Cpp</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="DialogFormDepartment.h">
@@ -374,6 +377,9 @@
     <QtMoc Include="DialogFormBulletin.h">
       <Filter>View\View Header</Filter>
     </QtMoc>
+    <QtMoc Include="DialogNotification.h">
+      <Filter>View\View Header</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="SignUpAdmin.ui">
@@ -449,6 +455,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="DialogFormBulletin.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="DialogNotification.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

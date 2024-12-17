@@ -4,6 +4,8 @@
 #include "IDatabaseManager.h"
 #include "EmployeeModel.h"
 #include "IriTrackerSingleton.h"
+#include "DialogNotification.h"
+#include "Constant.h"
 #include <QStandardItemModel>
 #include <QTimer>
 #include <QDate>
@@ -303,6 +305,32 @@ void EmployeeCheckInOutController::handleAttendanceEventForEmployee(QString id) 
 		});
 
 	timer->start(3000);
+
+
+	// Handle show bulletin
+	if (employee.getStatus() == "OUT") {
+		QList<BulletinModel> bulletinList = db->getBulletinRepository()->getByCurrentDate();
+		QList<BulletinModel> bulletinListFilter;
+		for (BulletinModel bulletin : bulletinList) {
+			if (bulletin.getType() == Constant::B_TYPE_ALL) {
+				bulletinListFilter.append(bulletin);
+				continue;
+			}
+			if (bulletin.getType() == Constant::B_TYPE_DEPARTMENT && bulletin.getDepartment() == employee.getDepartment().getName()) {
+				bulletinListFilter.append(bulletin);
+				continue;
+			}
+			if (bulletin.getType() == Constant::B_TYPE_EMPLOYEE && bulletin.getEmployeeIds().contains(employee.getId())) {
+				bulletinListFilter.append(bulletin);
+				continue;
+			}
+		}
+		std::sort(bulletinListFilter.begin(), bulletinListFilter.end(), [](const BulletinModel& a, const BulletinModel& b) {
+			return a.getIsPriority() > b.getIsPriority();  // Sắp xếp theo isPriority, true sẽ lên trước
+			});
+		DialogNotification* dialogNotification = new DialogNotification(bulletinListFilter, nullptr);
+		dialogNotification->exec();
+	}
 }
 
 void EmployeeCheckInOutController::handleSubmitForPassword() {
@@ -377,15 +405,15 @@ void EmployeeCheckInOutController::updateFrame(const unsigned char* imageData, i
 
 void EmployeeCheckInOutController::switchImage(bool isFoundDevice) {
 	if (isFoundDevice != _flagFoundDevice) {
-	if (isFoundDevice) {
-		if (!_flagFoundDevice) {
-			view->getUi()->device->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
-			_flagFoundDevice = true;
+		if (isFoundDevice) {
+			if (!_flagFoundDevice) {
+				view->getUi()->device->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+				_flagFoundDevice = true;
+			}
 		}
-	}
-	else {
-		view->getUi()->device->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
-		_flagFoundDevice = false;
-	}
+		else {
+			view->getUi()->device->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+			_flagFoundDevice = false;
+		}
 	}
 }

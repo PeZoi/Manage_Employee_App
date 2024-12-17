@@ -129,6 +129,7 @@
     <ClCompile Include="DialogFormEmployee.cpp" />
     <ClCompile Include="DialogFormException.cpp" />
     <ClCompile Include="DialogFormLoginAdmin.cpp" />
+    <ClCompile Include="DialogNotification.cpp" />
     <ClCompile Include="EmployeeCheckInOut.cpp" />
     <ClCompile Include="EmployeeCheckInOutController.cpp" />
     <ClCompile Include="EmployeeModel.cpp" />
@@ -177,6 +178,7 @@
     <QtUic Include="DialogFormEmployee.ui" />
     <QtUic Include="DialogFormException.ui" />
     <QtUic Include="DialogFormLoginAdmin.ui" />
+    <QtUic Include="DialogNotification.ui" />
     <QtUic Include="EmployeeCheckInOut.ui" />
     <QtUic Include="MainWindow.ui" />
     <ClCompile Include="main.cpp" />
@@ -231,6 +233,7 @@
     <QtMoc Include="DialogFormException.h" />
     <QtMoc Include="DialogAssignmentException.h" />
     <QtMoc Include="DialogFormBulletin.h" />
+    <QtMoc Include="DialogNotification.h" />
     <ClInclude Include="EmployeeRepositoryMYSQL.h" />
     <ClInclude Include="EmployeeRepositorySQLite.h" />
     <ClInclude Include="DatabaseSingleton.h" />

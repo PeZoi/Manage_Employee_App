@@ -1,14 +1,6 @@
 ﻿   Qt/MSBuild: 3.3.1.1
    Qt: 5.15.2
-  uic ManageBulletin.ui
-  MainWindowController.cpp
-  ManageBulletin.cpp
-  ManageBulletinController.cpp
-  SignUpAdminController.cpp
-  main.cpp
-  Generating Code...
-  moc_MainWindowController.cpp
-  moc_ManageBulletin.cpp
-  moc_ManageBulletinController.cpp
+  DialogNotification.cpp
+  EmployeeCheckInOutController.cpp
   Generating Code...
   ManageEmployee.vcxproj -> D:\IriTech\Code\ManageEmployee\x64\Debug\ManageEmployee.exe
