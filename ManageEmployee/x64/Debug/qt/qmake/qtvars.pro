@@ -218,3 +218,7 @@ CONFIG += no_fixpath
 QT = core gui widgets sql multimedia
 CONFIG += no_fixpath
 QT = core gui widgets sql multimedia
+CONFIG += no_fixpath
+QT = core gui widgets sql multimedia
+CONFIG += no_fixpath
+QT = core gui widgets sql multimedia

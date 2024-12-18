@@ -131,6 +131,7 @@
     <ClCompile Include="DialogFormException.cpp" />
     <ClCompile Include="DialogFormLoginAdmin.cpp" />
     <ClCompile Include="DialogNotification.cpp" />
+    <ClCompile Include="DialogSettings.cpp" />
     <ClCompile Include="EmployeeCheckInOut.cpp" />
     <ClCompile Include="EmployeeCheckInOutController.cpp" />
     <ClCompile Include="EmployeeModel.cpp" />
@@ -147,6 +148,7 @@
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
     <ClCompile Include="IriTrackerSingleton.cpp" />
+    <ClCompile Include="LanguagesUtils.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="MainWindowController.cpp" />
     <ClCompile Include="ManageAttendanceEvents.cpp" />
@@ -180,6 +182,7 @@
     <QtUic Include="DialogFormException.ui" />
     <QtUic Include="DialogFormLoginAdmin.ui" />
     <QtUic Include="DialogNotification.ui" />
+    <QtUic Include="DialogSettings.ui" />
     <QtUic Include="EmployeeCheckInOut.ui" />
     <QtUic Include="MainWindow.ui" />
     <ClCompile Include="main.cpp" />
@@ -236,6 +239,7 @@
     <QtMoc Include="DialogAssignmentException.h" />
     <QtMoc Include="DialogFormBulletin.h" />
     <QtMoc Include="DialogNotification.h" />
+    <QtMoc Include="DialogSettings.h" />
     <ClInclude Include="EmployeeRepositoryMYSQL.h" />
     <ClInclude Include="EmployeeRepositorySQLite.h" />
     <ClInclude Include="DatabaseSingleton.h" />
@@ -255,6 +259,7 @@
     <QtMoc Include="ManageExceptionController.h" />
     <QtMoc Include="ManageBulletin.h" />
     <QtMoc Include="ManageBulletinController.h" />
+    <ClInclude Include="LanguagesUtils.h" />
     <ClInclude Include="Utils.h" />
     <QtMoc Include="ManageAttendanceEventsController.h" />
     <QtMoc Include="ManageAttendanceEvents.h" />

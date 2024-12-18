@@ -25,6 +25,9 @@ public:
 	// LANGUAGE
 	static constexpr const char* EN = "en";
 	static constexpr const char* VI = "vi";
+	static constexpr const char* PATH_TRANSLATES_VI = "D:/IriTech/Code/ManageEmployee/languages/iritracker_vi.qm";
+	static constexpr const char* PATH_TRANSLATES_EN = "D:/IriTech/Code/ManageEmployee/languages/iritracker_en.qm";
+
 
 };
 #endif

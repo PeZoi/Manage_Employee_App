@@ -37,8 +37,8 @@ ManageAttendanceEvents* ManageAttendanceEventsController::getView() {
 
 void ManageAttendanceEventsController::loadEmployee() {
 	db->connectToDatabase();
-	
-	
+
+
 
 	QStandardItemModel* model = new QStandardItemModel(this);
 	view->getUi()->companyTreeView->header()->setVisible(false);
@@ -47,7 +47,7 @@ void ManageAttendanceEventsController::loadEmployee() {
 	QList<DepartmentModel> departmentList = db->getDepartmentRepository()->getAll();
 
 	for (int i = 0; i < departmentList.size(); i++) {
-		
+
 		QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getByDepartment(departmentList.at(i).getName());
 
 		QString departmentDisplay = QString("%1 (%2)").arg(departmentList.at(i).getName()).arg(employeeList.size());
@@ -97,7 +97,7 @@ void ManageAttendanceEventsController::onClickAdd() {
 }
 void ManageAttendanceEventsController::onClickEdit() {
 	db->connectToDatabase();
-	
+
 	QList<AttendanceEventModel> events = db->getAttendanceEventRepository()->getBySession(attendanceEventSelected.getSession());
 	DialogFormAttendanceEvents* dialog = new DialogFormAttendanceEvents(employeeSelected, db, nullptr);
 	dialog->setMode(true);
@@ -107,7 +107,7 @@ void ManageAttendanceEventsController::onClickEdit() {
 
 	dialog->exec();
 	db->closeDatabase();
-	
+
 }
 void ManageAttendanceEventsController::onClickDelete() {
 	db->connectToDatabase();
@@ -274,12 +274,12 @@ QList<AttendanceEventModel> ManageAttendanceEventsController::filterEvents(
 
 	for (const auto& event : eventList) {
 		QDate eventDate = QDate::fromString(event.getDateEvent(), "dd/MM/yyyy");
-		if ((filter == "This week" && Utils::isInCurrentWeek(eventDate)) ||
-			(filter == "Last week" && Utils::isInLastWeek(eventDate)) ||
-			(filter == "This month" && Utils::isInCurrentMonth(eventDate)) ||
-			(filter == "Last month" && Utils::isInLastMonth(eventDate)) ||
-			(filter == "This year" && Utils::isInCurrentYear(eventDate)) ||
-			filter == "All events") {
+		if ((filter == tr("This week") && Utils::isInCurrentWeek(eventDate)) ||
+			(filter == tr("Last week") && Utils::isInLastWeek(eventDate)) ||
+			(filter == tr("This month") && Utils::isInCurrentMonth(eventDate)) ||
+			(filter == tr("Last month") && Utils::isInLastMonth(eventDate)) ||
+			(filter == tr("This year") && Utils::isInCurrentYear(eventDate)) ||
+			filter == tr("All events")) {
 			filteredEvents.append(event);
 		}
 	}

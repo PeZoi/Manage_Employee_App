@@ -175,10 +175,10 @@ void EmployeeCheckInOutController::handleSelectEmployee(const QModelIndex& index
 			}
 
 			if (employee.getStatus() == "IN") {
-				view->getUi()->submit_checkin_out->setText("Check Out");
+				view->getUi()->submit_checkin_out->setText(tr("Check Out"));
 			}
 			else {
-				view->getUi()->submit_checkin_out->setText("Check In");
+				view->getUi()->submit_checkin_out->setText(tr("Check In"));
 			}
 
 			view->getUi()->name_list->setCurrentText(item->text());
@@ -295,10 +295,10 @@ void EmployeeCheckInOutController::handleAttendanceEventForEmployee(QString id) 
 	view->getUi()->this_month->setText(QString::number(totalThisMonth, 'f', 2));
 
 	if (employee.getStatus() == "IN") {
-		view->getUi()->notice->setText("check out successfully !");
+		view->getUi()->notice->setText(tr("check out successfully !"));
 	}
 	else {
-		view->getUi()->notice->setText("check in successfully !");
+		view->getUi()->notice->setText(tr("check in successfully !"));
 	}
 
 	QTimer* timer = new QTimer(this);

@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainWindowController_t {
-    QByteArrayData data[23];
-    char stringdata0[461];
+    QByteArrayData data[37];
+    char stringdata0[768];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -54,7 +54,21 @@ QT_MOC_LITERAL(18, 372, 24), // "handleShowManageBulletin"
 QT_MOC_LITERAL(19, 397, 17), // "handleHiddenTools"
 QT_MOC_LITERAL(20, 415, 15), // "handleShowTools"
 QT_MOC_LITERAL(21, 431, 17), // "getMainWindowView"
-QT_MOC_LITERAL(22, 449, 11) // "MainWindow*"
+QT_MOC_LITERAL(22, 449, 11), // "MainWindow*"
+QT_MOC_LITERAL(23, 461, 15), // "getMdController"
+QT_MOC_LITERAL(24, 477, 27), // "ManageDepartmentController*"
+QT_MOC_LITERAL(25, 505, 15), // "getMeController"
+QT_MOC_LITERAL(26, 521, 25), // "ManageEmployeeController*"
+QT_MOC_LITERAL(27, 547, 17), // "getEcioController"
+QT_MOC_LITERAL(28, 565, 29), // "EmployeeCheckInOutController*"
+QT_MOC_LITERAL(29, 595, 16), // "getMaeController"
+QT_MOC_LITERAL(30, 612, 33), // "ManageAttendanceEventsControl..."
+QT_MOC_LITERAL(31, 646, 16), // "getMexController"
+QT_MOC_LITERAL(32, 663, 26), // "ManageExceptionController*"
+QT_MOC_LITERAL(33, 690, 15), // "getMbController"
+QT_MOC_LITERAL(34, 706, 25), // "ManageBulletinController*"
+QT_MOC_LITERAL(35, 732, 18), // "getToolsController"
+QT_MOC_LITERAL(36, 751, 16) // "ToolsController*"
 
     },
     "MainWindowController\0handleLogout\0\0"
@@ -71,7 +85,14 @@ QT_MOC_LITERAL(22, 449, 11) // "MainWindow*"
     "handleHiddenManageBulletin\0"
     "handleShowManageBulletin\0handleHiddenTools\0"
     "handleShowTools\0getMainWindowView\0"
-    "MainWindow*"
+    "MainWindow*\0getMdController\0"
+    "ManageDepartmentController*\0getMeController\0"
+    "ManageEmployeeController*\0getEcioController\0"
+    "EmployeeCheckInOutController*\0"
+    "getMaeController\0ManageAttendanceEventsController*\0"
+    "getMexController\0ManageExceptionController*\0"
+    "getMbController\0ManageBulletinController*\0"
+    "getToolsController\0ToolsController*"
 };
 #undef QT_MOC_LITERAL
 
@@ -81,7 +102,7 @@ static const uint qt_meta_data_MainWindowController[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      27,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -89,26 +110,33 @@ static const uint qt_meta_data_MainWindowController[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,  114,    2, 0x0a /* Public */,
-       3,    0,  115,    2, 0x0a /* Public */,
-       4,    0,  116,    2, 0x0a /* Public */,
-       5,    0,  117,    2, 0x0a /* Public */,
-       6,    0,  118,    2, 0x0a /* Public */,
-       7,    0,  119,    2, 0x0a /* Public */,
-       8,    0,  120,    2, 0x0a /* Public */,
-       9,    0,  121,    2, 0x0a /* Public */,
-      10,    0,  122,    2, 0x0a /* Public */,
-      11,    0,  123,    2, 0x0a /* Public */,
-      12,    0,  124,    2, 0x0a /* Public */,
-      13,    0,  125,    2, 0x0a /* Public */,
-      14,    0,  126,    2, 0x0a /* Public */,
-      15,    0,  127,    2, 0x0a /* Public */,
-      16,    0,  128,    2, 0x0a /* Public */,
-      17,    0,  129,    2, 0x0a /* Public */,
-      18,    0,  130,    2, 0x0a /* Public */,
-      19,    0,  131,    2, 0x0a /* Public */,
-      20,    0,  132,    2, 0x0a /* Public */,
-      21,    0,  133,    2, 0x0a /* Public */,
+       1,    0,  149,    2, 0x0a /* Public */,
+       3,    0,  150,    2, 0x0a /* Public */,
+       4,    0,  151,    2, 0x0a /* Public */,
+       5,    0,  152,    2, 0x0a /* Public */,
+       6,    0,  153,    2, 0x0a /* Public */,
+       7,    0,  154,    2, 0x0a /* Public */,
+       8,    0,  155,    2, 0x0a /* Public */,
+       9,    0,  156,    2, 0x0a /* Public */,
+      10,    0,  157,    2, 0x0a /* Public */,
+      11,    0,  158,    2, 0x0a /* Public */,
+      12,    0,  159,    2, 0x0a /* Public */,
+      13,    0,  160,    2, 0x0a /* Public */,
+      14,    0,  161,    2, 0x0a /* Public */,
+      15,    0,  162,    2, 0x0a /* Public */,
+      16,    0,  163,    2, 0x0a /* Public */,
+      17,    0,  164,    2, 0x0a /* Public */,
+      18,    0,  165,    2, 0x0a /* Public */,
+      19,    0,  166,    2, 0x0a /* Public */,
+      20,    0,  167,    2, 0x0a /* Public */,
+      21,    0,  168,    2, 0x0a /* Public */,
+      23,    0,  169,    2, 0x0a /* Public */,
+      25,    0,  170,    2, 0x0a /* Public */,
+      27,    0,  171,    2, 0x0a /* Public */,
+      29,    0,  172,    2, 0x0a /* Public */,
+      31,    0,  173,    2, 0x0a /* Public */,
+      33,    0,  174,    2, 0x0a /* Public */,
+      35,    0,  175,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -131,6 +159,13 @@ static const uint qt_meta_data_MainWindowController[] = {
     QMetaType::Void,
     QMetaType::Void,
     0x80000000 | 22,
+    0x80000000 | 24,
+    0x80000000 | 26,
+    0x80000000 | 28,
+    0x80000000 | 30,
+    0x80000000 | 32,
+    0x80000000 | 34,
+    0x80000000 | 36,
 
        0        // eod
 };
@@ -162,6 +197,20 @@ void MainWindowController::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         case 18: _t->handleShowTools(); break;
         case 19: { MainWindow* _r = _t->getMainWindowView();
             if (_a[0]) *reinterpret_cast< MainWindow**>(_a[0]) = std::move(_r); }  break;
+        case 20: { ManageDepartmentController* _r = _t->getMdController();
+            if (_a[0]) *reinterpret_cast< ManageDepartmentController**>(_a[0]) = std::move(_r); }  break;
+        case 21: { ManageEmployeeController* _r = _t->getMeController();
+            if (_a[0]) *reinterpret_cast< ManageEmployeeController**>(_a[0]) = std::move(_r); }  break;
+        case 22: { EmployeeCheckInOutController* _r = _t->getEcioController();
+            if (_a[0]) *reinterpret_cast< EmployeeCheckInOutController**>(_a[0]) = std::move(_r); }  break;
+        case 23: { ManageAttendanceEventsController* _r = _t->getMaeController();
+            if (_a[0]) *reinterpret_cast< ManageAttendanceEventsController**>(_a[0]) = std::move(_r); }  break;
+        case 24: { ManageExceptionController* _r = _t->getMexController();
+            if (_a[0]) *reinterpret_cast< ManageExceptionController**>(_a[0]) = std::move(_r); }  break;
+        case 25: { ManageBulletinController* _r = _t->getMbController();
+            if (_a[0]) *reinterpret_cast< ManageBulletinController**>(_a[0]) = std::move(_r); }  break;
+        case 26: { ToolsController* _r = _t->getToolsController();
+            if (_a[0]) *reinterpret_cast< ToolsController**>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     }
@@ -196,13 +245,13 @@ int MainWindowController::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 27)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 27;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 27)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 20;
+        _id -= 27;
     }
     return _id;
 }

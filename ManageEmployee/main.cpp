@@ -11,6 +11,7 @@
 #include "DatabaseSingleton.h"
 #include "IriTrackerSingleton.h"
 #include "AudioUtils.h"
+#include "LanguagesUtils.h"
 #include <QtWidgets/QApplication>
 #include <QSqlDatabase>
 #include <QStandardPaths>
@@ -19,7 +20,6 @@
 #include <QImageReader>
 #include <QThread>
 #include <QObject>
-
 void getDevice() {
 	IriTracker* iriTracker = IriTrackerSingleton::getIriTrackerGetDevice();
 	QThread* threadGetDevice = IriTrackerSingleton::getGetDeviceThread();
@@ -33,8 +33,13 @@ int main(int argc, char* argv[])
 	QApplication a(argc, argv);
 	a.setWindowIcon(QIcon("D:/IriTech/Code/ManageEmployee/icon/IriTech.ico"));
 
+	// GET DEVICE
 	getDevice();
+
+	// INIT AUDIO
 	AudioUtils::getInstance()->initAudio();
+
+	
 
 	QString pathIni = Constant::PATH_CONFIG;
 	QFile configFile(pathIni);
@@ -57,6 +62,9 @@ int main(int argc, char* argv[])
 
 	MainWindow* mainWindowUI = new MainWindow(db, nullptr);
 	MainWindowController* mainWindowController = new MainWindowController(mainWindowUI, db, nullptr);
+
+	// INIT TRANSLATOR
+	LanguagesUtils::getInstance()->setAppDefault(&a, mainWindowController);
 
 	db->connectToDatabase();
 	if (!db->getEmployeeRepository()->checkExistAdmin()) {

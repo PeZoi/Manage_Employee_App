@@ -43,6 +43,33 @@ public slots:
     void handleShowTools();
 
     MainWindow* getMainWindowView();
+    ManageDepartmentController* getMdController() const {
+        return mdController;
+    }
+
+    ManageEmployeeController* getMeController() const {
+        return meController;
+    }
+
+    EmployeeCheckInOutController* getEcioController() const {
+        return ecioController;
+    }
+
+    ManageAttendanceEventsController* getMaeController() const {
+        return maeController;
+    }
+
+    ManageExceptionController* getMexController() const {
+        return mexController;
+    }
+
+    ManageBulletinController* getMbController() const {
+        return mbController;
+    }
+
+    ToolsController* getToolsController() const {
+        return toolsController;
+    }
 
 private:
     MainWindow* mainWindowView;
