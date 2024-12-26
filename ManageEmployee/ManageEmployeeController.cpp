@@ -31,20 +31,32 @@ ManageEmployeeController::ManageEmployeeController(ManageEmployee* view, IDataba
 }
 
 void ManageEmployeeController::onClickAdd() {
-	DialogFormEmployee* dialog = new DialogFormEmployee(meView);
+	/*DialogFormEmployee* dialog = new DialogFormEmployee(meView);
 
 	dialog->setMode(false);
 	renderDepartments(dialog->getUi());
 
 	connect(dialog, &DialogFormEmployee::uploadAvatar, this, &ManageEmployeeController::handleUploadAvatar);
 	connect(dialog, &DialogFormEmployee::submit, this, &ManageEmployeeController::submitEmployee);
+	connect(dialog, &DialogFormEmployee::cancel, dialog, &DialogFormEmployee::deleteLater);
 
-	dialog->exec();
+	dialog->exec();*/
+
+	DialogFormEmployee dialog = new DialogFormEmployee(meView);
+
+	dialog.setMode(false);
+	renderDepartments(dialog.getUi());
+
+	connect(&dialog, &DialogFormEmployee::uploadAvatar, this, &ManageEmployeeController::handleUploadAvatar);
+	connect(&dialog, &DialogFormEmployee::submit, this, &ManageEmployeeController::submitEmployee);
+	connect(&dialog, &DialogFormEmployee::cancel, &dialog, &DialogFormEmployee::deleteLater);
+
+	dialog.exec();
 }
 
 void ManageEmployeeController::handleRenderTable() {
 	db->connectToDatabase();
-	
+
 	QList<EmployeeModel> employeeList = db->getEmployeeRepository()->getAll();
 
 	meView->getUi()->table->setRowCount(employeeList.size());
@@ -119,7 +131,7 @@ void ManageEmployeeController::onClickDelete() {
 	db->connectToDatabase();
 	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete employee ?", nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
-		
+
 		if (db->getAttendanceEventRepository()->_deleteByEmployeeId(employeeSelected) && db->getEmployeeRepository()->_delete(employeeSelected)) {
 			employeeSelected = "";
 			handleRenderTable();
@@ -199,7 +211,7 @@ void ManageEmployeeController::handleUploadAvatar(DialogFormEmployee* employeeFo
 
 void ManageEmployeeController::renderDepartments(Ui::DialogFormEmployeeClass employeeForm) {
 	db->connectToDatabase();
-	
+
 	QList<DepartmentModel> employeeList = db->getDepartmentRepository()->getAll();
 
 	for (int i = 0; i < employeeList.size(); i++) {

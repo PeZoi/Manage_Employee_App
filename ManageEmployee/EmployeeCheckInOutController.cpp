@@ -42,8 +42,7 @@ EmployeeCheckInOutController::EmployeeCheckInOutController(EmployeeCheckInOut* v
 	connect(view->getUi()->submit_checkin_out, &QPushButton::clicked, this, &EmployeeCheckInOutController::handleSubmitForPassword);
 	connect(view->getUi()->show_all, &QPushButton::clicked, this, &EmployeeCheckInOutController::onClickShowAll);
 
-	//connect(view, &EmployeeCheckInOut::onClickDevice, this, &EmployeeCheckInOutController::processStreaming);
-	connect(IriTrackerSingleton::getIriTrackerGetDevice(), &IriTracker::foundDevice, this, &EmployeeCheckInOutController::switchImage, Qt::QueuedConnection);
+	connect(IriTrackerSingleton::getIriTrackerGetDevice(), &IriTracker::foundDevice, this, &EmployeeCheckInOutController::switchImage);
 	processStreaming();
 }
 
@@ -332,8 +331,11 @@ void EmployeeCheckInOutController::handleAttendanceEventForEmployee(QString id) 
 		std::sort(bulletinListFilter.begin(), bulletinListFilter.end(), [](const BulletinModel& a, const BulletinModel& b) {
 			return a.getIsPriority() > b.getIsPriority();  // Sắp xếp theo isPriority, true sẽ lên trước
 			});
-		DialogNotification* dialogNotification = new DialogNotification(bulletinListFilter, nullptr);
-		dialogNotification->exec();
+		
+		if (!bulletinList.isEmpty()) {
+			DialogNotification* dialogNotification = new DialogNotification(bulletinListFilter, nullptr);
+			dialogNotification->exec();
+		}
 	}
 }
 

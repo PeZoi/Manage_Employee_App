@@ -6,6 +6,7 @@ private:
 	static IriTrackerSingleton* instance;
 	static IriTracker* iriTracker;
     static IriTracker* iriTrackerGetDevice;
+    static IriTracker* iriCaptureEyes;
 	static QThread* streamThread;
 	static QThread* streamThreadCheckInOut;
 	static QThread* getDeviceThread;
@@ -68,6 +69,10 @@ public:
 
     static void setGetDeviceThread(QThread* thread) {
         getDeviceThread = thread;
+    }
+
+    static IriTracker* getIriCaptureEyes() {
+        return iriCaptureEyes;
     }
 
     static bool isRunningStreamThreadCheckInOut;

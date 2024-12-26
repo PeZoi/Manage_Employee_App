@@ -28,6 +28,8 @@ signals:
 	void submit(EmployeeModel employee, bool isEditMode, DialogFormEmployee* employeeView);
 	void uploadAvatar(DialogFormEmployee* employeeForm, bool isEditMode_employee);
 
+	void cancel();
+
 public slots:
 	void onClickCancel();
 	void handleSubmit();

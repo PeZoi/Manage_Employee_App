@@ -9,6 +9,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <utility>
+#include <QThread>
 
 bool flagCheckFirstOpenDevice = false;
 
@@ -146,6 +147,7 @@ void IriTracker::get_device() {
 	int nDeviceCnt = 0;
 	char buffer[256];
 
+
 	/* We should get the current configuration before setting new one */
 	iRet = Iddk_GetSdkConfig(&config);
 	if (iRet != IDDK_OK)
@@ -174,6 +176,7 @@ void IriTracker::get_device() {
 	/* Now, we can open the device and retrieve the handle */
 	/* If USB, we should scan devices first */
 	while (true) {
+		QThread::msleep(500);
 		//qDebug() << "Scan device...";
 
 		iRet = Iddk_ScanDevices(&ppDeviceDescs, &nDeviceCnt);
@@ -197,6 +200,7 @@ void IriTracker::get_device() {
 		/* Open the first found device */
 		if (!flagCheckFirstOpenDevice) {
 			iRet = Iddk_OpenDevice(ppDeviceDescs[0], &g_hDevice);
+
 		}
 		if (iRet == IDDK_OK)
 		{
@@ -228,7 +232,7 @@ void IriTracker::get_device() {
 		}
 
 		reset_error_level(iRet);
-		if (flagCheckFirstOpenDevice) {
+		if (!flagCheckFirstOpenDevice) {
 			emit foundDevice(false);
 		}
 		flagCheckFirstOpenDevice = false;
@@ -256,7 +260,7 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 
 	/* Parameters for capturing */
 	IddkCaptureMode captureMode = IDDK_TIMEBASED;
-	IddkQualityMode qualityMode = IDDK_QUALITY_VERY_HIGH;
+	IddkQualityMode qualityMode = IDDK_QUALITY_NORMAL;
 	bool autoLeds = true;
 	bool bStreamMode = true;
 	int iCount = 3;
@@ -273,6 +277,8 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 
 	IddkIrisQuality* pQualities;
 	int nQualityCount = 0;
+
+	bool flagBreak = false; // In case dialog close, using this to break loop
 
 	/* We have to init camera first */
 	iRet = Iddk_InitCamera(g_hDevice, &imageWidth, &imageHeight);
@@ -331,13 +337,18 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 		Start a loop to check the device status.
 		(You can use the callback function capture_proc instead of this while loop).
 		*/
+
+
 		qDebug() << "Scanning for eyes";
 		while (bRun)
 		{
+			if (bDefaultParams ? !IriTrackerSingleton::isRunningStreamThreadCheckInOut : false) {
+				break;
+			}
 			if (bStreamMode)
 			{
 				iRet = Iddk_GetStreamImage(g_hDevice, &pImages, &nMaxEyeSubtypes, &captureStatus);
-				if (iRet == IDDK_OK)
+ 				if (iRet == IDDK_OK)
 				{
 					//TODO/////////////////////////////////////////////////////////////////
 					//
@@ -393,10 +404,14 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 					printf(".");
 					/* We set up a counter to break the loop if user doesn't place the eyes in front of the camera */
 					i++;
-					if (i > 300)
+					if (i > 50)
 					{
-						bRun = false;
+						i = 0;
 						qDebug() << "Oops! No eye detected for so long. The capture process aborted.";
+						if (bDefaultParams == false && isCancelDialogEmployee) { // DialogEmployee using
+							flagBreak = true;
+							break;
+						}
 					}
 				}
 
@@ -408,6 +423,10 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 				//handle_error(iRet);
 				bRun = false;
 			}
+		}
+
+		if (flagBreak) {
+			break;
 		}
 
 		/* Try to stop capturing*/
@@ -492,7 +511,7 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 			IddkDataBuffer templateDataBuffer = get_result_template_custom(timestamp);
 			emit resultTemplate(templateDataBuffer.data, templateDataBuffer.dataSize);
 			clear_capture_custom();
-			return;
+			break;
 		}
 
 		/* iris_recognition calls, we break the loop */
@@ -514,7 +533,6 @@ RETSEC:
 	{
 		handle_error(iRet);
 	}
-
 	reset_error_level(iRet);
 }
 
@@ -523,6 +541,7 @@ void IriTracker::scan_iri()
 	while (true)
 	{
 		if (!IriTrackerSingleton::isFoundDevice) {
+			QThread::msleep(500);
 			continue;
 		}
 		// SCAN
@@ -536,13 +555,14 @@ void IriTracker::scan_iri()
 				reset_error_level(iRet);
 				if (captureStatus != IDDK_COMPLETE)
 				{
-					run(true, false, false);
-					checkTemplates(); // CHECKING
+					if (IriTrackerSingleton::isRunningStreamThreadCheckInOut) {
+						run(true, false, false);
+						checkTemplates(); // CHECKING
+					}
 				}
 			}
 		}
-
-
+		QThread::msleep(2000);
 	}
 }
 
@@ -574,14 +594,17 @@ bool IriTracker::checkTemplates() {
 		nComparisonResults = 0;
 		pComparisonResults = NULL;
 
+		// INIT pEnrollTemplate
+		pEnrollTemplate.data = nullptr;
+
 		/* Remember that before doing any identification or verification,
 		we should check the quality of the current captured image */
 		bool isGrayZone = false;
 		int numAcceptableEyes = 0;
-		if (!check_image_quality_custom(false, isGrayZone, numAcceptableEyes))
+		/*if (!check_image_quality_custom(false, isGrayZone, numAcceptableEyes))
 		{
 			continue;
-		}
+		}*/
 
 		for (int i = 0; i < 2; i++) {
 			QByteArray iri;
@@ -598,7 +621,9 @@ bool IriTracker::checkTemplates() {
 				memcpy(pEnrollTemplate.data, iri.constData(), pEnrollTemplate.dataSize);
 			}
 			else {
-				delete[] pEnrollTemplate.data;
+				if (pEnrollTemplate.data != nullptr) {
+					delete[] pEnrollTemplate.data;
+				}
 				pEnrollTemplate.data = nullptr;
 				pEnrollTemplate.dataSize = 0;
 			}

@@ -33,4 +33,6 @@ public:
 	void get_device();
 	void scan_iri();
 	bool checkTemplates();
+
+	bool isCancelDialogEmployee = false;
 };

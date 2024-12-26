@@ -23,7 +23,8 @@ DialogFormEmployee::DialogFormEmployee(QWidget* parent)
 {
 	ui.setupUi(this);
 
-	iriTracker = new IriTracker();
+	iriTracker = IriTrackerSingleton::getIriCaptureEyes();
+	iriTracker->isCancelDialogEmployee = false;
 
 	QLinearGradient gradient(0, 0, 0, this->height());
 	gradient.setColorAt(0.0, Qt::white);
@@ -62,19 +63,35 @@ DialogFormEmployee::DialogFormEmployee(QWidget* parent)
 		});
 
 	connect(IriTrackerSingleton::getIriTrackerGetDevice(), &IriTracker::foundDevice, this, &DialogFormEmployee::switchImage, Qt::QueuedConnection);
+	//switchImage(true);
 }
 
 DialogFormEmployee::~DialogFormEmployee()
 {
-	this->deleteLater();
+
+	if (iriTracker) {
+		disconnect(iriTracker, &IriTracker::imageProcessed, this, &DialogFormEmployee::updateFrame);
+		disconnect(iriTracker, &IriTracker::imageResult, this, &DialogFormEmployee::updateFrame);
+		disconnect(iriTracker, &IriTracker::resultTemplate, this, &DialogFormEmployee::handleReciveTemplate);
+	}
+
+	disconnect(IriTrackerSingleton::getIriTrackerGetDevice(), &IriTracker::foundDevice, this, nullptr);
+
+	iriTracker->isCancelDialogEmployee = true;
 	captureThread = nullptr;
-	iriTracker = nullptr;
+	checkConnectSignal = false;
+	flagFoundDevice = false;
+	isRunningFirst = true;
+	isRunningIriLeft = false;
+	isRunningIriRight = false;
+
 }
 void DialogFormEmployee::onClickCancel() {
 	if (IriTrackerSingleton::getStreamThread()->isRunning()) {
 		IriTrackerSingleton::getStreamThread()->quit();
 	}
-	this->deleteLater();
+	emit cancel();
+	close();
 }
 
 void DialogFormEmployee::handleSubmit() {
@@ -203,17 +220,22 @@ Ui::DialogFormEmployeeClass DialogFormEmployee::getUi() {
 }
 
 void DialogFormEmployee::processStreaming() {
+	
 	// Kiểm tra và kết nối tín hiệu nếu chưa kết nối
 	if (!checkConnectSignal) {
-		connect(iriTracker, &IriTracker::imageProcessed, this, &DialogFormEmployee::updateFrame);
-		connect(iriTracker, &IriTracker::imageResult, this, &DialogFormEmployee::updateFrame);
-		connect(iriTracker, &IriTracker::resultTemplate, this, &DialogFormEmployee::handleReciveTemplate);
+		connect(iriTracker, &IriTracker::imageProcessed, this, &DialogFormEmployee::updateFrame, Qt::QueuedConnection);
+		connect(iriTracker, &IriTracker::imageResult, this, &DialogFormEmployee::updateFrame, Qt::QueuedConnection);
+		connect(iriTracker, &IriTracker::resultTemplate, this, &DialogFormEmployee::handleReciveTemplate, Qt::QueuedConnection);
 		checkConnectSignal = true;
 	}
 
 	// Dừng luồng hiện tại nếu nó đang chạy
 	if (IriTrackerSingleton::getStreamThread()->isRunning()) {
 		IriTrackerSingleton::getStreamThread()->quit();
+	}
+
+	if (checkConnectSignal) {
+		disconnect(IriTrackerSingleton::getStreamThread(), &QThread::started, nullptr, nullptr);
 	}
 
 	// Di chuyển tracker sang thread và kết nối run()
@@ -279,6 +301,21 @@ bool DialogFormEmployee::eventFilter(QObject* obj, QEvent* event) {
 }
 
 void DialogFormEmployee::switchImage(bool isFoundDevice) {
+
+	/*if (!isFoundDevice) {
+		isRunningIriLeft = false;
+		isRunningIriRight = false;
+	}
+
+	if ((isRunningIriLeft || isRunningIriRight) && isFoundDevice) {
+		if (isRunningIriLeft && iri_rightPath.isEmpty()) {
+			ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		}
+		else if (isRunningIriRight && iri_leftPath.isEmpty()) {
+			ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		}
+		return;
+	}
 	if (isRunningFirst || isFoundDevice != flagFoundDevice) {
 		if (isFoundDevice) {
 			ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
@@ -291,6 +328,28 @@ void DialogFormEmployee::switchImage(bool isFoundDevice) {
 
 		flagFoundDevice = isFoundDevice;
 		isRunningFirst = false;
+	}*/
+
+	if (!isFoundDevice) {
+		isRunningIriLeft = false;
+		isRunningIriRight = false;
 	}
 
+	if ((isRunningIriLeft || isRunningIriRight) && isFoundDevice) {
+		if (isRunningIriLeft && iri_rightPath.isEmpty()) {
+			ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		}
+		else if (isRunningIriRight && iri_leftPath.isEmpty()) {
+			ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		}
+		return;
+	}
+	if (isFoundDevice) {
+		ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+	}
+	else {
+		ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+		ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+	}
 }

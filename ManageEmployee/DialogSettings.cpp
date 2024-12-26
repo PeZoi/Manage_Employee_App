@@ -1,6 +1,7 @@
 #include "DialogSettings.h"
 #include "Constant.h"
 #include "LanguagesUtils.h"
+#include "AudioUtils.h"
 #include <QFile>
 #include <QSettings>
 #include <QPushButton>
@@ -44,9 +45,8 @@ DialogSettings::DialogSettings(QWidget *parent)
 		else {
 			settings.setValue("system/language", Constant::VI);
 			LanguagesUtils::getInstance()->switchLanguages(Constant::VI);
-
 		}
-
+		AudioUtils::getInstance()->initAudio();
 		this->accept();
 		});
 }
