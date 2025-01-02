@@ -217,9 +217,6 @@
       <Filter>IriTracker</Filter>
     </ClCompile>
     <ClCompile Include="DialogChangePassword.cpp">
-      <Filter>Controller\Controller Cpp</Filter>
-    </ClCompile>
-    <ClCompile Include="DialogChangePassword.cpp">
       <Filter>View\View Cpp</Filter>
     </ClCompile>
     <ClCompile Include="ManageException.cpp">
@@ -272,6 +269,9 @@
     </ClCompile>
     <ClCompile Include="LanguagesUtils.cpp">
       <Filter>Utils\Utils Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogChangePassword.cpp">
+      <Filter>View\View Cpp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,3 +1,18 @@
 ﻿   Qt/MSBuild: 3.3.1.1
    Qt: 5.15.2
+  DialogAssignmentException.cpp
+  DialogChangeDatabase.cpp
+  DialogChangePassword.cpp
+  DialogConfirm.cpp
+  DialogDeleteAttendanceEvent.cpp
+  DialogFormAttendanceEvents.cpp
+  DialogFormBulletin.cpp
+  DialogFormDepartment.cpp
+  DialogFormEmployee.cpp
+  DialogFormException.cpp
+  DialogFormLoginAdmin.cpp
+  DialogNotification.cpp
+  DialogSettings.cpp
+  MainWindow.cpp
+  Generating Code...
   ManageEmployee.vcxproj -> D:\IriTech\Code\ManageEmployee\x64\Debug\ManageEmployee.exe

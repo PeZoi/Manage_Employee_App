@@ -57,11 +57,12 @@ int main(int argc, char* argv[])
 
 	DatabaseSingleton::getInstance()->setDB(db);
 
-	SignUpAdmin* signUpUI = new SignUpAdmin(nullptr);
-	SignUpAdminController* signUpController = new SignUpAdminController(signUpUI, db, nullptr);
-
 	MainWindow* mainWindowUI = new MainWindow(db, nullptr);
 	MainWindowController* mainWindowController = new MainWindowController(mainWindowUI, db, nullptr);
+
+	SignUpAdmin* signUpUI = new SignUpAdmin(nullptr);
+	SignUpAdminController* signUpController = new SignUpAdminController(signUpUI, db, mainWindowController, nullptr);
+
 
 	// INIT TRANSLATOR
 	LanguagesUtils::getInstance()->setAppDefault(&a, mainWindowController);

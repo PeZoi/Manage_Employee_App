@@ -141,7 +141,6 @@ void MainWindowController::handleHiddenManageDepartment() {
 
 void MainWindowController::handleShowManageDepartment() {
 	handleHiddenMenu();
-
 	mainWindowView->getUi()->content->layout()->addWidget(mdController->getMdView());
 	mdController->getMdView()->show();
 

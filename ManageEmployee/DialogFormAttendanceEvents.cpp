@@ -7,6 +7,8 @@ DialogFormAttendanceEvents::DialogFormAttendanceEvents(QString employeeSelected,
 {
 	ui->setupUi(this);
 
+	this->setWindowTitle(tr("Form Attendance Events"));
+
 	QLinearGradient gradient(0, 0, 0, this->height());
 	gradient.setColorAt(0.0, Qt::white);
 	gradient.setColorAt(1.0, QColor("#87A8D2"));

@@ -17,6 +17,8 @@ MainWindow::MainWindow(IDatabaseManager*& _db, QWidget* parent)
     this->setAutoFillBackground(true);
 
     ui->header->layout()->addWidget(navbarController->getUi());
+
+    this->setWindowTitle(tr("IriTracker - Time And Attendance Management System"));
 }
 
 

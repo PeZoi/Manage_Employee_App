@@ -23,6 +23,8 @@ DialogFormEmployee::DialogFormEmployee(QWidget* parent)
 {
 	ui.setupUi(this);
 
+	this->setWindowTitle(tr("Form Employee"));
+
 	iriTracker = IriTrackerSingleton::getIriCaptureEyes();
 	iriTracker->isCancelDialogEmployee = false;
 

@@ -2,8 +2,8 @@
 #include "MainWindowController.h"
 #include "ErrorLabel.h"
 
-SignUpAdminController::SignUpAdminController(SignUpAdmin* view, IDatabaseManager*& _db, QObject* parent)
-	: QObject(parent), signUpView(view), db(_db)
+SignUpAdminController::SignUpAdminController(SignUpAdmin* view, IDatabaseManager*& _db, MainWindowController* mwController, QObject* parent)
+	: QObject(parent), signUpView(view), db(_db), mainWindowController(mwController)
 {
 
 	connect(signUpView->getUi()->btn_signup_2, &QPushButton::clicked, this, &SignUpAdminController::handleSubmit);
@@ -59,9 +59,6 @@ void SignUpAdminController::handleSubmit() {
 	db->closeDatabase();
 
 	signUpView->hide();
-	
-	MainWindow* mainWindowUI = new MainWindow(db, nullptr);
-	MainWindowController* mainWindowController = new MainWindowController(mainWindowUI, db, nullptr);
 
 	mainWindowController->getMainWindowView()->show();
 }

@@ -10,6 +10,8 @@ DialogFormException::DialogFormException(QWidget *parent)
 {
 	ui->setupUi(this);
 
+	this->setWindowTitle(tr("Form Exception"));
+
 	ui->paid_hours->setDisplayFormat("HH:mm");
 	ui->paid_hours->setTime(QTime(0, 0));
 
