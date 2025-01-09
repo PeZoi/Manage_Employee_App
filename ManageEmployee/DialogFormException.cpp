@@ -55,7 +55,7 @@ void DialogFormException::handleSubmit() {
 	bool isCalculate = ui->is_calculate->isChecked();
 
 	if (name.isEmpty()) {
-		ErrorLabel* error = new ErrorLabel("  Please fill in the name field");
+		ErrorLabel* error = new ErrorLabel(tr("  Please fill in the name field"));
 		error->showTemporary(ui->verticalLayout, 3000);
 		return;
 	}

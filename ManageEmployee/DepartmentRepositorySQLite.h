@@ -13,6 +13,7 @@ public:
 	QList<DepartmentModel> getAll() override;
 	QList<DepartmentModel> getAllIgnoreOthers() override;
 	DepartmentModel getByName(QString name) override;
+	bool switchIsDeleted(bool value, DepartmentModel department) override;
 
 private:
 	IDatabaseManager* db;

@@ -348,7 +348,7 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 			if (bStreamMode)
 			{
 				iRet = Iddk_GetStreamImage(g_hDevice, &pImages, &nMaxEyeSubtypes, &captureStatus);
- 				if (iRet == IDDK_OK)
+				if (iRet == IDDK_OK)
 				{
 					//TODO/////////////////////////////////////////////////////////////////
 					//
@@ -501,17 +501,25 @@ void IriTracker::run(bool bDefaultParams, bool bMultiple, bool bProcessResult)
 		qDebug() << "Preparing save template.";
 		if (bProcessResult && captureStatus == IDDK_COMPLETE)
 		{
-			qint64 timestamp = QDateTime::currentDateTime().toSecsSinceEpoch();
-			/* Get the result image */
-			IddkImage* result = get_result_image_custom(timestamp);
-			emit imageResult(result->imageData, result->imageDataLen, result->imageWidth, result->imageHeight);
-			//get_result_ISO_image(times);
+			if (checkTemplates(false)) {
+				emit isExistIri(true);
+				continue;
+			}
+			else {
+				qint64 timestamp = QDateTime::currentDateTime().toSecsSinceEpoch();
+				/* Get the result image */
+				IddkImage* result = get_result_image_custom(timestamp);
+				emit imageResult(result->imageData, result->imageDataLen, result->imageWidth, result->imageHeight);
+				//get_result_ISO_image(times);
 
-			/* Get the result template */
-			IddkDataBuffer templateDataBuffer = get_result_template_custom(timestamp);
-			emit resultTemplate(templateDataBuffer.data, templateDataBuffer.dataSize);
-			clear_capture_custom();
-			break;
+				/* Get the result template */
+				IddkDataBuffer templateDataBuffer = get_result_template_custom(timestamp);
+				emit resultTemplate(templateDataBuffer.data, templateDataBuffer.dataSize);
+
+				clear_capture_custom();
+				break;
+			}
+
 		}
 
 		/* iris_recognition calls, we break the loop */
@@ -557,7 +565,7 @@ void IriTracker::scan_iri()
 				{
 					if (IriTrackerSingleton::isRunningStreamThreadCheckInOut) {
 						run(true, false, false);
-						checkTemplates(); // CHECKING
+						checkTemplates(true); // CHECKING
 					}
 				}
 			}
@@ -567,7 +575,7 @@ void IriTracker::scan_iri()
 }
 
 
-bool IriTracker::checkTemplates() {
+bool IriTracker::checkTemplates(bool isClearDevice) {
 	DatabaseSingleton::getInstance()->getDB()->connectToDatabase();
 	QList<QPair<QString, QPair<QByteArray, QByteArray>>> employeeIriesList = DatabaseSingleton::getInstance()->getDB()->getEmployeeRepository()->getAllIri();
 	DatabaseSingleton::getInstance()->getDB()->closeDatabase();
@@ -638,7 +646,9 @@ bool IriTracker::checkTemplates() {
 				qDebug() << "Done. Compare Distance = " << compareDis;
 
 				emit isCheckCompareSuccess(employeeIries.first);
-				clear_capture_custom();
+				if (isClearDevice) {
+					clear_capture_custom();
+				}
 
 				return true;
 			}
@@ -659,6 +669,8 @@ bool IriTracker::checkTemplates() {
 		}
 	}
 	qDebug() << "No match found";
-	clear_capture_custom();
+	if (isClearDevice) {
+		clear_capture_custom();
+	}
 	return false;
 }

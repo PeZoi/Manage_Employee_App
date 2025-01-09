@@ -115,21 +115,22 @@ void ManageEmployeeController::handleRowClicked(const QModelIndex& index) {
 void ManageEmployeeController::onClickEdit() {
 	EmployeeModel employee = db->getEmployeeRepository()->getById(employeeSelected);
 
-	DialogFormEmployee* dialog = new DialogFormEmployee(meView);
-	dialog->setMode(true);
-	renderDepartments(dialog->getUi());
-	dialog->setValue(employee);
+	DialogFormEmployee dialog = new DialogFormEmployee(meView);
+	dialog.setMode(true);
+	renderDepartments(dialog.getUi());
+	dialog.setValue(employee);
 
-	connect(dialog, &DialogFormEmployee::uploadAvatar, this, &ManageEmployeeController::handleUploadAvatar);
-	connect(dialog, &DialogFormEmployee::submit, this, &ManageEmployeeController::submitEmployee);
+	connect(&dialog, &DialogFormEmployee::uploadAvatar, this, &ManageEmployeeController::handleUploadAvatar);
+	connect(&dialog, &DialogFormEmployee::submit, this, &ManageEmployeeController::submitEmployee);
+	connect(&dialog, &DialogFormEmployee::cancel, &dialog, &DialogFormEmployee::deleteLater);
 
-	dialog->exec();
+	dialog.exec();
 
 }
 
 void ManageEmployeeController::onClickDelete() {
 	db->connectToDatabase();
-	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete employee ?", nullptr);
+	DialogConfirm* confirm = new DialogConfirm(tr("Do you really want to delete employee ?"), nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
 
 		if (db->getAttendanceEventRepository()->_deleteByEmployeeId(employeeSelected) && db->getEmployeeRepository()->_delete(employeeSelected)) {
@@ -150,7 +151,7 @@ void ManageEmployeeController::submitEmployee(const EmployeeModel& employee, boo
 	if (!isEditMode) {
 		// Kiểm tra xem id có tồn tại không
 		if (!db->getEmployeeRepository()->getById(employee.getId()).getId().isEmpty()) {
-			ErrorLabel* error = new ErrorLabel("  Employee ID exists.");
+			ErrorLabel* error = new ErrorLabel(tr("  Employee ID exists."));
 			error->showTemporary(employeeView->getUi().errorLayout, 3000);
 			return;
 		}
@@ -158,7 +159,7 @@ void ManageEmployeeController::submitEmployee(const EmployeeModel& employee, boo
 			handleRenderTable();
 		}
 		else {
-			ErrorLabel* error = new ErrorLabel("  Addition failed.");
+			ErrorLabel* error = new ErrorLabel(tr("  Addition failed."));
 			error->showTemporary(employeeView->getUi().errorLayout, 3000);
 			return;
 		}
@@ -168,7 +169,7 @@ void ManageEmployeeController::submitEmployee(const EmployeeModel& employee, boo
 			handleRenderTable();
 		}
 		else {
-			ErrorLabel* error = new ErrorLabel("  Update failed.");
+			ErrorLabel* error = new ErrorLabel(tr("  Update failed."));
 			error->showTemporary(employeeView->getUi().errorLayout, 3000);
 			return;
 		}

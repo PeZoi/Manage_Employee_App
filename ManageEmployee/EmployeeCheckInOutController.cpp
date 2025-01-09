@@ -200,10 +200,10 @@ void EmployeeCheckInOutController::handleSelectEmployeeByCombo(const QString& na
 	EmployeeModel employee = db->getEmployeeRepository()->getById(employeeSelected);
 
 	if (employee.getStatus() == "IN") {
-		view->getUi()->submit_checkin_out->setText("Check Out");
+		view->getUi()->submit_checkin_out->setText(tr("Check Out"));
 	}
 	else {
-		view->getUi()->submit_checkin_out->setText("Check In");
+		view->getUi()->submit_checkin_out->setText(tr("Check In"));
 	}
 	view->getUi()->password->setText("");
 

@@ -95,15 +95,24 @@ DepartmentModel DepartmentRepositoryMYSQL::getByName(QString name) {
 		return DepartmentModel();
 	}
 
-	DepartmentModel department = DepartmentModel();
+	
 
 	if (result.next()) {
-		department.setName(result.value(0).toString());
-		department.setDescription(result.value(1).toString());
+		DepartmentModel department = DepartmentModel(result.value(0).toString(), result.value(1).toString(), result.value(2).toBool());
 		return department;
 	}
 	else {
 		return DepartmentModel();
 	}
 
+}
+
+bool DepartmentRepositoryMYSQL::switchIsDeleted(bool value, DepartmentModel department) {
+	QString queryDeleteDepartment = "UPDATE department SET is_deleted = :is_deleted, description = :description WHERE name = :name";
+	QMap<QString, QVariant> params;
+	params[":name"] = department.getName();
+	params[":description"] = department.getDescription();
+	params[":is_deleted"] = value;
+
+	return db->executeCreate(queryDeleteDepartment, params);
 }

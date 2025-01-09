@@ -126,7 +126,7 @@ void ManageAttendanceEventsController::onClickDelete() {
 
 	if (dialog->exec() == QDialog::Accepted) {
 		if (!db->getAttendanceEventRepository()->deleteBySession(attendanceEventSelected.getSession())) {
-			ErrorLabel* error = new ErrorLabel("  Delete failed.");
+			ErrorLabel* error = new ErrorLabel(tr("  Delete failed."));
 			error->showTemporary(view->getUi()->verticalLayout, 3000);
 			return;
 		}
@@ -168,7 +168,7 @@ void ManageAttendanceEventsController::handleCheckout() {
 	attendanceEvent.setTime(QTime::currentTime().toString("HH:mm:ss"));
 
 	if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
-		ErrorLabel* error = new ErrorLabel("  Checkout failed");
+		ErrorLabel* error = new ErrorLabel(tr("  Checkout failed"));
 		error->showTemporary(view->getUi()->verticalLayout, 3000);
 		return;
 	}
@@ -327,7 +327,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 			}
 
 			if (dateTimeCheckin >= checkinLast || dateTimeCheckout >= checkinLast) {
-				ErrorLabel* error = new ErrorLabel("  Event time is overlapped with other events.");
+				ErrorLabel* error = new ErrorLabel(tr("  Event time is overlapped with other events."));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
@@ -349,25 +349,25 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 			}
 
 			if (dateTimeCheckin == checkinDB && (checkinDB <= dateTimeCheckout && checkoutDB >= dateTimeCheckout) && attendanceEventSelected.getSession() != eventsBySession.at(0).getSession()) {
-				ErrorLabel* error = new ErrorLabel("  Time duplicates with other event.");
+				ErrorLabel* error = new ErrorLabel(tr("  Time duplicates with other event."));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 
 			if (checkinDB <= dateTimeCheckout && checkoutDB >= dateTimeCheckout && attendanceEventSelected.getSession() != eventsBySession.at(0).getSession()) {
-				ErrorLabel* error = new ErrorLabel("  Event time is overlapped with other events.");
+				ErrorLabel* error = new ErrorLabel(tr("  Event time is overlapped with other events."));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 
 			if (checkinDB <= dateTimeCheckin && checkoutDB >= dateTimeCheckin && attendanceEventSelected.getSession() != eventsBySession.at(0).getSession()) {
-				ErrorLabel* error = new ErrorLabel("  Event time is overlapped with other events.");
+				ErrorLabel* error = new ErrorLabel(tr("  Event time is overlapped with other events."));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 
 			if (dateTimeCheckin <= checkinDB && dateTimeCheckout >= checkoutDB && attendanceEventSelected.getSession() != eventsBySession.at(0).getSession()) {
-				ErrorLabel* error = new ErrorLabel("  Event time is overlapped with other events.");
+				ErrorLabel* error = new ErrorLabel(tr("  Event time is overlapped with other events."));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
@@ -393,14 +393,14 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 
 		if (!isEditMode) {
 			if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
-				ErrorLabel* error = new ErrorLabel("  Additon failed");
+				ErrorLabel* error = new ErrorLabel(tr("  Additon failed"));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 		}
 		else {
 			if (!db->getAttendanceEventRepository()->update(attendanceEvent)) {
-				ErrorLabel* error = new ErrorLabel("  Edit failed");
+				ErrorLabel* error = new ErrorLabel(tr("  Edit failed"));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
@@ -418,14 +418,14 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 
 		if (!isEditMode) {
 			if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
-				ErrorLabel* error = new ErrorLabel("  Additon failed");
+				ErrorLabel* error = new ErrorLabel(tr("  Additon failed"));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 		}
 		else {
 			if (!db->getAttendanceEventRepository()->update(attendanceEvent)) {
-				ErrorLabel* error = new ErrorLabel("  Edit failed");
+				ErrorLabel* error = new ErrorLabel(tr("  Edit failed"));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
@@ -434,7 +434,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 
 	if (dialog->getUi()->radio_in->isChecked()) {
 		if (checkStatusIn && !isEditMode) {
-			ErrorLabel* error = new ErrorLabel("  Cannot add this event. The 'IN' event exists.");
+			ErrorLabel* error = new ErrorLabel(tr("  Cannot add this event. The 'IN' event exists."));
 			error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 			return;
 		}
@@ -453,7 +453,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 		}
 
 		if (dateTimeCheckin <= checkoutLast) {
-			ErrorLabel* error = new ErrorLabel("  The current event should be later than the previous normal event.");
+			ErrorLabel* error = new ErrorLabel(tr("  The current event should be later than the previous normal event."));
 			error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 			return;
 		}
@@ -476,14 +476,14 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 
 		if (!isEditMode) {
 			if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
-				ErrorLabel* error = new ErrorLabel("  Additon failed");
+				ErrorLabel* error = new ErrorLabel(tr("  Additon failed"));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
 		}
 		else {
 			if (!db->getAttendanceEventRepository()->update(attendanceEvent)) {
-				ErrorLabel* error = new ErrorLabel("  Edit failed");
+				ErrorLabel* error = new ErrorLabel(tr("  Edit failed"));
 				error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 				return;
 			}
@@ -496,7 +496,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 
 	if (dialog->getUi()->radio_out->isChecked()) {
 		if (!checkStatusIn) {
-			ErrorLabel* error = new ErrorLabel("  The current event should be later than the previous normal event.");
+			ErrorLabel* error = new ErrorLabel(tr("  The current event should be later than the previous normal event."));
 			error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 			return;
 		}
@@ -513,7 +513,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 		QDateTime checkinDB = QDateTime::fromString(events.at(0).getDateEvent() + " " + events.at(0).getTime(), "dd/MM/yyyy HH:mm:ss");
 
 		if (dateTimeCheckout <= checkinDB) {
-			ErrorLabel* error = new ErrorLabel("  The current event should be later than the previous normal event.");
+			ErrorLabel* error = new ErrorLabel(tr("  The current event should be later than the previous normal event."));
 			error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 			return;
 		}
@@ -526,7 +526,7 @@ void ManageAttendanceEventsController::handleSubmit(QString _employeeSelected, b
 		attendanceEvent.setTime(timeCheckout);
 
 		if (!db->getAttendanceEventRepository()->add(attendanceEvent)) {
-			ErrorLabel* error = new ErrorLabel("  Additon failed");
+			ErrorLabel* error = new ErrorLabel(tr("  Additon failed"));
 			error->showTemporary(dialog->getUi()->verticalLayout, 3000);
 			return;
 		}

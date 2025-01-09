@@ -27,13 +27,13 @@ Tools* ToolsController::getView() {
 }
 
 void ToolsController::onClickBackupData() {
-	DialogConfirm* confirm = new DialogConfirm("This will backup database that contains all IriTracker data.\nAre you sure you want to do this?", nullptr);
+	DialogConfirm* confirm = new DialogConfirm(tr("This will backup database that contains all IriTracker data.\nAre you sure you want to do this?"), nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
 		db->bankupData();
 	}
 }
 void ToolsController::onClickRestoreData() {
-	DialogConfirm* confirm = new DialogConfirm("This will use the backup database to overwrite all the existing IriTracker data.\nAre you sure you want to do this?", nullptr);
+	DialogConfirm* confirm = new DialogConfirm(tr("This will use the backup database to overwrite all the existing IriTracker data.\nAre you sure you want to do this?"), nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
 		db->restoreData();
 	}

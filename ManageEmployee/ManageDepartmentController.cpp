@@ -88,7 +88,7 @@ void ManageDepartmentController::onClickEdit() {
 
 void ManageDepartmentController::onClickDelete() {
 	db->connectToDatabase();
-	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete department ?", nullptr);
+	DialogConfirm* confirm = new DialogConfirm(tr("Do you really want to delete department ?"), nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
 		if (db->getDepartmentRepository()->_delete(departmentSelected)) {
 			departmentSelected = "";
@@ -107,8 +107,14 @@ void ManageDepartmentController::submitDepartment(const DepartmentModel& departm
 	// Nếu không phải là mode edit
 	if (!isEditMode) {
 		// Kiểm tra xem name có tồn tại không
-		if (db->getDepartmentRepository()->getByName(department.getName()).getName() != "") {
-			ErrorLabel* error = new ErrorLabel("  The name already exists");
+		DepartmentModel departmenInDB = db->getDepartmentRepository()->getByName(department.getName());
+		if (departmenInDB.getName() != "" && departmenInDB.getIsDeleted()) {
+				db->getDepartmentRepository()->switchIsDeleted(false, department);
+			handleRenderTable();
+			goto DONE;
+		}
+		if (departmenInDB.getName() != "" && !departmenInDB.getIsDeleted()) {
+			ErrorLabel* error = new ErrorLabel(tr("  The name already exists"));
 			error->showTemporary(departmentView->getUi()->verticalLayout, 3000);
 			return;
 		}
@@ -121,6 +127,9 @@ void ManageDepartmentController::submitDepartment(const DepartmentModel& departm
 			handleRenderTable();
 		};
 	}
+
+	// When the name deparment is exist but it is deleted => modify status is_deleted = true
+	DONE:
 	departmentView->accept();
 
 	db->closeDatabase();

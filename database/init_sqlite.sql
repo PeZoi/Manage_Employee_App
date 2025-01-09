@@ -39,46 +39,37 @@ FOREIGN KEY(employee_id) REFERENCES employee(id));
 BEGIN;
 
 CREATE TABLE IF NOT EXISTS exception (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    `name` VARCHAR(255),
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(255),
     paidHours VARCHAR(255),
     paidCoefficient DOUBLE,
     workCoefficient DOUBLE,
-    isCaculate BOOLEAN NOT NULL DEFAULT 0
+    isCaculate INTEGER NOT NULL DEFAULT 0
 );
 
-IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Sickly') THEN
-    INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
-    VALUES ('Sickly', '08:00', 1.0, 1.0);
-END IF;
-
-IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Vacation') THEN
-    INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
-    VALUES ('Vacation', '08:00', 1.0, 1.0);
-END IF;
-
-IF NOT EXISTS (SELECT 1 FROM exception WHERE name = 'Holiday') THEN
-    INSERT INTO exception (name, paidHours, paidCoefficient, workCoefficient)
-    VALUES ('Holiday', '08:00', 1.0, 1.0);
-END IF;
+INSERT OR IGNORE INTO exception (name, paidHours, paidCoefficient, workCoefficient)
+VALUES 
+    ('Sickly', '08:00', 1.0, 1.0),
+    ('Vacation', '08:00', 1.0, 1.0),
+    ('Holiday', '08:00', 1.0, 1.0);
 
 COMMIT;
 
 CREATE TABLE IF NOT EXISTS Bulletin (
-    id INT PRIMARY KEY AUTO_INCREMENT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
     start_date VARCHAR(255) NOT NULL,
     end_date VARCHAR(255) NOT NULL,
-    is_active BOOLEAN DEFAULT FALSE,
-    is_priority BOOLEAN DEFAULT FALSE,
+    is_active INTEGER DEFAULT 0,
+    is_priority INTEGER DEFAULT 0,
     type VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Bulletin_Detail (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    bulletin_id INT NOT NULL,
-    department_id INT,
-    employee_id INT,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    bulletin_id INTEGER NOT NULL,
+    department_id INTEGER,
+    employee_id INTEGER,
     FOREIGN KEY (bulletin_id) REFERENCES Bulletin(id)
 );

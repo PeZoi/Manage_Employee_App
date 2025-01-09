@@ -35,7 +35,7 @@ public:
         ToolsClass->resize(752, 400);
         change_password = new QToolButton(ToolsClass);
         change_password->setObjectName(QString::fromUtf8("change_password"));
-        change_password->setGeometry(QRect(120, 240, 221, 131));
+        change_password->setGeometry(QRect(90, 240, 251, 131));
         QFont font;
         font.setPointSize(11);
         font.setBold(true);
@@ -66,7 +66,7 @@ public:
 "}"));
         settings = new QToolButton(ToolsClass);
         settings->setObjectName(QString::fromUtf8("settings"));
-        settings->setGeometry(QRect(390, 240, 161, 131));
+        settings->setGeometry(QRect(390, 240, 241, 131));
         settings->setFont(font);
         settings->setStyleSheet(QString::fromUtf8("QToolButton {\n"
 "	background: transparent;\n"

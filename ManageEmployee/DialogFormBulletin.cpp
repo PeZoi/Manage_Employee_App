@@ -154,7 +154,7 @@ void DialogFormBulletin::handleSubmit() {
 	}
 
 	if (bulletin.getType() == Constant::B_TYPE_EMPLOYEE && bulletin.getEmployeeIds().isEmpty()) {
-		ErrorLabel* error = new ErrorLabel("  Please select employee");
+		ErrorLabel* error = new ErrorLabel(tr("  Please select employee"));
 		error->showTemporary(ui->verticalLayout, 3000);
 		return;
 	}

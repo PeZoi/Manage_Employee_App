@@ -220,7 +220,11 @@ BulletinModel BulletinRepositorySQLite::getById(int id) {
 }
 QList<BulletinModel> BulletinRepositorySQLite::getByCurrentDate() {
 	QList<BulletinModel> list;
-	QString queryGetAll = "SELECT * FROM bulletin WHERE STR_TO_DATE(start_date, '%d/%m/%Y') <= CURDATE() AND STR_TO_DATE(end_date, '%d/%m/%Y') >= CURDATE(); ";
+	QString queryGetAll =
+		"SELECT * FROM bulletin WHERE "
+		"DATE(substr(start_date, 7, 4) || '-' || substr(start_date, 4, 2) || '-' || substr(start_date, 1, 2)) <= DATE('now') AND "
+		"DATE(substr(end_date, 7, 4) || '-' || substr(end_date, 4, 2) || '-' || substr(end_date, 1, 2)) >= DATE('now');";
+
 	QSqlQuery result = db->executeQuery(queryGetAll);
 	if (!result.isActive()) {
 		qDebug() << "Query failed to retrieve bulletin:" << result.lastError().text();
@@ -265,6 +269,7 @@ QList<BulletinModel> BulletinRepositorySQLite::getByCurrentDate() {
 	}
 	return list;
 }
+
 
 bool BulletinRepositorySQLite::updateActived(int id, bool checked) {
 	QString query = "UPDATE bulletin SET is_active = :is_active WHERE id = :id;";

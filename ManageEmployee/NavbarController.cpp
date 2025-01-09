@@ -22,8 +22,6 @@ NavbarController::NavbarController(Navbar* view, IDatabaseManager*& _db, QObject
 
 void NavbarController::handleClickLogout() {
 	onLogoutSuccess();
-	msgBox.setText("Logout");
-	msgBox.exec();
 
 }
 void NavbarController::handleClickLogin() {
@@ -82,7 +80,7 @@ void NavbarController::handleSignInAdmin(QString pass, DialogFormLoginAdmin* dia
 		onLoginSuccess();
 	}
 	else {
-		ErrorLabel* error = new ErrorLabel("  Password was wrong.  ");
+		ErrorLabel* error = new ErrorLabel(tr("  Password was wrong.  "));
 		error->showTemporary(dialog->getUi().verticalLayout, 3000);
 		dialog->adjustSize();
 	}

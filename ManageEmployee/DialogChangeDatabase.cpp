@@ -87,20 +87,20 @@ void DialogChangeDatabase::handleConnectDB() {
 			QDir dir(QFileInfo(path).absolutePath());
 
 			if (!dir.exists()) {
-				ErrorLabel* error = new ErrorLabel("  The path is invalid.");
+				ErrorLabel* error = new ErrorLabel(tr("  The path is invalid."));
 				error->showTemporary(ui->verticalLayout, 3000);
 				return;
 			}
 
 			if (!isFileDB(path)) {
-				ErrorLabel* error = new ErrorLabel("  File extension is not in the correct format (.db). Location: " + path);
+				ErrorLabel* error = new ErrorLabel(tr("  File extension is not in the correct format (.db). Location: ") + path);
 				error->showTemporary(ui->verticalLayout, 3000);
 				return;
 			}
 
 			if (ui->radio_exist->isChecked()) {
 				if (!file.exists()) {
-					ErrorLabel* error = new ErrorLabel("  Failed to open the database file. Location: " + path);
+					ErrorLabel* error = new ErrorLabel(tr("  Failed to open the database file. Location: ") + path);
 					error->showTemporary(ui->verticalLayout, 3000);
 					return;
 				}
@@ -195,7 +195,7 @@ void DialogChangeDatabase::handleConnectDB() {
 	}
 	catch (const std::exception&)
 	{
-		ErrorLabel* error = new ErrorLabel("  Failed something ...");
+		ErrorLabel* error = new ErrorLabel(tr("  Failed something ..."));
 		error->showTemporary(ui->verticalLayout, 3000);
 		return;
 		qDebug() << "Có lỗi gì đó Dialog Change Database";

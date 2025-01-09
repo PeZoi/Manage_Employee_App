@@ -35,14 +35,14 @@ void DialogFormLoginAdmin::handleLoginAdmin() {
 	QString pass = ui.password->text();
 
 	if (pass.trimmed().isEmpty()) {
-		ErrorLabel* error = new ErrorLabel("  Please enter complete information.  ");
+		ErrorLabel* error = new ErrorLabel(tr("  Please enter complete information.  "));
 		error->showTemporary(ui.verticalLayout, 3000);
 		this->adjustSize();
 		return;
 	}
 
 	if (pass.trimmed().length() < 4) {
-		ErrorLabel* error = new ErrorLabel("  Password must be at least 4 characters long.  ");
+		ErrorLabel* error = new ErrorLabel(tr("  Password must be at least 4 characters long.  "));
 		error->showTemporary(ui.verticalLayout, 3000);
 		this->adjustSize();
 		return;

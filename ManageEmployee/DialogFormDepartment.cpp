@@ -31,7 +31,7 @@ void DialogFormDepartment::handleSubmit() {
 	QString description = ui->description->text();
 
 	if (name.trimmed().isEmpty()) {
-		ErrorLabel* error = new ErrorLabel("  The name field cannot be left empty");
+		ErrorLabel* error = new ErrorLabel(tr("  The name field cannot be left empty"));
 		error->showTemporary(ui->verticalLayout, 3000);
 		return;
 	}

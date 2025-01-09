@@ -12,4 +12,5 @@ public:
 	virtual QList<DepartmentModel> getAll() = 0;
 	virtual QList<DepartmentModel> getAllIgnoreOthers() = 0;
 	virtual DepartmentModel getByName(QString name) = 0;
+	virtual bool switchIsDeleted(bool value, DepartmentModel department) = 0;
 };

@@ -102,7 +102,7 @@ void ManageExceptionController::onClickEdit() {
 
 void ManageExceptionController::onClickDelete() {
 	DatabaseSingleton::getInstance()->getDB()->connectToDatabase();
-	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete exception ?", nullptr);
+	DialogConfirm* confirm = new DialogConfirm(tr("Do you really want to delete exception ?"), nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
 		if (DatabaseSingleton::getInstance()->getDB()->getExceptionRepository()->_delete(exceptionSelected.getId())) {
 			exceptionSelected = ExceptionModel();
@@ -124,7 +124,7 @@ void ManageExceptionController::submitException(const ExceptionModel& exception,
 	if (!isEditMode) {
 		// Kiểm tra xem name có tồn tại không
 		if (DatabaseSingleton::getInstance()->getDB()->getExceptionRepository()->getByName(exception.getName()).getName() != "") {
-			ErrorLabel* error = new ErrorLabel("  The name already exists");
+			ErrorLabel* error = new ErrorLabel(tr("  The name already exists"));
 			error->showTemporary(exceptionView->getUi()->verticalLayout, 3000);
 			return;
 		}
@@ -139,7 +139,7 @@ void ManageExceptionController::submitException(const ExceptionModel& exception,
 		// Kiểm tra xem name có giống tên hiện tại ko thì bỏ qua check
 		bool checkExistName = exception.getName() == exceptionSelected.getName();
 		if (!checkExistName && DatabaseSingleton::getInstance()->getDB()->getExceptionRepository()->getByName(exception.getName()).getName() != "") {
-			ErrorLabel* error = new ErrorLabel("  The name already exists");
+			ErrorLabel* error = new ErrorLabel(tr("  The name already exists"));
 			error->showTemporary(exceptionView->getUi()->verticalLayout, 3000);
 			return;
 		}

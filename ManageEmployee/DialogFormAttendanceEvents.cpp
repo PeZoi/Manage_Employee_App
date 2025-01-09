@@ -127,28 +127,28 @@ QString DialogFormAttendanceEvents::handleCheckTimeCheckInOut() {
 		EmployeeModel employee = db->getEmployeeRepository()->getById(employeeSelected);
 
 		if (checkin.date() < employee.getStartDateOfWork()) {
-			errorMsg = "  Event time must be later than the start of working date.";
+			errorMsg = tr("  Event time must be later than the start of working date.");
 			ui->hours->setText(errorMsg);
 			ui->hours->setStyleSheet("color: red; font-weight: bold");
 			return errorMsg;
 		}
 
 		if (checkin.date() != checkout.date()) {
-			errorMsg = "The 'IN' event and the 'OUT' event must be on the same date.";
+			errorMsg = tr("The 'IN' event and the 'OUT' event must be on the same date.");
 			ui->hours->setText(errorMsg);
 			ui->hours->setStyleSheet("color: red; font-weight: bold");
 			return errorMsg;
 		}
 
 		if (checkin >= checkout) {
-			errorMsg = "The 'IN' event must be followed by 'OUT' event.";
+			errorMsg = tr("The 'IN' event must be followed by 'OUT' event.");
 			ui->hours->setText(errorMsg);
 			ui->hours->setStyleSheet("color: red; font-weight: bold");
 			return errorMsg;
 		}
 
 		if (checkout > now || checkin > now) {
-			errorMsg = "Cannot add event in the future time.";
+			errorMsg = tr("Cannot add event in the future time.");
 			ui->hours->setText(errorMsg);
 			ui->hours->setStyleSheet("color: red; font-weight: bold");
 			return errorMsg;
@@ -166,7 +166,7 @@ QString DialogFormAttendanceEvents::handleCheckTimeCheckInOut() {
 	}
 	else if (ui->radio_in->isChecked()) {
 		if (checkin > now) {
-			errorMsg = "Cannot add event in the future time.";
+			errorMsg = tr("Cannot add event in the future time.");
 			ui->hours->setText(errorMsg);
 			ui->hours->setStyleSheet("color: red; font-weight: bold");
 			return errorMsg;
@@ -174,7 +174,7 @@ QString DialogFormAttendanceEvents::handleCheckTimeCheckInOut() {
 	}
 	else if (ui->radio_out->isChecked()) {
 		if (checkout > now) {
-			errorMsg = "Cannot add event in the future time.";
+			errorMsg = tr("Cannot add event in the future time.");
 			ui->hours->setText(errorMsg);
 			ui->hours->setStyleSheet("color: red; font-weight: bold");
 			return errorMsg;

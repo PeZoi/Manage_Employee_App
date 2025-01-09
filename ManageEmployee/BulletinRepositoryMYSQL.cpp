@@ -221,7 +221,7 @@ BulletinModel BulletinRepositoryMYSQL::getById(int id) {
 
 QList<BulletinModel> BulletinRepositoryMYSQL::getByCurrentDate() {
 	QList<BulletinModel> list;
-	QString queryGetAll = "SELECT * FROM bulletin WHERE STR_TO_DATE(start_date, '%d/%m/%Y') <= CURDATE() AND STR_TO_DATE(end_date, '%d/%m/%Y') >= CURDATE(); ";
+	QString queryGetAll = "SELECT * FROM bulletin WHERE is_active = 1 AND STR_TO_DATE(start_date, '%d/%m/%Y') <= CURDATE() AND STR_TO_DATE(end_date, '%d/%m/%Y') >= CURDATE(); ";
 	QSqlQuery result = db->executeQuery(queryGetAll);
 	if (!result.isActive()) {
 		qDebug() << "Query failed to retrieve bulletin:" << result.lastError().text();

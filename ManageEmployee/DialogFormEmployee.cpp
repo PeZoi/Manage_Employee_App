@@ -113,25 +113,25 @@ void DialogFormEmployee::handleSubmit() {
 
 
 	if (id.trimmed().isEmpty() || firstName.trimmed().isEmpty() || lastName.trimmed().isEmpty()) {
-		ErrorLabel* error = new ErrorLabel("  All required fields must be filled in");
+		ErrorLabel* error = new ErrorLabel(tr("  All required fields must be filled in"));
 		error->showTemporary(ui.errorLayout, 3000);
 		return;
 	}
 
 	if (isAllowPassword && (password.trimmed().isEmpty() || confirmPassword.trimmed().isEmpty())) {
-		ErrorLabel* error = new ErrorLabel("  The password field cannot be left empty");
+		ErrorLabel* error = new ErrorLabel(tr("  The password field cannot be left empty"));
 		error->showTemporary(ui.errorLayout, 3000);
 		return;
 	}
 
 	if (isAllowPassword && (password.length() < 4)) {
-		ErrorLabel* error = new ErrorLabel("  Password must be at least 4 characters long.");
+		ErrorLabel* error = new ErrorLabel(tr("  Password must be at least 4 characters long."));
 		error->showTemporary(ui.errorLayout, 3000);
 		return;
 	}
 
 	if (isAllowPassword && (password != confirmPassword)) {
-		ErrorLabel* error = new ErrorLabel("  Passwords do not match");
+		ErrorLabel* error = new ErrorLabel(tr("  Passwords do not match"));
 		error->showTemporary(ui.errorLayout, 3000);
 		return;
 	}
@@ -204,6 +204,16 @@ void DialogFormEmployee::setValue(EmployeeModel employee) {
 	ui.is_allow_password->setChecked(employee.getIsAllowPassword());
 	ui.is_enabled->setChecked(!employee.getIsEnabled());
 
+	if (employee.getIriLeft().size() > 0) {
+		ui.label_left->setText(tr("   (Registed)"));
+		ui.label_left->setStyleSheet("color: green;");
+	}
+
+	if (employee.getIriRight().size() > 0) {
+		ui.label_right->setText(tr("   (Registed)"));
+		ui.label_right->setStyleSheet("color: green;");
+	}
+
 	idSelected = employee.getId();
 	avatarPath = employee.getAvatar();
 
@@ -228,6 +238,13 @@ void DialogFormEmployee::processStreaming() {
 		connect(iriTracker, &IriTracker::imageProcessed, this, &DialogFormEmployee::updateFrame, Qt::QueuedConnection);
 		connect(iriTracker, &IriTracker::imageResult, this, &DialogFormEmployee::updateFrame, Qt::QueuedConnection);
 		connect(iriTracker, &IriTracker::resultTemplate, this, &DialogFormEmployee::handleReciveTemplate, Qt::QueuedConnection);
+		connect(iriTracker, &IriTracker::isExistIri, this, [this](bool check) {
+			if (check) {
+				ErrorLabel* error = new ErrorLabel(tr("  Iri already exists"));
+				error->showTemporary(ui.errorLayout, 3000);
+			}
+			}, Qt::QueuedConnection);
+
 		checkConnectSignal = true;
 	}
 
@@ -347,11 +364,28 @@ void DialogFormEmployee::switchImage(bool isFoundDevice) {
 		return;
 	}
 	if (isFoundDevice) {
-		ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
-		ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		
+		if (!iri_leftPath.isEmpty()) {
+			ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		}
+		else if (!iri_rightPath.isEmpty()) {
+			ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		}
+		else {
+			ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+			ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/found-device.png"));
+		}
 	}
 	else {
-		ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
-		ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+		if (!iri_leftPath.isEmpty()) {
+			ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+		}
+		else if (!iri_rightPath.isEmpty()) {
+			ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+		}
+		else {
+			ui.iri_left->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+			ui.iri_right->setPixmap(QPixmap("D:/IriTech/Code/ManageEmployee/icon/no-device.jpg"));
+		}
 	}
 }

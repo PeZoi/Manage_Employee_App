@@ -17,27 +17,27 @@ void SignUpAdminController::handleSubmit() {
 	QString passCon = signUpView->getUi()->password_confirm_2->text();
 
 	if (email.trimmed().isEmpty() || pass.trimmed().isEmpty() || passCon.trimmed().isEmpty()) {
-		ErrorLabel* error = new ErrorLabel("  Please enter complete information.  ");
+		ErrorLabel* error = new ErrorLabel(tr("  Please enter complete information.  "));
 		error->showTemporary(signUpView->getUi()->verticalLayout, 3000);
 		
 		return;
 	}
 
 	if (pass.length() < 4) {
-		ErrorLabel* error = new ErrorLabel("   Password must be at least 4 characters long.  ");
+		ErrorLabel* error = new ErrorLabel(tr("   Password must be at least 4 characters long.  "));
 		error->showTemporary(signUpView->getUi()->verticalLayout, 3000);
 		return;
 	}
 
 	if (pass != passCon) {
-		ErrorLabel* error = new ErrorLabel("  Passwords do not match.  ");
+		ErrorLabel* error = new ErrorLabel(tr("  Passwords do not match.  "));
 		error->showTemporary(signUpView->getUi()->verticalLayout, 3000);
 		return;
 	}
 
 	QRegularExpression emailRegex("^[\\w\\.]+@[\\w\\.]+\\.[a-z]{2,3}$");
 	if (!emailRegex.match(email).hasMatch()) {
-		ErrorLabel* error = new ErrorLabel("  Email address is invalid. ");
+		ErrorLabel* error = new ErrorLabel(tr("  Email address is invalid. "));
 		error->showTemporary(signUpView->getUi()->verticalLayout, 3000);
 		return;
 	}

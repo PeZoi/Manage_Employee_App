@@ -88,6 +88,8 @@ bool DatabaseManagerSQLite::excuteInitTable(QString pathDefault) {
 
 bool DatabaseManagerSQLite::connectToDatabase()
 {
+	bool flagFileExist = true;
+
 	QString pathIni = Constant::PATH_CONFIG;
 	QSettings settings(pathIni, QSettings::IniFormat);
 
@@ -95,6 +97,8 @@ bool DatabaseManagerSQLite::connectToDatabase()
 	QFile dbFile(dbName);
 
 	if (!dbFile.exists()) {
+		flagFileExist = false;
+
 		QString dirDatabase = settings.value("database/dirDB").toString();
 		QString _dbName = "manage_employee_sqlite.db";
 
@@ -120,10 +124,12 @@ bool DatabaseManagerSQLite::connectToDatabase()
 		return false;
 	}
 
-	QString sqlFilePath = settings.value("database/initSQLite").toString();
-	if (!excuteInitTable(sqlFilePath)) {
-		qDebug() << "Lỗi khi thực thi các câu lệnh SQL từ file.";
-		return false;
+	if (!flagFileExist) {
+		QString sqlFilePath = settings.value("database/initSQLite").toString();
+		if (!excuteInitTable(sqlFilePath)) {
+			qDebug() << "Lỗi khi thực thi các câu lệnh SQL từ file.";
+			return false;
+		}
 	}
 
 	qDebug() << "Connected to database successfully.";

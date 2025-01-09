@@ -119,7 +119,7 @@ void ManageBulletinController::onClickEdit() {
 
 void ManageBulletinController::onClickDelete() {
 	DatabaseSingleton::getInstance()->getDB()->connectToDatabase();
-	DialogConfirm* confirm = new DialogConfirm("Do you really want to delete bulletin ?", nullptr);
+	DialogConfirm* confirm = new DialogConfirm(tr("Do you really want to delete bulletin ?"), nullptr);
 	if (confirm->exec() == QDialog::Accepted) {
 		if (DatabaseSingleton::getInstance()->getDB()->getBulletinRepository()->_delete(bulletinSelected.getId())) {
 			bulletinSelected = BulletinModel();

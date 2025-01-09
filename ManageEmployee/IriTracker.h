@@ -25,6 +25,8 @@ signals:
 	void resultTemplate(const unsigned char* buffer, int size);
 	void isCheckCompareSuccess(QString employeeId);
 
+	void isExistIri(bool check);
+
 	void foundDevice(bool check);
 
 public:
@@ -32,7 +34,7 @@ public:
 	void run(bool bDefaultParams, bool bMultiple, bool bProcessResult);
 	void get_device();
 	void scan_iri();
-	bool checkTemplates();
+	bool checkTemplates(bool isClearDevice);
 
 	bool isCancelDialogEmployee = false;
 };
